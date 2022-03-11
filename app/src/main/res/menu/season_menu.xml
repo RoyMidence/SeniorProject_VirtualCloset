@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/season_menu">
+    <group android:id="@+id/list_season">
+        <item android:id="@+id/nav_winter"
+            android:title="Winter" />
+        <item android:id="@+id/nav_spring"
+            android:title="Spring" />
+        <item android:id="@+id/nav_summer"
+            android:title="Summer" />
+        <item android:id="@+id/nav_fall"
+            android:title="Fall" />
+        <item android:id="@+id/nav_winter_fall"
+            android:title="Winter and Fall" />
+        <item android:id="@+id/nav_spring_summer"
+            android:title="Spring and Summer" />
+        <item android:id="@+id/nav_all"
+            android:title="All" />
+    </group>
+</menu>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/color_menu">
+    <group android:id="@+id/list_color">
+        <item android:id="@+id/nav_red"
+            android:title="Red" />
+        <item android:id="@+id/nav_black"
+            android:title="Black" />
+        <item android:id="@+id/nav_green"
+            android:title="Green" />
+        <item android:id="@+id/nav_blue"
+            android:title="Blue" />
+        <item android:id="@+id/nav_yellow"
+            android:title="Yellow" />
+        <item android:id="@+id/nav_pink"
+            android:title="Pink" />
+        <item android:id="@+id/nav_orange"
+            android:title="Orange" />
+    </group>
+</menu>

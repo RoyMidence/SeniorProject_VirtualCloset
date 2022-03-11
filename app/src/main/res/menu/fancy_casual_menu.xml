@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fancy_casual_menu">
+
+    <group android:id="@+id/list_fancy_casual">
+    <item android:id="@+id/nav_fancy"
+        android:title="Fancy"/>
+    <item android:id="@+id/nav_casual"
+        android:title="Casual" />
+    </group>
+</menu>

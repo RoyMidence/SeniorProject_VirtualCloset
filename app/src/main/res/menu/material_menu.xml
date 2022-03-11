@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/material_menu">
+    <group android:id="@+id/list_material">
+        <item android:id="@+id/nav_wool"
+            android:title="Wool" />
+        <item android:id="@+id/nav_cotton"
+            android:title="Cotton" />
+        <item android:id="@+id/nav_polyester"
+            android:title="Polyester" />
+        <item android:id="@+id/nav_cotton_polyester"
+            android:title="Cotton/Polyester blend" />
+        <item android:id="@+id/nav_nylon"
+            android:title="Nylon" />
+        <item android:id="@+id/nav_latex"
+            android:title="Latex" />
+        <item android:id="@+id/nav_denim"
+            android:title="Denim" />
+        <item android:id="@+id/nav_other_material"
+            android:title="Other" />
+    </group>
+</menu>
