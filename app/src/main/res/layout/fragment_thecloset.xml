@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerViewClothing"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="0dp" />
+
+    <ImageView
+        android:id="@+id/emptyImageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="167dp"
+        android:layout_marginTop="150dp"
+        android:layout_marginEnd="153dp"
+        android:alpha="0.1"
+        android:visibility="visible"
+        app:srcCompat="@drawable/ic_hanger" />
+
+    <TextView
+        android:id="@+id/textViewEmptyCloset"
+        android:layout_width="91dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/emptyImageView"
+        android:layout_alignStart="@+id/emptyImageView"
+        android:layout_alignEnd="@+id/emptyImageView"
+        android:layout_marginStart="-1dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginEnd="1dp"
+        android:alpha="0.4"
+        android:text="TextView"
+        android:visibility="visible" />
+</RelativeLayout>
