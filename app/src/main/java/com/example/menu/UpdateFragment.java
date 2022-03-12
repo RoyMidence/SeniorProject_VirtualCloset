@@ -1,12 +1,16 @@
 package com.example.menu;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -14,6 +18,12 @@ import android.view.ViewGroup;
  * create an instance of this fragment.
  */
 public class UpdateFragment extends Fragment {
+
+    EditText editTextUpdateName;
+    Button btnUpdateItem, btnDeleteItem;
+
+    String name, ID;
+
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -61,8 +71,58 @@ public class UpdateFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_update, container, false);
+        editTextUpdateName = view.findViewById(R.id.editTextUpdateName);
+        btnUpdateItem = view.findViewById(R.id.btnUpdateItem);
+        btnDeleteItem = view.findViewById(R.id.btnDeleteItem);
+
+        Bundle bundle = this.getArguments();
+        ID = bundle.getString("id");
+        name = bundle.getString("name");
+
+        editTextUpdateName.setText(name);
+
+        btnUpdateItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseHelper db = new DatabaseHelper(getContext());
+                db.updateData(ID, editTextUpdateName.getText().toString());
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new TheClothesFragment()).commit();
+            }
+        });
+
+        btnDeleteItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                confirmDialog();
+            }
+        });
+
+
 
 
         return view;
+    }
+
+    void confirmDialog() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+        builder.setTitle("Delete " + name + " ?");
+        builder.setMessage("Are you sure you want to delete " + name + " ?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                DatabaseHelper db = new DatabaseHelper(getContext());
+                db.deleteOneRow(ID);
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new TheClothesFragment()).commit();
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create().show();
     }
 }

@@ -65,7 +65,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         ContentValues cv = new ContentValues();
         cv.put(CLOTHING_NAME, name);
 
-        long result = db.update(CLOTHING_TABLE, cv, "ID=?", new String[] {row_id});
+        long result = db.update(CLOTHING_TABLE, cv, "_ID=?", new String[] {row_id});
         if (result == -1)
             Toast.makeText(context, "Failed to Update!", Toast.LENGTH_SHORT).show();
         else
@@ -74,7 +74,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     void deleteOneRow(String row_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete(CLOTHING_TABLE, "ID=?", new String[] {row_id});
+        long result = db.delete(CLOTHING_TABLE, "_ID=?", new String[] {row_id});
         if (result == -1) {
             Toast.makeText(context, "Failed to delete", Toast.LENGTH_SHORT).show();
         } else {

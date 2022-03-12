@@ -51,7 +51,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(new ClothingAdapter(TheClothesFragment.this, getContext(), clothingID,clothingName, this));
 
-        AddData("Plain White Tee");
+        //AddData("Plain White Tee");
 
         storeValuesInArrays();
 
@@ -64,13 +64,13 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             emptyImageView.setVisibility(View.VISIBLE);
             textViewEmptyCloset.setVisibility(View.VISIBLE);
         } else {
+            emptyImageView.setVisibility(View.GONE);
+            textViewEmptyCloset.setVisibility(View.GONE);
+
             while (cursor.moveToNext()) {
                 clothingID.add(cursor.getString(0));
                 clothingName.add(cursor.getString(1));
             }
-
-            emptyImageView.setVisibility(View.GONE);
-            textViewEmptyCloset.setVisibility(View.GONE);
         }
     }
 
