@@ -92,5 +92,23 @@
             android:text="Fancy or Casual"
             android:textColor="@color/black"
             android:textSize="20sp" />
+
+        <ImageButton
+            android:id="@+id/image_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_below="@id/fancy_casual_type"
+            android:src="@drawable/ic_size" />
+        <TextView
+            android:id="@+id/size_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/image_size"
+            android:layout_alignParentRight="true"
+            android:padding="25px"
+            android:text="Size"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/size_menu">
+    <group android:id="@+id/list_size">
+        <item android:id="@+id/nav_S"
+            android:title="Small" />
+        <item android:id="@+id/nav_M"
+            android:title="Medium" />
+        <item android:id="@+id/nav_L"
+            android:title="Large" />
+        <item android:id="@+id/nav_XL"
+            android:title="Extra Large" />
+    </group>
+</menu>

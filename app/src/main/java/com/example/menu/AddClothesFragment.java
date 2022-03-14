@@ -36,6 +36,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
         ImageButton btn_season = (ImageButton) v.findViewById(R.id.image_season);
         ImageButton btn_material = (ImageButton) v.findViewById(R.id.image_material);
         ImageButton btn_fancy_casual = (ImageButton) v.findViewById(R.id.image_fancy_casual);
+        ImageButton btn_size = (ImageButton) v.findViewById(R.id.image_size);
 
 
 
@@ -95,6 +96,17 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
 
             }
         });
+        btn_size.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                PopupMenu popup = new PopupMenu(getActivity(), v);
+                popup.setOnMenuItemClickListener(AddClothesFragment.this);
+                popup.inflate(R.menu.size_menu);
+                popup.show();
+
+            }
+        });
     }
 
     @Override
@@ -104,6 +116,8 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
         TextView tv_season = (TextView)v.findViewById(R.id.season_type);
         TextView tv_material = (TextView)v.findViewById(R.id.material_type);
         TextView tv_fancy_casual= (TextView)v.findViewById(R.id.fancy_casual_type);
+        TextView tv_size= (TextView)v.findViewById(R.id.size_type);
+
 
         switch(item.getItemId()){
             case R.id.nav_shirt:
@@ -207,7 +221,6 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
                 break;
             case R.id.nav_other_material:
                 tv_material.setText("Other");
-
                 break;
             case R.id.nav_fancy:
                 tv_fancy_casual.setText("Fancy");
@@ -215,6 +228,19 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
             case R.id.nav_casual:
                 tv_fancy_casual.setText("Casual");
                 break;
+            case R.id.nav_S:
+                tv_size.setText("Small");
+                break;
+            case R.id.nav_M:
+                tv_size.setText("Medium");
+                break;
+            case R.id.nav_L:
+                tv_size.setText("Large");
+                break;
+            case R.id.nav_XL:
+                tv_size.setText("Extra Large");
+                break;
+
         }
 
         return false;

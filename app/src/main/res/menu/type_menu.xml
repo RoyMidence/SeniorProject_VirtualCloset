@@ -10,6 +10,6 @@
         <item android:id="@+id/nav_hat"
             android:title="Hat" />
         <item android:id="@+id/nav_socks"
-            android:title="Sock" />
+            android:title="Socks" />
     </group>
 </menu>

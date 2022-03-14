@@ -20,11 +20,19 @@
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/drawable-v24/ic_color.xml" value="0.1" />
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/drawable-v24/ic_material.xml" value="0.1" />
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/drawable/ic_season.xml" value="0.1" />
+        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/drawable/ic_size.xml" value="0.1955" />
+        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/layout/activity_main.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/layout/clothing_recyclerview_item.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/layout/fragment_addclothes.xml" value="0.2" />
-        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/color_menu.xml" value="0.1" />
+        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/layout/fragment_thecloset.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/layout/fragment_update.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/layout/nav_header.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/closet_menu.xml" value="0.20416666666666666" />
+        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/color_menu.xml" value="0.25" />
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/fancy_casual_menu.xml" value="0.1" />
-        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/material_menu.xml" value="0.1" />
-        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/season_menu.xml" value="0.1" />
+        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/material_menu.xml" value="0.25" />
+        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/season_menu.xml" value="0.25" />
+        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/size_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/type_menu.xml" value="0.1" />
       </map>
     </option>
