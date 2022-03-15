@@ -6,7 +6,9 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
     <string name="update_button">Update</string>
+    <string name="delete_button">Delete</string>
 
     <string name="shirt_option">shirt</string>
+    <string name="socks_option">Socks</string>
 
 </resources>
