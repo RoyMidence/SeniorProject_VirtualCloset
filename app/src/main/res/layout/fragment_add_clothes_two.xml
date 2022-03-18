@@ -1,102 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/list2_piece"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    tools:context=".AddClothesFragment"
-    android:id="@+id/list_piece">
+    tools:context=".AddClothesTwo">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/teal_200">
 
-
         <ImageButton
-            android:id="@+id/image_button"
+            android:id="@+id/image_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_clothes" />
-
+            android:src="@drawable/ic_color" />
         <TextView
-            android:id="@+id/clothes_type"
+            android:padding="25px"
+            android:id="@+id/color_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/image_button"
+            android:layout_below="@id/image_color"
             android:layout_alignParentRight="true"
-            android:padding="25px"
-            android:text="Clothes type"
+            android:text="Color 1"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
         <ImageButton
-            android:id="@+id/image_fancy_casual"
+            android:id="@+id/image_color2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/clothes_type"
+            android:layout_below="@id/color_type"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_business" />
+            android:src="@drawable/ic_color" />
 
         <TextView
-            android:id="@+id/fancy_casual_type"
+            android:id="@+id/color2_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/image_fancy_casual"
+            android:layout_below="@id/image_color2"
             android:layout_alignParentRight="true"
             android:padding="25px"
-            android:text="Occasion"
+            android:text="Color 2"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
         <ImageButton
-            android:id="@+id/image_pattern"
+            android:id="@+id/image_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/fancy_casual_type"
+            android:layout_below="@id/color2_type"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_pattern" />
+            android:src="@drawable/ic_size" />
         <TextView
-            android:id="@+id/pattern_type"
+            android:id="@+id/size_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/image_pattern"
+            android:layout_below="@id/image_size"
             android:layout_alignParentRight="true"
             android:padding="25px"
-            android:text="Pattern"
+            android:text="Size"
             android:textColor="@color/black"
             android:textSize="20sp" />
-
         <ImageButton
-            android:id="@+id/image_material"
+            android:id="@+id/image_season"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/pattern_type"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_material" />
+            android:layout_below="@+id/size_type"
+            android:src="@drawable/ic_season" />
         <TextView
             android:padding="25px"
-            android:id="@+id/material_type"
+            android:id="@+id/season_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/image_season"
             android:layout_alignParentRight="true"
-            android:layout_below="@id/image_material"
-            android:text="Material"
+            android:text="Season"
             android:textColor="@color/black"
             android:textSize="20sp" />
-
-
-
-
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/second_screen"
+            android:id="@+id/previous_screen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_next"
+            android:src="@drawable/ic_previous"
             app:fabSize="normal"/>
-
     </RelativeLayout>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

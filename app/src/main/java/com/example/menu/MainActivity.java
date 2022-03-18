@@ -58,6 +58,10 @@ private DatabaseHelper mDatabaseHelper;
             case R.id.nav_logout:
                 Toast.makeText(this,"You have been logged out.",Toast.LENGTH_SHORT).show();
                 break;
+            case R.id.nav_add2:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new AddClothesTwo()).commit();
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
