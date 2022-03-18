@@ -74,8 +74,8 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         }
     }
 
-    public void AddData(String newEntry) {
-        boolean insertData = mDatabaseHelper.addData(newEntry);
+    public void AddData(String item, String brand, String size, String material, String desc) {
+        boolean insertData = mDatabaseHelper.addClothing(item, brand,size,material,desc);
 
         if (insertData)
             toastMessage("Data Successfully Inserted!");
@@ -91,7 +91,6 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
         bundle.putString("id",clothingID.get(position));
-        bundle.putString("name",clothingName.get(position));
         UpdateFragment frag = new UpdateFragment();
         frag.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
