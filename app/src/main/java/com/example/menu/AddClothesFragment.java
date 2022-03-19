@@ -23,6 +23,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
     private View v;
+    TextView tv;
+    TextView tv_material;
+    TextView tv_fancy_casual;
 
     public AddClothesFragment() {
         // Required empty public constructor
@@ -33,6 +36,10 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_addclothes, container, false);
         configureButtons();
+        tv = (TextView)v.findViewById(R.id.clothes_type);
+        tv_material = (TextView)v.findViewById(R.id.material_type);
+        tv_fancy_casual= (TextView)v.findViewById(R.id.fancy_casual_type);
+
         return v;
     }
 
@@ -96,14 +103,13 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
         {
             @Override
             public void onClick (View v){
-                // Bundle bundle = new Bundle();
-                // bundle.putString("id",clothingID.get(position));
+                Bundle bundle = new Bundle();
+               bundle.putString("type",String.valueOf(tv.getText()));
                 // bundle.putString("name",clothingName.get(position));
-                // UpdateFragment frag = new UpdateFragment();
-                // frag.setArguments(bundle);
-                FragmentTransaction fr =getFragmentManager().beginTransaction();
-                fr.replace(R.id.fragment_container,new AddClothesTwo());
-                fr.commit();
+                 AddClothesTwo frag = new AddClothesTwo();
+                frag.setArguments(bundle);
+                getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        frag).commit();
 
             }
 
@@ -113,16 +119,11 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
-        TextView tv = (TextView)v.findViewById(R.id.clothes_type);
-        TextView tv_material = (TextView)v.findViewById(R.id.material_type);
-        TextView tv_fancy_casual= (TextView)v.findViewById(R.id.fancy_casual_type);
-
-
         switch(item.getItemId()){
             case R.id.nav_shirt:
 
                 tv.setText("shirt");
-
+                System.out.println(String.valueOf(tv.getText()));
                 break;
             case R.id.nav_pants:
 

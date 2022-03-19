@@ -10,12 +10,28 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/teal_200">
+        <TextView
+            android:id="@+id/description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Description:"
+            android:textSize="35sp"/>
+
+        <EditText
+            android:id="@+id/edit_text_description"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/description"
+            android:text="Click me"
+            android:textSize="25sp"
+            android:textColor="@color/orange"/>
 
         <ImageButton
             android:id="@+id/image_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginTop="120dp"
             android:src="@drawable/ic_color" />
 
         <TextView
@@ -23,7 +39,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/image_color"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
             android:padding="25px"
             android:text="Color 1"
             android:textColor="@color/black"
@@ -33,8 +49,8 @@
             android:id="@+id/image_color2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/color_type"
-            android:layout_alignParentRight="true"
+            android:layout_below="@+id/color_type"
+            android:layout_alignParentLeft="true"
             android:src="@drawable/ic_color" />
 
         <TextView
@@ -42,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/image_color2"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
             android:padding="25px"
             android:text="Color 2"
             android:textColor="@color/black"
@@ -52,7 +68,7 @@
             android:id="@+id/image_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/color2_type"
+            android:layout_marginTop="120dp"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_size" />
 
@@ -85,13 +101,31 @@
             android:text="Season"
             android:textColor="@color/black"
             android:textSize="20sp" />
+        <ImageButton
+            android:id="@+id/image_brand"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_brand"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/season_type"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/image_brand"
+            android:layout_alignParentRight="true"
+            android:text="Brand"
+            android:padding="25px"
+            android:textColor="@color/black"
+            android:textSize="20sp"
+            />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/previous_screen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentLeft="true"
             android:src="@drawable/ic_previous"
             app:fabSize="normal"/>
     </RelativeLayout>

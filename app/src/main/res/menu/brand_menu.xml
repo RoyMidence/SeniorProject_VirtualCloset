@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:id="@+id/list_brand">
+    <item android:id="@+id/nav_adidas"
+        android:title="Adidas" />
+    <item android:id="@+id/nav_nike"
+        android:title="Nike" />
+        <item android:id="@+id/nav_nautica"
+            android:title="Nautica" />
+        <item android:id="@+id/nav_polorl"
+            android:title="Polo RL" />
+        <item android:id="@+id/nav_calvinklein"
+            android:title="Calvin Klein" />
+        <item android:id="@+id/nav_champion"
+            android:title="Champion" />
+        <item android:id="@+id/nav_supreme"
+            android:title="Supreme" />
+        <item android:id="@+id/nav_american_eagle"
+            android:title="American Eagle" />
+        <item android:id="@+id/nav_hollister"
+            android:title="Hollister" />
+        <item android:id="@+id/nav_tommy_hilfiger"
+            android:title="Tommy Hilfiger" />
+        <item android:id="@+id/nav_banana_republic"
+            android:title="Banana Republic" />
+        <item android:id="@+id/nav_brand_general"
+            android:title="General" />
+    </group>
+</menu>

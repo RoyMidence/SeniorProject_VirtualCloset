@@ -20,6 +20,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClickListener {
     private View v;
+    String type;
+
 
     public AddClothesTwo() {
         // Required empty public constructor
@@ -31,7 +33,8 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
         configureImageButton();
         configureFabButton();
 
-
+        Bundle bundle = this.getArguments();
+        type = bundle.getString("type");
 
         return v;
     }
@@ -42,6 +45,7 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
     ImageButton btn_color2 = (ImageButton) v.findViewById(R.id.image_color2);
     ImageButton btn_size = (ImageButton) v.findViewById(R.id.image_size);
     ImageButton btn_season = (ImageButton) v.findViewById(R.id.image_season);
+    ImageButton btn_brand = (ImageButton) v.findViewById(R.id.image_brand);
 
     btn_color.setOnClickListener(v -> {
 
@@ -63,7 +67,13 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
 
         PopupMenu popup = new PopupMenu(getActivity(), v);
         popup.setOnMenuItemClickListener(AddClothesTwo.this);
-        popup.inflate(R.menu.size_menu);
+        if(type.equals("shirt")){
+            popup.inflate(R.menu.size_menu);
+        }else{
+            popup.inflate(R.menu.color_menu);
+
+        }
+
         popup.show();
 
     });
@@ -74,7 +84,14 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
         popup.inflate(R.menu.season_menu);
         popup.show();
     });
+        btn_brand.setOnClickListener(v -> {
 
+            PopupMenu popup = new PopupMenu(getActivity(), v);
+            popup.setOnMenuItemClickListener(AddClothesTwo.this);
+            popup.inflate(R.menu.brand_menu);
+            popup.show();
+
+        });
 }
 
     private void configureFabButton(){
