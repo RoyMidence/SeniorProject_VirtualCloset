@@ -67,6 +67,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
 
             }
         });
+
         btn_fancy_casual.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -78,6 +79,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
 
             }
         });
+
         btn_pattern.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -89,14 +91,15 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
 
             }
         });
+
         fab.setOnClickListener(new View.OnClickListener()
         {
             @Override
             public void onClick (View v){
                 // Bundle bundle = new Bundle();
-                //  bundle.putString("id",clothingID.get(position));
+                // bundle.putString("id",clothingID.get(position));
                 // bundle.putString("name",clothingName.get(position));
-                UpdateFragment frag = new UpdateFragment();
+                // UpdateFragment frag = new UpdateFragment();
                 // frag.setArguments(bundle);
                 FragmentTransaction fr =getFragmentManager().beginTransaction();
                 fr.replace(R.id.fragment_container,new AddClothesTwo());
@@ -118,7 +121,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
         switch(item.getItemId()){
             case R.id.nav_shirt:
 
-                tv.setText("Shirt");
+                tv.setText("shirt");
 
                 break;
             case R.id.nav_pants:

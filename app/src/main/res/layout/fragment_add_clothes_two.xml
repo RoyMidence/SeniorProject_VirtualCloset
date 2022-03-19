@@ -17,13 +17,14 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_color" />
+
         <TextView
-            android:padding="25px"
             android:id="@+id/color_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/image_color"
             android:layout_alignParentRight="true"
+            android:padding="25px"
             android:text="Color 1"
             android:textColor="@color/black"
             android:textSize="20sp" />
@@ -54,6 +55,7 @@
             android:layout_below="@id/color2_type"
             android:layout_alignParentRight="true"
             android:src="@drawable/ic_size" />
+
         <TextView
             android:id="@+id/size_type"
             android:layout_width="wrap_content"
@@ -64,20 +66,22 @@
             android:text="Size"
             android:textColor="@color/black"
             android:textSize="20sp" />
+
         <ImageButton
             android:id="@+id/image_season"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
             android:layout_below="@+id/size_type"
+            android:layout_alignParentRight="true"
             android:src="@drawable/ic_season" />
+
         <TextView
-            android:padding="25px"
             android:id="@+id/season_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/image_season"
             android:layout_alignParentRight="true"
+            android:padding="25px"
             android:text="Season"
             android:textColor="@color/black"
             android:textSize="20sp" />

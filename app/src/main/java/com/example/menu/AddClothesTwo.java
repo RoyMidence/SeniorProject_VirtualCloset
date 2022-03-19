@@ -18,7 +18,7 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
-public class AddClothesTwo extends Fragment {
+public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClickListener {
     private View v;
 
     public AddClothesTwo() {
@@ -27,13 +27,16 @@ public class AddClothesTwo extends Fragment {
 
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-       // configureImageButton();
-       // configureFabButton();
         v =inflater.inflate(R.layout.fragment_add_clothes_two, container, false);
+        configureImageButton();
+        configureFabButton();
+
+
+
         return v;
     }
 
-/* private void configureImageButton() {
+    private void configureImageButton() {
     // TODO Auto-generated method stub
     ImageButton btn_color = (ImageButton) v.findViewById(R.id.image_color);
     ImageButton btn_color2 = (ImageButton) v.findViewById(R.id.image_color2);
@@ -96,7 +99,7 @@ public class AddClothesTwo extends Fragment {
         });
     }
 
-
+    @Override
     public boolean onMenuItemClick(MenuItem item) {
        TextView tv_color = (TextView)v.findViewById(R.id.color_type);
        TextView tv_color2 = (TextView)v.findViewById(R.id.color2_type);
@@ -204,6 +207,6 @@ public class AddClothesTwo extends Fragment {
 
        return false;
     }
-*/
+
 
 }
