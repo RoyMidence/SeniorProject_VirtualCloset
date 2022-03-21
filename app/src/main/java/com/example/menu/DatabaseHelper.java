@@ -179,6 +179,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    // ADD COLORS TO TABLE
+    public boolean addToColorTable(String color) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(COLOR,color);
+
+        long result = db.insert(COLOR_TABLE,null,contentValues);
+
+        if (result == -1) {
+            return false; // DIDN'T WORK
+        } else {
+            return true; // WORKED
+        }
+    }
+
     // ADD A TAG
     public boolean addTag(String tag, int clothingID) {
         SQLiteDatabase db = this.getWritableDatabase();

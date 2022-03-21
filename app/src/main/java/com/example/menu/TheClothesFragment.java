@@ -57,6 +57,15 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         AddData("Die for Succ","Diesel", "Shirt","L","Cotton","");
         AddData("Tight Jeans","Lucky Brand", "Pants","34X32","Denim","");
         AddData("Olive Boots","Palladium", "Shoes","10","Polyester","");
+
+        mDatabaseHelper.addToColorTable("Red");
+        mDatabaseHelper.addToColorTable("Black");
+        mDatabaseHelper.addToColorTable("Green");
+        mDatabaseHelper.addToColorTable("Blue");
+        mDatabaseHelper.addToColorTable("Yellow");
+        mDatabaseHelper.addToColorTable("Pink");
+        mDatabaseHelper.addToColorTable("Orange");
+
          */
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewClothing);
