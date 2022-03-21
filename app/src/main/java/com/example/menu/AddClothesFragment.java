@@ -7,6 +7,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -26,6 +27,8 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
     TextView tv;
     TextView tv_material;
     TextView tv_fancy_casual;
+    TextView tv_pattern;
+    EditText ed_name;
 
     public AddClothesFragment() {
         // Required empty public constructor
@@ -39,7 +42,8 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
         tv = (TextView)v.findViewById(R.id.clothes_type);
         tv_material = (TextView)v.findViewById(R.id.material_type);
         tv_fancy_casual= (TextView)v.findViewById(R.id.fancy_casual_type);
-
+        tv_pattern = (TextView) v.findViewById(R.id.pattern_type);
+        ed_name = (EditText) v.findViewById(R.id.edit_text_name);
         return v;
     }
 
@@ -101,11 +105,14 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
 
         fab.setOnClickListener(new View.OnClickListener()
         {
+
             @Override
-            public void onClick (View v){
-                Bundle bundle = new Bundle();
+            public void onClick (View v){ Bundle bundle = new Bundle();
                bundle.putString("type",String.valueOf(tv.getText()));
-                // bundle.putString("name",clothingName.get(position));
+               bundle.putString("material",String.valueOf(tv_material.getText()));
+               bundle.putString("occasion",String.valueOf(tv_fancy_casual.getText()));
+               bundle.putString("pattern",String.valueOf(tv_pattern.getText()));
+               bundle.putString("name",String.valueOf(ed_name.getText()));
                  AddClothesTwo frag = new AddClothesTwo();
                 frag.setArguments(bundle);
                 getFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -122,7 +129,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
         switch(item.getItemId()){
             case R.id.nav_shirt:
 
-                tv.setText("shirt");
+                tv.setText("Shirt");
 
                 break;
             case R.id.nav_pants:
@@ -172,7 +179,12 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
             case R.id.nav_casual:
                 tv_fancy_casual.setText("Casual");
                 break;
-
+            case R.id.nav_one_color:
+                tv_pattern.setText("One Color");
+                break;
+            case R.id.nav_two_color:
+                tv_pattern.setText("Two Colors");
+                break;
 
         }
 

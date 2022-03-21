@@ -22,7 +22,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/description"
-            android:text="Click me"
+            android:hint="Click me"
+            android:maxLength="30"
             android:textSize="25sp"
             android:textColor="@color/orange"/>
 
@@ -41,7 +42,7 @@
             android:layout_below="@id/image_color"
             android:layout_alignParentLeft="true"
             android:padding="25px"
-            android:text="Color 1"
+            android:hint="Color 1"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -60,7 +61,7 @@
             android:layout_below="@id/image_color2"
             android:layout_alignParentLeft="true"
             android:padding="25px"
-            android:text="Color 2"
+            android:hint="Color 2"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -79,7 +80,7 @@
             android:layout_below="@id/image_size"
             android:layout_alignParentRight="true"
             android:padding="25px"
-            android:text="Size"
+            android:hint="Size"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -98,7 +99,7 @@
             android:layout_below="@id/image_season"
             android:layout_alignParentRight="true"
             android:padding="25px"
-            android:text="Season"
+            android:hint="Season"
             android:textColor="@color/black"
             android:textSize="20sp" />
         <ImageButton
@@ -109,16 +110,17 @@
             android:layout_alignParentRight="true"
             android:layout_below="@+id/season_type"
             />
+
         <TextView
+            android:id="@+id/brand_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/image_brand"
             android:layout_alignParentRight="true"
-            android:text="Brand"
             android:padding="25px"
+            android:hint="Brand"
             android:textColor="@color/black"
-            android:textSize="20sp"
-            />
+            android:textSize="20sp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/previous_screen"
@@ -128,6 +130,15 @@
             android:layout_alignParentLeft="true"
             android:src="@drawable/ic_previous"
             app:fabSize="normal"/>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_clothes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_add"
+            app:fabSize="normal" />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

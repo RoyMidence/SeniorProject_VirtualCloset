@@ -10,21 +10,23 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/teal_200">
-<TextView
-    android:id="@+id/Name_of_clothing"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="Name of Clothing:"
-    android:textSize="35sp"/>
+
+        <TextView
+            android:id="@+id/Name_of_clothing"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name of Clothing:"
+            android:textSize="35sp" />
 
         <EditText
             android:id="@+id/edit_text_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/Name_of_clothing"
-            android:text="Click me"
-            android:textSize="25sp"
-            android:textColor="@color/orange"/>
+            android:hint="Click me"
+            android:maxLength="15"
+            android:textColor="@color/orange"
+            android:textSize="25sp" />
 
         <ImageButton
             android:id="@+id/image_button"
@@ -41,7 +43,7 @@
             android:layout_below="@id/image_button"
             android:layout_alignParentLeft="true"
             android:padding="25px"
-            android:text="Clothes type"
+            android:hint="Clothes type"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -60,7 +62,7 @@
             android:layout_below="@id/image_fancy_casual"
             android:layout_alignParentRight="true"
             android:padding="25px"
-            android:text="Occasion"
+            android:hint="Occasion"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -78,7 +80,7 @@
             android:layout_below="@id/image_pattern"
             android:layout_alignParentRight="true"
             android:padding="25px"
-            android:text="Pattern"
+            android:hint="Pattern"
             android:textColor="@color/black"
             android:textSize="20sp" />
 
@@ -89,14 +91,15 @@
             android:layout_below="@+id/clothes_type"
             android:layout_alignParentLeft="true"
             android:src="@drawable/ic_material" />
+
         <TextView
-            android:padding="25px"
             android:id="@+id/material_type"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
             android:layout_below="@id/image_material"
-            android:text="Material"
+            android:layout_alignParentLeft="true"
+            android:padding="25px"
+            android:hint="Material"
             android:textColor="@color/black"
             android:textSize="20sp" />
 

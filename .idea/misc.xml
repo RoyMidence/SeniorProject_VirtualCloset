@@ -5,24 +5,16 @@
       <map>
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable/ic_add.xml" value="0.5025" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable/ic_closet.xml" value="0.5025" />
-        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable/ic_delete.xml" value="0.53" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable/ic_hanger.xml" value="0.5025" />
-        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable/ic_remove.xml" value="0.53" />
-        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable/ic_save.xml" value="0.53" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/activity_add.xml" value="0.5505208333333333" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/activity_main.xml" value="0.5505208333333333" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/activity_update.xml" value="0.5364583333333334" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/clothing_recyclerview_item.xml" value="0.5505208333333333" />
-        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/fragment_add_clothes_two.xml" value="0.3138586956521739" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/fragment_addclothes.xml" value="0.5505208333333333" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/fragment_thecloset.xml" value="0.5505208333333333" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/fragment_update.xml" value="0.5546875" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/nav_header.xml" value="0.5505208333333333" />
-        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/menu/brand_menu.xml" value="0.40370370370370373" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/menu/closet_menu.xml" value="0.5505208333333333" />
-        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/menu/color_menu.xml" value="0.33796296296296297" />
-        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/menu/material_menu.xml" value="0.5546875" />
-        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/menu/type_menu.xml" value="0.40370370370370373" />
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/drawable-v24/ic_business.xml" value="0.1" />
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/drawable-v24/ic_clothes.xml" value="0.1" />
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/drawable-v24/ic_color.xml" value="0.1" />
@@ -42,8 +34,10 @@
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/color_menu.xml" value="0.25" />
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/fancy_casual_menu.xml" value="0.1" />
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/material_menu.xml" value="0.25" />
+        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/pant_size_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/pattern_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/season_menu.xml" value="0.25" />
+        <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/shoe_menu.xml" value="0.1" />
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/size_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/type_menu.xml" value="0.1" />
       </map>

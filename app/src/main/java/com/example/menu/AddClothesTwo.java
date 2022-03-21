@@ -11,16 +11,31 @@ import androidx.fragment.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClickListener {
     private View v;
+    private DatabaseHelper mDatabaseHelper;
     String type;
+    String material;
+    String pattern;
+    String occasion;
+    String name;
+    boolean isColor2 = true;
+    TextView tv_color;
+    TextView tv_color2;
+    TextView tv_season;
+    TextView tv_size;
+    TextView tv_brand;
+    EditText  ed_desc;
 
 
     public AddClothesTwo() {
@@ -30,11 +45,25 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v =inflater.inflate(R.layout.fragment_add_clothes_two, container, false);
-        configureImageButton();
-        configureFabButton();
-
+        mDatabaseHelper = new DatabaseHelper(getContext());
         Bundle bundle = this.getArguments();
         type = bundle.getString("type");
+        material = bundle.getString("material");
+        pattern = bundle.getString("pattern");
+        occasion = bundle.getString("occasion");
+        name = bundle.getString("name");
+
+        tv_color = (TextView)v.findViewById(R.id.color_type);
+        tv_color2 = (TextView)v.findViewById(R.id.color2_type);
+        tv_season = (TextView)v.findViewById(R.id.season_type);
+        tv_size= (TextView)v.findViewById(R.id.size_type);
+        tv_brand =(TextView)v.findViewById(R.id.brand_type);
+        ed_desc = (EditText) v.findViewById(R.id.edit_text_description);
+
+        configureImageButton();
+        configureFabButtons();
+
+
 
         return v;
     }
@@ -67,11 +96,13 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
 
         PopupMenu popup = new PopupMenu(getActivity(), v);
         popup.setOnMenuItemClickListener(AddClothesTwo.this);
-        if(type.equals("shirt")){
+        if(type.equals("Shirt")){
             popup.inflate(R.menu.size_menu);
-        }else{
-            popup.inflate(R.menu.color_menu);
-
+        } else if(type.equals("Pants")){
+            popup.inflate(R.menu.pant_size_menu);
+        }
+        else{
+            popup.inflate(R.menu.size_menu);
         }
 
         popup.show();
@@ -84,7 +115,7 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
         popup.inflate(R.menu.season_menu);
         popup.show();
     });
-        btn_brand.setOnClickListener(v -> {
+    btn_brand.setOnClickListener(v -> {
 
             PopupMenu popup = new PopupMenu(getActivity(), v);
             popup.setOnMenuItemClickListener(AddClothesTwo.this);
@@ -92,21 +123,23 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
             popup.show();
 
         });
+
+    if(pattern.equals("One Color")){
+            btn_color2.setVisibility(View.GONE);
+            tv_color2.setVisibility(View.GONE);
+            isColor2 = false;
+
+        }
 }
 
-    private void configureFabButton(){
+    private void configureFabButtons(){
 
         FloatingActionButton fab2 = (FloatingActionButton) v.findViewById(R.id.previous_screen);
-
-        fab2.setOnClickListener(new View.OnClickListener()
+        FloatingActionButton fab_add = (FloatingActionButton) v.findViewById(R.id.add_clothes);
+        fab2.setOnClickListener(new OnClickListener()
         {
 
             public void onClick (View v){
-                // Bundle bundle = new Bundle();
-                //  bundle.putString("id",clothingID.get(position));
-                // bundle.putString("name",clothingName.get(position));
-                // frag.setArguments(bundle);
-                UpdateFragment frag = new UpdateFragment();
                 FragmentTransaction fr2 =getFragmentManager().beginTransaction();
                 fr2.replace(R.id.fragment_container,new AddClothesFragment());
                 fr2.commit();
@@ -114,14 +147,44 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
             }
 
         });
+        fab_add.setOnClickListener(new OnClickListener()
+        {
+
+            public void onClick (View v){
+                String size = String.valueOf(tv_size.getText());
+                String brand = String.valueOf(tv_brand.getText());
+                String desc = String.valueOf(ed_desc.getText());
+                String color = String.valueOf(tv_color.getText());
+                String color2 =  String.valueOf(tv_color2.getText());
+                boolean insertData = mDatabaseHelper.addClothing(name,brand,type,size,material,desc);
+
+                if (insertData)
+                    toastMessage("Data Successfully Inserted!");
+                else
+                    toastMessage("Something went wrong");
+
+
+                    boolean insertcolor = mDatabaseHelper.addColor(color, mDatabaseHelper.getLatestItem());
+                if (isColor2) {
+                    boolean insertcolor2 = mDatabaseHelper.addColor(color2, mDatabaseHelper.getLatestItem());
+                }
+
+
+                FragmentTransaction fr2 =getFragmentManager().beginTransaction();
+                fr2.replace(R.id.fragment_container,new TheClothesFragment());
+                fr2.commit();
+            }
+
+            private void toastMessage(String Message) {
+                Toast.makeText(getContext(),Message,Toast.LENGTH_SHORT).show();
+            }
+
+        });
     }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
-       TextView tv_color = (TextView)v.findViewById(R.id.color_type);
-       TextView tv_color2 = (TextView)v.findViewById(R.id.color2_type);
-       TextView tv_season = (TextView)v.findViewById(R.id.season_type);
-       TextView tv_size= (TextView)v.findViewById(R.id.size_type);
+
        switch(item.getItemId()){
            case R.id.nav_red:
 
@@ -219,7 +282,55 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
            case R.id.nav_XL:
                tv_size.setText("Extra Large");
                break;
-       }
+
+            case R.id.nav_nike:
+                tv_brand.setText("Nike");
+                break;
+
+            case R.id.nav_nautica:
+                tv_brand.setText("Nautica");
+                break;
+            case R.id.nav_adidas:
+                tv_brand.setText("Adidas");
+                break;
+            case R.id.nav_polorl:
+                tv_brand.setText("Polo RL");
+                break;
+            case R.id.nav_calvinklein:
+                tv_brand.setText("Calvin Klein");
+                break;
+            case R.id.nav_champion:
+                tv_brand.setText("Champion");
+                break;
+            case R.id.nav_supreme:
+                tv_brand.setText("Supreme");
+                break;
+            case R.id.nav_american_eagle:
+                tv_brand.setText("American Eagle");
+                break;
+            case R.id.nav_hollister:
+                tv_brand.setText("Hollister");
+                break;
+            case R.id.nav_tommy_hilfiger:
+                tv_brand.setText("Tommy Hilfiger");
+                break;
+            case R.id.nav_banana_republic:
+                tv_brand.setText("Banana Republic");
+                break;
+           case R.id.nav_sp:
+               tv_size.setText("28X30");
+               break;
+           case R.id.nav_mp:
+               tv_size.setText("30X32");
+               break;
+           case R.id.nav_lp:
+               tv_size.setText("34X36");
+               break;
+           case R.id.nav_xlp:
+               tv_size.setText("36X38");
+               break;
+            }
+
 
 
        return false;

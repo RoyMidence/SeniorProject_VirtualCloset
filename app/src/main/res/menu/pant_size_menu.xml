@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/pant_size_menu">
+    <group android:id="@+id/list_pant_size">
+        <item android:id="@+id/nav_sp"
+            android:title="28 x 30" />
+        <item android:id="@+id/nav_mp"
+            android:title="30 x 32" />
+        <item android:id="@+id/nav_lp"
+            android:title="34 x 36" />
+        <item android:id="@+id/nav_xlp"
+            android:title="36 x 38" />
+    </group>
+</menu>
