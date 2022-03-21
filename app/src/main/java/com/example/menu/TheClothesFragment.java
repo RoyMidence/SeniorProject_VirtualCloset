@@ -27,6 +27,8 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
 
     private List<String> clothingName = new ArrayList<>();
     private List<String> clothingID = new ArrayList<>();
+    private List<String> clothingBrand = new ArrayList<>();
+    private List<String> clothingType = new ArrayList<>();
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -45,15 +47,29 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         emptyImageView = view.findViewById(R.id.emptyImageView);
         textViewEmptyCloset = view.findViewById(R.id.textViewEmptyCloset);
 
+        // I use this to fill database
+
+        /*
+        AddData("Yellow Jippy","Fruit of The Loom", "Shirt","L","Cotton","");
+        AddData("Comfy Jeans","Lucky Brand", "Pants","34X34","Denim","");
+        AddData("White Destiny Boots","Palladium", "Shoes","10","No Clue","");
+        AddData("Fish Hat","No Clue", "Hat","One Size","Polyester","");
+        AddData("Die for Succ","Diesel", "Shirt","L","Cotton","");
+        AddData("Tight Jeans","Lucky Brand", "Pants","34X32","Denim","");
+        AddData("Olive Boots","Palladium", "Shoes","10","Polyester","");
+         */
+
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewClothing);
+        storeValuesInArrays();
+
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new ClothingAdapter(TheClothesFragment.this, getContext(), clothingID,clothingName, this));
+        recyclerView.setAdapter(new ClothingAdapter(TheClothesFragment.this, getContext(), clothingID,clothingName, clothingBrand, clothingType, this));
 
-        //AddData("Plain White Tee");
 
-        storeValuesInArrays();
+
+
 
         return view;
     }
@@ -70,12 +86,14 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             while (cursor.moveToNext()) {
                 clothingID.add(cursor.getString(0));
                 clothingName.add(cursor.getString(1));
+                clothingBrand.add(cursor.getString(2));
+                clothingType.add(cursor.getString(3));
             }
         }
     }
 
-    public void AddData(String item, String brand, String size, String material, String desc) {
-        boolean insertData = mDatabaseHelper.addClothing(item, brand,size,material,desc);
+    public void AddData(String item, String brand, String type, String size, String material, String desc) {
+        boolean insertData = mDatabaseHelper.addClothing(item, brand,type, size,material,desc);
 
         if (insertData)
             toastMessage("Data Successfully Inserted!");
@@ -91,6 +109,9 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
         bundle.putString("id",clothingID.get(position));
+        bundle.putString("name", clothingName.get(position));
+        bundle.putString("brand", clothingBrand.get(position));
+        bundle.putString("type",clothingType.get(position));
         UpdateFragment frag = new UpdateFragment();
         frag.setArguments(bundle);
         getFragmentManager().beginTransaction().replace(R.id.fragment_container,

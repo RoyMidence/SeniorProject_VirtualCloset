@@ -123,7 +123,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
             case R.id.nav_shirt:
 
                 tv.setText("shirt");
-                System.out.println(String.valueOf(tv.getText()));
+
                 break;
             case R.id.nav_pants:
 

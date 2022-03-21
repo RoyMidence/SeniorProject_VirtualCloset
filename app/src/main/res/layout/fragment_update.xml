@@ -12,35 +12,137 @@
 
         <EditText
             android:id="@+id/editTextUpdateName"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="316dp"
+            android:layout_width="256dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
             android:ems="10"
             android:inputType="textPersonName"
             android:minHeight="48dp"
             android:text="Name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <Button
-            android:id="@+id/btnUpdateItem"
-            android:layout_width="0dp"
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButtonUpdate"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/update_button"
+            android:layout_marginTop="16dp"
+            android:clickable="true"
+            android:src="@drawable/ic_save"
+            app:layout_constraintEnd_toStartOf="@+id/floatingActionButtonDelete"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/floatingActionButtonDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="56dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="8dp"
+            android:clickable="true"
+            android:src="@drawable/ic_delete"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteBrand"
+            android:layout_width="196dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="24dp"
+            android:completionHint="Select a Brand"
+            android:text="Enter a Brand"
+            android:completionThreshold="1"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextUpdateName" />
 
-        <Button
-            android:id="@+id/btnDeleteItem"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="@string/delete_button"
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteType"
+            android:layout_width="196dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:completionHint="Select a Type"
+            android:completionThreshold="1"
+            android:text="Enter a Type"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/autoCompleteBrand" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteMaterial"
+            android:layout_width="196dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:completionHint="Select a Material"
+            android:completionThreshold="1"
+            android:minHeight="48dp"
+            android:text="Enter a Material"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/btnUpdateItem" />
+            app:layout_constraintTop_toBottomOf="@+id/autoCompleteBrand" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteGeneral"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:completionHint="Select Shirt Size"
+            android:completionThreshold="1"
+            android:minWidth="120dp"
+            android:minHeight="48dp"
+            android:text="Select Shirt Size"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/autoCompleteType"
+            app:layout_constraintStart_toStartOf="@+id/autoCompleteType"
+            app:layout_constraintTop_toBottomOf="@+id/autoCompleteType" />
+
+        <EditText
+            android:id="@+id/editTextDescription"
+            android:layout_width="389dp"
+            android:layout_height="117dp"
+            android:layout_marginBottom="8dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompletePants1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:minWidth="64dp"
+            android:minHeight="48dp"
+            android:text="##"
+            android:visibility="gone"
+            app:layout_constraintEnd_toStartOf="@+id/textViewPants"
+            app:layout_constraintTop_toBottomOf="@+id/autoCompleteType" />
+
+        <TextView
+            android:id="@+id/textViewPants"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="26dp"
+            android:text="X"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="@+id/autoCompleteType"
+            app:layout_constraintStart_toEndOf="@+id/autoCompleteBrand"
+            app:layout_constraintTop_toBottomOf="@+id/autoCompleteType" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompletePants2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:minWidth="64dp"
+            android:minHeight="48dp"
+            android:text="##"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/textViewPants"
+            app:layout_constraintTop_toBottomOf="@+id/autoCompleteType" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>
