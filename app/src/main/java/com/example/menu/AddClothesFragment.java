@@ -141,7 +141,15 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
 
                 tv.setText("Socks");
                 break;
+            case R.id.nav_hat:
 
+                tv.setText("Hat");
+
+                break;
+            case R.id.nav_shoes:
+
+                tv.setText("Shoes");
+                break;
             case R.id.nav_wool:
                 tv_material.setText("Wool");
 

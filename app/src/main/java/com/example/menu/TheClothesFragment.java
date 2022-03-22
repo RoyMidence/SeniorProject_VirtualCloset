@@ -48,8 +48,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         textViewEmptyCloset = view.findViewById(R.id.textViewEmptyCloset);
 
         // I use this to fill database
-
-
+        /*
         AddData("Yellow Jippy","Fruit of The Loom", "Shirt","L","Cotton","");
         AddData("Comfy Jeans","Lucky Brand", "Pants","34X34","Denim","");
         AddData("White Destiny Boots","Palladium", "Shoes","10","No Clue","");
@@ -66,7 +65,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         mDatabaseHelper.addToColorTable("Pink");
         mDatabaseHelper.addToColorTable("Orange");
 
-
+*/
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewClothing);
         storeValuesInArrays();

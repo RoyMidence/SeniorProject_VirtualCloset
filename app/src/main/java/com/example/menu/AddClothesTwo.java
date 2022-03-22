@@ -96,10 +96,13 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
 
         PopupMenu popup = new PopupMenu(getActivity(), v);
         popup.setOnMenuItemClickListener(AddClothesTwo.this);
-        if(type.equals("Shirt")){
-            popup.inflate(R.menu.size_menu);
-        } else if(type.equals("Pants")){
+         if(type.equals("Pants")){
+
             popup.inflate(R.menu.pant_size_menu);
+
+        }else if(type.equals("Shoes")){
+
+            popup.inflate(R.menu.shoe_menu);
         }
         else{
             popup.inflate(R.menu.size_menu);
@@ -328,6 +331,33 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
                break;
            case R.id.nav_xlp:
                tv_size.setText("36X38");
+               break;
+           case R.id.nav_5:
+               tv_size.setText("Size: 5");
+               break;
+           case R.id.nav_6:
+               tv_size.setText("Size: 6");
+               break;
+           case R.id.nav_7:
+               tv_size.setText("Size: 7");
+               break;
+           case R.id.nav_8:
+               tv_size.setText("Size: 8");
+               break;
+           case R.id.nav_9:
+               tv_size.setText("Size: 9");
+               break;
+           case R.id.nav_10:
+               tv_size.setText("Size: 10");
+               break;
+           case R.id.nav_11:
+               tv_size.setText("Size: 11");
+               break;
+           case R.id.nav_12:
+               tv_size.setText("Size: 12");
+               break;
+           case R.id.nav_13:
+               tv_size.setText("Size: 13");
                break;
             }
 
