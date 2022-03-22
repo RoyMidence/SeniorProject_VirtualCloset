@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/show_menu">
+    android:id="@+id/shoe_menu">
 
     <group>
-
+        <item android:id="@+id/nav_5"
+            android:title="Size: 5" />
+        <item android:id="@+id/nav_6"
+            android:title="Size: 6" />
+        <item android:id="@+id/nav_7"
+            android:title="Size: 7" />
+        <item android:id="@+id/nav_8"
+            android:title="Size: 8" />
+        <item android:id="@+id/nav_9"
+            android:title="Size: 9" />
+        <item android:id="@+id/nav_10"
+            android:title="Size: 10" />
+        <item android:id="@+id/nav_11"
+            android:title="Size: 11" />
+        <item android:id="@+id/nav_12"
+            android:title="Size: 12" />
+        <item android:id="@+id/nav_13"
+            android:title="Size: 13" />
 
     </group>
 </menu>
