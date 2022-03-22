@@ -48,6 +48,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         textViewEmptyCloset = view.findViewById(R.id.textViewEmptyCloset);
 
         // I use this to fill database
+        // Checking if my lap top is connected to github
         if (mDatabaseHelper.colorTableEmpty()) {
             mDatabaseHelper.addToColorTable("Red");
             mDatabaseHelper.addToColorTable("Black");
