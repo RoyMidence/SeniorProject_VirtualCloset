@@ -6,11 +6,14 @@ import android.os.Bundle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -27,7 +30,7 @@ public class UpdateFragment extends Fragment {
             autoCompletePants1, autoCompletePants2, autoCompletePattern, autoCompleteColor1, autoCompleteColor2,
             autoCompleteOccasion;
 
-    RadioButton radioButtonSpring, radioButtonSummer, radioButtonFall, radioButtonWinter;
+    CheckBox checkBoxSpring, checkBoxSummer, checkBoxFall, checkBoxWinter;
 
     // Values for autoComplete fields
     // Brand of clothing
@@ -71,7 +74,8 @@ public class UpdateFragment extends Fragment {
 
     // Patterns on clothing
     private static final String[] PATTERNS = new String[] {
-            "One Color", "Two Color"
+            "Solid", "Striped", "Dotted", "Floral",
+            "Graphic", "Plaid", "Two Colors"
     };
 
     // Color of Clothing
@@ -117,10 +121,10 @@ public class UpdateFragment extends Fragment {
         autoCompleteOccasion = view.findViewById(R.id.autoCompleteOccasion);
 
         // Setting up radio buttons
-        radioButtonSpring = view.findViewById(R.id.radioButtonSpring);
-        radioButtonSummer = view.findViewById(R.id.radioButtonSummer);
-        radioButtonFall = view.findViewById(R.id.radioButtonFall);
-        radioButtonWinter = view.findViewById(R.id.radioButtonWinter);
+        checkBoxSpring = view.findViewById(R.id.checkBoxSpring);
+        checkBoxSummer = view.findViewById(R.id.checkBoxSummer);
+        checkBoxFall = view.findViewById(R.id.checkBoxFall);
+        checkBoxWinter = view.findViewById(R.id.checkBoxWinter);
 
         // Get values from bundle
         Bundle bundle = this.getArguments();
@@ -143,29 +147,30 @@ public class UpdateFragment extends Fragment {
         // Lets have fun with weather....
         weather = db.getWeatherConditions(ID); // has all weather conditions attributed to item
 
-        if (weather.substring(0, weather.indexOf(",")).equals("10")) { // ID for All seasons
-            radioButtonSpring.setChecked(true);
-            radioButtonSummer.setChecked(true);
-            radioButtonFall.setChecked(true);
-            radioButtonWinter.setChecked(true);
+        // Set value of Buttons
+        if (weather.substring(0, weather.indexOf(",")).equals("15")) { // ID for All seasons
+            checkBoxSpring.setChecked(true);
+            checkBoxSummer.setChecked(true);
+            checkBoxFall.setChecked(true);
+            checkBoxWinter.setChecked(true);
         } else { // At least 3 are checked, still have to check all
-            if (weather.substring(0, weather.indexOf(",")).equals("9")) {
-                radioButtonFall.setChecked(true);
+            if (weather.substring(0, weather.indexOf(",")).equals("14")) {
+                checkBoxFall.setChecked(true);
                 weather = weather.substring(weather.indexOf(","));
                 if ((weather.indexOf(",") == 0) && (weather.length() > 1)) {weather = weather.substring(weather.indexOf(",")+1);} // KEPT RUNNING INTO STRING OUT OF BOUNDS ERRORS, USING THIS TO STOP IT
             }
-            if (weather.substring(0, weather.indexOf(",")).equals("8")) {
-                radioButtonSummer.setChecked(true);
+            if (weather.substring(0, weather.indexOf(",")).equals("13")) {
+                checkBoxSummer.setChecked(true);
                 weather = weather.substring(weather.indexOf(","));
                 if ((weather.indexOf(",") == 0) && (weather.length() > 1)) {weather = weather.substring(weather.indexOf(",")+1);}
             }
-            if (weather.substring(0, weather.indexOf(",")).equals("7")) {
-                radioButtonSpring.setChecked(true);
+            if (weather.substring(0, weather.indexOf(",")).equals("12")) {
+                checkBoxSpring.setChecked(true);
                 weather = weather.substring(weather.indexOf(","));
                 if ((weather.indexOf(",") == 0) && (weather.length() > 1)) {weather = weather.substring(weather.indexOf(",")+1);}
             }
-            if (weather.substring(0, weather.indexOf(",")).equals("6")) {
-                radioButtonWinter.setChecked(true);
+            if (weather.substring(0, weather.indexOf(",")).equals("11")) {
+                checkBoxWinter.setChecked(true);
                 weather = weather.substring(weather.indexOf(","));
                 if ((weather.indexOf(",") == 0) && (weather.length() > 1)) {weather = weather.substring(weather.indexOf(",")+1);}
             }
@@ -179,7 +184,6 @@ public class UpdateFragment extends Fragment {
 
         // Clothing Description
         editTextDescription.setText(db.getClothingDescription(ID));
-        //editTextDescription.setText(tags);
 
         // autoCompleteBrand set up
         ArrayAdapter<String> brandAdapter = new ArrayAdapter<String>(getContext(),
@@ -241,7 +245,7 @@ public class UpdateFragment extends Fragment {
 
             // Pants size accordingly set up
         }
-        else
+        else // General size, Odd type
         {
             autoCompleteGeneral.setVisibility(View.VISIBLE);
             // autoCompleteShirt set up but for general purpose
@@ -258,25 +262,47 @@ public class UpdateFragment extends Fragment {
         autoCompletePattern.setAdapter(patternAdapter);
         autoCompletePattern.setText(pattern);
 
+        // Creating Color Adapter
+        ArrayAdapter<String> colorAdapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_list_item_1,COLOR);
+
         // set up colors autoCompletes. Find out if multi-colored
-        if (pattern.equals("Two Color")) { // Means I gotta work with 2 colors
+        if (!pattern.equals("Solid")) { // Means I gotta work with 2 colors
             autoCompleteColor2.setVisibility(View.VISIBLE);
             c1 = colors.substring(0,colors.indexOf(","));
             c2 = colors.substring(colors.indexOf(",")+2, colors.length()-2); //  Should get second color
-
-            ArrayAdapter<String> colorAdapter = new ArrayAdapter<String>(getContext(),
-                    android.R.layout.simple_list_item_1,COLOR);
             autoCompleteColor1.setAdapter(colorAdapter);
             autoCompleteColor2.setAdapter(colorAdapter);
             autoCompleteColor1.setText(c1);
             autoCompleteColor2.setText(c2);
         } else { // One Color
             c1 = colors.substring(0,colors.indexOf(","));
-            ArrayAdapter<String> colorAdapter = new ArrayAdapter<String>(getContext(),
-                    android.R.layout.simple_list_item_1,COLOR);
             autoCompleteColor1.setAdapter(colorAdapter);
             autoCompleteColor1.setText(c1);
         }
+
+        autoCompletePattern.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) { // Using to change color settings on demand
+                if (!autoCompletePattern.getText().toString().equalsIgnoreCase("Solid")) {
+                    // Code for multi-colored
+                    autoCompleteColor2.setVisibility(View.VISIBLE);
+                } else {
+                    // Code for single color
+                    autoCompleteColor2.setVisibility(View.GONE);
+                }
+            }
+        });
 
         // Set up Occasion autoComplete
         ArrayAdapter<String> occasionAdapter = new ArrayAdapter<String>(getContext(),
@@ -295,6 +321,8 @@ public class UpdateFragment extends Fragment {
                 material = autoCompleteMaterial.getText().toString();
                 String desc = editTextDescription.getText().toString();
 
+
+
                 // gotta check if pants and reformat size again
                 if (type.equalsIgnoreCase("Pants"))
                 {
@@ -303,16 +331,46 @@ public class UpdateFragment extends Fragment {
                 else { size = autoCompleteGeneral.getText().toString();} // As long as it not pants all good
 
 
-                db.updateData(ID,name, brand, type, size,material,desc); // hopefully it worked lol
+                db.updateData(ID,name, brand, type, size,material,desc); // hopefully it worked lol, updated clothing table
 
-                // reset fragment before we leave
-                autoCompleteGeneral.setVisibility(View.GONE);
-                autoCompletePants1.setVisibility(View.GONE);
-                textViewPants.setVisibility(View.GONE);
-                autoCompletePants2.setVisibility(View.GONE);
+                // Lets update tags and colors
+                // Start by delete all current values
+                db.deleteClothingTags(ID);
+                db.deleteClothingColor(ID);
+
+
+                // Now we get and reinsert all  new values
+                pattern = autoCompletePattern.getText().toString();
+                db.addTag(pattern,Integer.parseInt(ID));
+                c1 = autoCompleteColor1.getText().toString();
+                db.addColor(c1,Integer.parseInt(ID));
+
+                if (!pattern.equalsIgnoreCase("Solid")) {
+                    c2 = autoCompleteColor2.getText().toString();
+                    db.addColor(c2,Integer.parseInt(ID));
+                }
+
+                occasion = autoCompleteOccasion.getText().toString();
+                db.addTag(occasion, Integer.parseInt(ID));
+
+                // Yeehaw I love seasons.... Have to check radio buttons
+                if (checkBoxSpring.isChecked() && checkBoxFall.isChecked() &&
+                        checkBoxSummer.isChecked() && checkBoxWinter.isChecked()) { // ALL SEASONS
+                    db.addTag("All", Integer.parseInt(ID));
+                } else {
+                    if (checkBoxSpring.isChecked())
+                        db.addTag("Spring",Integer.parseInt(ID));
+                    if (checkBoxSummer.isChecked())
+                        db.addTag("Summer",Integer.parseInt(ID));
+                    if (checkBoxFall.isChecked())
+                        db.addTag("Fall",Integer.parseInt(ID));
+                    if (checkBoxWinter.isChecked())
+                        db.addTag("Winter",Integer.parseInt(ID));
+                }
+
 
                 // Changes made, job done, now we can leave
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new TheClothesFragment()).commit();
             }
         });
@@ -336,13 +394,10 @@ public class UpdateFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 DatabaseHelper db = new DatabaseHelper(getContext());
-                db.deleteOneRow(ID);
-                // reset fragment before we leave
-                autoCompleteGeneral.setVisibility(View.GONE);
-                autoCompletePants1.setVisibility(View.GONE);
-                textViewPants.setVisibility(View.GONE);
-                autoCompletePants2.setVisibility(View.GONE);
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                db.deleteClothingColor(ID);
+                db.deleteClothingTags(ID);
+                db.deleteOneItem(ID);
+                getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new TheClothesFragment()).commit();
             }
         });

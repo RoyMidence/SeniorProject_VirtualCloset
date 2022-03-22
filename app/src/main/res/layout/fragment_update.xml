@@ -199,15 +199,6 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/autoCompleteColor1" />
 
-        <RadioButton
-            android:id="@+id/radioButtonSpring"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
-            app:layout_constraintEnd_toEndOf="@+id/textViewSpringButton"
-            app:layout_constraintHorizontal_bias="1.0"
-            app:layout_constraintStart_toStartOf="@+id/textViewSpringButton"
-            app:layout_constraintTop_toBottomOf="@+id/textViewSpringButton" />
-
         <TextView
             android:id="@+id/textViewSpringButton"
             android:layout_width="wrap_content"
@@ -252,17 +243,26 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/autoCompleteOccasion" />
 
-        <RadioButton
-            android:id="@+id/radioButtonSummer"
+        <CheckBox
+            android:id="@+id/checkBoxSpring"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/textViewSpringButton"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/textViewSpringButton"
+            app:layout_constraintTop_toBottomOf="@+id/textViewSpringButton" />
+
+        <CheckBox
+            android:id="@+id/checkBoxSummer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@+id/textView2"
-            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintHorizontal_bias="0.98"
             app:layout_constraintStart_toStartOf="@+id/textView2"
             app:layout_constraintTop_toBottomOf="@+id/textView2" />
 
-        <RadioButton
-            android:id="@+id/radioButtonFall"
+        <CheckBox
+            android:id="@+id/checkBoxFall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@+id/textView3"
@@ -270,12 +270,12 @@
             app:layout_constraintStart_toStartOf="@+id/textView3"
             app:layout_constraintTop_toBottomOf="@+id/textView3" />
 
-        <RadioButton
-            android:id="@+id/radioButtonWinter"
+        <CheckBox
+            android:id="@+id/checkBoxWinter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintEnd_toEndOf="@+id/textView4"
-            app:layout_constraintHorizontal_bias="0.81"
+            app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 

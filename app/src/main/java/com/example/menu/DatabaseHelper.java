@@ -449,7 +449,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT " + TAGS_ID +
                 " FROM " + CLOTHING_TAGS_TABLE +
                 " WHERE (" + CLOTHING_ID + " = " + clothingID + ") " +
-                " AND (" + TAGS_ID + " BETWEEN 6 AND 10) " +
+                " AND (" + TAGS_ID + " BETWEEN 11 AND 15) " +
                 " ORDER BY " + TAGS_ID + " DESC";
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -482,7 +482,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
     }
 
-    void deleteOneRow(String row_id) {
+    void deleteOneItem(String row_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete(CLOTHING_TABLE, "clothing_id=?", new String[] {row_id});
         if (result == -1) {
@@ -492,8 +492,114 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
-    void deleteAllData() {
+    void deleteUserCloset(String user_id) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.execSQL("DELETE FROM " + CLOTHING_TABLE);
+        db.execSQL("DELETE FROM " + CLOTHING_TABLE +
+                " WHERE " + USER_ID + " = " + user_id);
     }
+
+    // USING SMOOTH BRAIN TACTIC OF WORKING HARD AND NOT SMART--------------------------------------------------------------
+    // Will be using these to slowly delete very specific rows
+    // Its how I will manipulate specific tags on clothing
+    void deleteWinterTag(String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID +
+                " AND " + TAGS_ID + " = 6";
+        db.execSQL(query);
+    }
+    void deleteFallTag(String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID +
+                " AND " + TAGS_ID + " = 9";
+        db.execSQL(query);
+    }
+    void deleteSpringTag(String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID +
+                " AND " + TAGS_ID + " = 7";
+        db.execSQL(query);
+    }
+    void deleteSummerTag(String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID +
+                " AND " + TAGS_ID + " = 8";
+        db.execSQL(query);
+    }
+
+    void deleteAllTag(String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID +
+                " AND " + TAGS_ID + " = 10";
+        db.execSQL(query);
+    }
+
+    void deleteOneColorTag(String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID +
+                " AND " + TAGS_ID + " = 1";
+        db.execSQL(query);
+    }
+
+    void deleteTwoColorTag(String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID +
+                " AND " + TAGS_ID + " = 2";
+        db.execSQL(query);
+    }
+
+    void deleteFormalTag(String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID +
+                " AND " + TAGS_ID + " = 3";
+        db.execSQL(query);
+    }
+
+    void deleteCasualTag(String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID +
+                " AND " + TAGS_ID + " = 4";
+        db.execSQL(query);
+    }
+
+    void deleteAthleticTag(String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID +
+                " AND " + TAGS_ID + " = 5";
+        db.execSQL(query);
+    }
+
+    void deleteClothingTags(String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(CLOTHING_TAGS_TABLE, "clothing_id=?", new String[] {clothingID});
+        if (result == -1) {
+            Toast.makeText(context, "Failed to delete", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    void deleteClothingColor(String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(CLOTHING_COLOR_TABLE, "clothing_id=?", new String[] {clothingID});
+        if (result == -1) {
+            Toast.makeText(context, "Failed to delete", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    // HAHA SMOOTH BRAINED
+    // NOW WE ADD SPECIFIC TAGS TO CERTAIN CLOTHING
+
+
 }
