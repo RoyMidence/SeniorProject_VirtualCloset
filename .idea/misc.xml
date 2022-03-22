@@ -3,7 +3,11 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable-v24/ic_business.xml" value="0.512" />
+        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable-v24/ic_color.xml" value="0.512" />
+        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable-v24/ic_material.xml" value="0.512" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable/ic_add.xml" value="0.5025" />
+        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable/ic_brand.xml" value="0.512" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable/ic_closet.xml" value="0.5025" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable/ic_hanger.xml" value="0.5025" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/activity_add.xml" value="0.5505208333333333" />

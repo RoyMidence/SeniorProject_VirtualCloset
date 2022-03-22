@@ -16,10 +16,11 @@
             android:layout_height="48dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="16dp"
+            android:autofillHints=""
             android:ems="10"
+            android:hint="@string/name"
             android:inputType="textPersonName"
             android:minHeight="48dp"
-            android:text="Name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -51,8 +52,9 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:completionHint="Select a Brand"
-            android:text="Enter a Brand"
             android:completionThreshold="1"
+            android:hint="@string/enter_a_brand"
+            android:textColorHint="#757575"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/editTextUpdateName" />
 
@@ -63,7 +65,8 @@
             android:layout_marginEnd="8dp"
             android:completionHint="Select a Type"
             android:completionThreshold="1"
-            android:text="Enter a Type"
+            android:hint="@string/enter_a_type"
+            android:textColorHint="#757575"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="@+id/autoCompleteBrand" />
 
@@ -75,8 +78,9 @@
             android:layout_marginTop="16dp"
             android:completionHint="Select a Material"
             android:completionThreshold="1"
+            android:hint="@string/enter_a_material"
             android:minHeight="48dp"
-            android:text="Enter a Material"
+            android:textColorHint="#757575"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/autoCompleteBrand" />
 
@@ -85,11 +89,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:completionHint="Select Shirt Size"
+            android:completionHint="Select a Size"
             android:completionThreshold="1"
+            android:hint="@string/select_a_size"
             android:minWidth="120dp"
             android:minHeight="48dp"
-            android:text="Select Shirt Size"
+            android:textAlignment="center"
+            android:textColorHint="#757575"
             android:visibility="gone"
             app:layout_constraintEnd_toEndOf="@+id/autoCompleteType"
             app:layout_constraintStart_toStartOf="@+id/autoCompleteType"
@@ -100,8 +106,11 @@
             android:layout_width="389dp"
             android:layout_height="117dp"
             android:layout_marginBottom="8dp"
+            android:autofillHints=""
             android:ems="10"
+            android:hint="@string/enter_a_description"
             android:inputType="textPersonName"
+            android:textColorHint="#757575"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />
@@ -111,9 +120,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:hint="@string/pants_size_one"
             android:minWidth="64dp"
             android:minHeight="48dp"
-            android:text="##"
+            android:textAlignment="textEnd"
             android:visibility="gone"
             app:layout_constraintEnd_toStartOf="@+id/textViewPants"
             app:layout_constraintTop_toBottomOf="@+id/autoCompleteType" />
@@ -123,7 +133,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="26dp"
-            android:text="X"
+            android:text="@string/pants_middle_value"
             android:textSize="18sp"
             android:textStyle="bold"
             android:visibility="gone"
@@ -136,12 +146,138 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:hint="@string/pants_size_two"
             android:minWidth="64dp"
             android:minHeight="48dp"
-            android:text="##"
             android:visibility="gone"
             app:layout_constraintStart_toEndOf="@+id/textViewPants"
             app:layout_constraintTop_toBottomOf="@+id/autoCompleteType" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompletePattern"
+            android:layout_width="196dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/pattern"
+            android:minHeight="48dp"
+            android:textColorHint="#757575"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/autoCompleteMaterial" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteColor1"
+            android:layout_width="98dp"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/color_1"
+            android:textColorHint="#757575"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/autoCompletePattern" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteColor2"
+            android:layout_width="98dp"
+            android:layout_height="48dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/color_2"
+            android:textColorHint="#757575"
+            android:visibility="gone"
+            app:layout_constraintStart_toEndOf="@+id/autoCompleteColor1"
+            app:layout_constraintTop_toBottomOf="@+id/autoCompletePattern" />
+
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteOccasion"
+            android:layout_width="196dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:hint="@string/select_an_occasion"
+            android:minHeight="48dp"
+            android:textColorHint="#757575"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/autoCompleteColor1" />
+
+        <RadioButton
+            android:id="@+id/radioButtonSpring"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
+            app:layout_constraintEnd_toEndOf="@+id/textViewSpringButton"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/textViewSpringButton"
+            app:layout_constraintTop_toBottomOf="@+id/textViewSpringButton" />
+
+        <TextView
+            android:id="@+id/textViewSpringButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="@string/spring"
+            android:textSize="18sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/autoCompleteOccasion" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:text="@string/summer"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView3"
+            app:layout_constraintStart_toEndOf="@+id/textViewSpringButton"
+            app:layout_constraintTop_toBottomOf="@+id/autoCompleteOccasion" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="88dp"
+            android:text="@string/fall"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/autoCompleteOccasion" />
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="16dp"
+            android:text="@string/winter"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/autoCompleteOccasion" />
+
+        <RadioButton
+            android:id="@+id/radioButtonSummer"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/textView2"
+            app:layout_constraintHorizontal_bias="1.0"
+            app:layout_constraintStart_toStartOf="@+id/textView2"
+            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+        <RadioButton
+            android:id="@+id/radioButtonFall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/textView3"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/textView3"
+            app:layout_constraintTop_toBottomOf="@+id/textView3" />
+
+        <RadioButton
+            android:id="@+id/radioButtonWinter"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintEnd_toEndOf="@+id/textView4"
+            app:layout_constraintHorizontal_bias="0.81"
+            app:layout_constraintStart_toStartOf="@+id/textView4"
+            app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -68,7 +68,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
+        db.execSQL("DROP TABLE IF EXISTS " + CLOTHING_COLOR_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + CLOTHING_TAGS_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + OUTFIT_CLOTHING_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + CLOTHING_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + COLOR_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + TAGS_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + OUTFIT_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE);
         onCreate(db);
     }
@@ -107,6 +113,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " (" + TAGS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 TAGS + " TEXT);";
         db.execSQL(createTable);
+
+        /*
+        // ADDING VALUES TO TAGS TABLE
+
+        */
 
         //MINI TABLE BETWEEN CLOTHING AND TAGS
         createTable = "CREATE TABLE " + CLOTHING_TAGS_TABLE +
@@ -202,6 +213,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(TAGS_ID,getTagID(tag));
 
         long result = db.insert(CLOTHING_TAGS_TABLE,null,contentValues);
+
+        if (result == -1) {
+            return false; // DIDN'T WORK
+        } else {
+            return true; // WORKED
+        }
+    }
+
+    // ADD TAGS TO TABLE
+    public boolean addToTagsTable(String tag) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(TAGS,tag);
+
+        long result = db.insert(TAGS_TABLE,null,contentValues);
 
         if (result == -1) {
             return false; // DIDN'T WORK
@@ -315,6 +341,36 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return -1;
     }
 
+    // CHECK IF TAGS TABLE EMPTY
+    public boolean tagTableEmpty() {
+        String query = "SELECT COUNT(*) FROM " + TAGS_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // CHECK IF COLOR TABLE EMPTY
+    public boolean colorTableEmpty() {
+        String query = "SELECT COUNT(*) FROM " + COLOR_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // GET ALL CLOTHES
     Cursor readAllData() {
         String query = "SELECT * FROM " + CLOTHING_TABLE;
@@ -332,8 +388,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String Query = "SELECT " + COLOR +
                 " FROM " + COLOR_TABLE +
                 " INNER JOIN " + CLOTHING_COLOR_TABLE +
-                "ON " + COLOR_TABLE + "." + COLOR_ID + " = " + CLOTHING_COLOR_TABLE + "." + COLOR_ID +
-                "WHERE " + CLOTHING_COLOR_TABLE + "." + CLOTHING_ID + " = " + clothingID;
+                " ON " + COLOR_TABLE + "." + COLOR_ID + " = " + CLOTHING_COLOR_TABLE + "." + COLOR_ID +
+                " WHERE " + CLOTHING_COLOR_TABLE + "." + CLOTHING_ID + " = " + clothingID;
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
@@ -355,8 +411,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String Query = "SELECT " + TAGS +
                 " FROM " + TAGS_TABLE +
                 " INNER JOIN " + CLOTHING_TAGS_TABLE +
-                "ON " + TAGS_TABLE + "." + TAGS_ID + " = " + CLOTHING_TAGS_TABLE + "." + TAGS_ID +
-                "WHERE " + CLOTHING_TAGS_TABLE + "." + CLOTHING_ID + " = " + clothingID;
+                " ON " + TAGS_TABLE + "." + TAGS_ID + " = " + CLOTHING_TAGS_TABLE + "." + TAGS_ID +
+                " WHERE " + CLOTHING_TAGS_TABLE + "." + CLOTHING_ID + " = " + clothingID;
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
@@ -369,6 +425,28 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return result;
         }
 
+        return result;
+    }
+
+    // GET CLOTHING WEATHER CONDITIONS
+    public String getWeatherConditions(String clothingID) {
+        String result = "DIDNT WORK!";
+        String query = "SELECT " + TAGS_ID +
+                " FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE (" + CLOTHING_ID + " = " + clothingID + ") " +
+                " AND (" + TAGS_ID + " BETWEEN 6 AND 10) " +
+                " ORDER BY " + TAGS_ID + " DESC";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+            result = "";
+            while (cursor.moveToNext()) {
+                result += cursor.getString(0) + ",";
+            }
+            return result;
+        }
         return result;
     }
 

@@ -48,23 +48,59 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         textViewEmptyCloset = view.findViewById(R.id.textViewEmptyCloset);
 
         // I use this to fill database
+        if (mDatabaseHelper.colorTableEmpty()) {
+            mDatabaseHelper.addToColorTable("Red");
+            mDatabaseHelper.addToColorTable("Black");
+            mDatabaseHelper.addToColorTable("Green");
+            mDatabaseHelper.addToColorTable("Blue");
+            mDatabaseHelper.addToColorTable("Yellow");
+            mDatabaseHelper.addToColorTable("Pink");
+            mDatabaseHelper.addToColorTable("Orange");
+        }
+
+        if (mDatabaseHelper.tagTableEmpty()) {
+            mDatabaseHelper.addToTagsTable("One Color"); // ID's: 1
+            mDatabaseHelper.addToTagsTable("Two Color"); // 2
+            mDatabaseHelper.addToTagsTable("Formal"); // 3
+            mDatabaseHelper.addToTagsTable("Casual");// 4
+            mDatabaseHelper.addToTagsTable("Athletic"); // 5
+            mDatabaseHelper.addToTagsTable("Winter");// 6
+            mDatabaseHelper.addToTagsTable("Spring");// 7
+            mDatabaseHelper.addToTagsTable("Summer");// 8
+            mDatabaseHelper.addToTagsTable("Fall"); // 9
+            mDatabaseHelper.addToTagsTable("All"); // 10
+            mDatabaseHelper.addToTagsTable("Winter and Fall"); // 11
+            mDatabaseHelper.addToTagsTable("Spring and Summer"); // 12
+        }
+
+        int cl; // Exists for testing purposes
 
 
+
+
+
+        mDatabaseHelper.deleteAllData();
         AddData("Yellow Jippy","Fruit of The Loom", "Shirt","L","Cotton","");
+        cl = mDatabaseHelper.getLatestItem();
+        mDatabaseHelper.addColor("Yellow",cl);
+        mDatabaseHelper.addTag("One Color",cl);
+        mDatabaseHelper.addTag("Casual", cl);
+        mDatabaseHelper.addTag("All", cl);
         AddData("Comfy Jeans","Lucky Brand", "Pants","34X34","Denim","");
         AddData("White Destiny Boots","Palladium", "Shoes","10","No Clue","");
         AddData("Fish Hat","No Clue", "Hat","One Size","Polyester","");
         AddData("Die for Succ","Diesel", "Shirt","L","Cotton","");
+        cl = mDatabaseHelper.getLatestItem();
+        mDatabaseHelper.addColor("Red",cl);
+        mDatabaseHelper.addColor("Black", cl);
+        mDatabaseHelper.addTag("Two Color",cl);
+        mDatabaseHelper.addTag("Casual", cl);
+        mDatabaseHelper.addTag("Fall", cl);
+        mDatabaseHelper.addTag("Winter", cl);
+        mDatabaseHelper.addTag("Summer", cl);
         AddData("Tight Jeans","Lucky Brand", "Pants","34X32","Denim","");
         AddData("Olive Boots","Palladium", "Shoes","10","Polyester","");
 
-        mDatabaseHelper.addToColorTable("Red");
-        mDatabaseHelper.addToColorTable("Black");
-        mDatabaseHelper.addToColorTable("Green");
-        mDatabaseHelper.addToColorTable("Blue");
-        mDatabaseHelper.addToColorTable("Yellow");
-        mDatabaseHelper.addToColorTable("Pink");
-        mDatabaseHelper.addToColorTable("Orange");
 
 
 

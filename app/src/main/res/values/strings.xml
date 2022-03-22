@@ -10,5 +10,22 @@
 
     <string name="shirt_option">shirt</string>
     <string name="socks_option">Socks</string>
+    <string name="enter_a_brand">Enter a Brand</string>
+    <string name="name">Name</string>
+    <string name="enter_a_type">Enter a Type</string>
+    <string name="enter_a_material">Enter a Material</string>
+    <string name="select_a_size">Select a Size</string>
+    <string name="enter_a_description">Enter a Description...</string>
+    <string name="pants_size_one">##</string>
+    <string name="pants_middle_value">X</string>
+    <string name="pants_size_two">##</string>
+    <string name="pattern">Pattern</string>
+    <string name="color_1">Color 1</string>
+    <string name="color_2">Color 2</string>
+    <string name="select_an_occasion">Select an Occasion</string>
+    <string name="spring">Spring</string>
+    <string name="summer">Summer</string>
+    <string name="fall">Fall</string>
+    <string name="winter">Winter</string>
 
 </resources>

@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,7 +24,10 @@ public class UpdateFragment extends Fragment {
     FloatingActionButton floatingActionButtonUpdate, floatingActionButtonDelete;
 
     AutoCompleteTextView autoCompleteBrand, autoCompleteType, autoCompleteMaterial, autoCompleteGeneral,
-            autoCompletePants1, autoCompletePants2;
+            autoCompletePants1, autoCompletePants2, autoCompletePattern, autoCompleteColor1, autoCompleteColor2,
+            autoCompleteOccasion;
+
+    RadioButton radioButtonSpring, radioButtonSummer, radioButtonFall, radioButtonWinter;
 
     // Values for autoComplete fields
     // Brand of clothing
@@ -65,7 +69,23 @@ public class UpdateFragment extends Fragment {
             "36", "38", "40"
     };
 
-    String name, ID, brand, type, material, size;
+    // Patterns on clothing
+    private static final String[] PATTERNS = new String[] {
+            "One Color", "Two Color"
+    };
+
+    // Color of Clothing
+    private static final String[] COLOR = new String[] {
+            "Red", "Black", "Green", "Blue", "Yellow",
+            "Pink", "Orange"
+    };
+
+    // Occasion for Clothing
+    private static final String[] OCCASION = new String[] {
+            "Formal", "Casual", "Athletic"
+    };
+
+    String name, ID, brand, type, material, size, colors, tags, c1, c2, pattern, occasion, weather;
 
     public UpdateFragment() {
 
@@ -91,6 +111,16 @@ public class UpdateFragment extends Fragment {
         autoCompleteGeneral = view.findViewById(R.id.autoCompleteGeneral);
         autoCompletePants1 = view.findViewById(R.id.autoCompletePants1);
         autoCompletePants2 = view.findViewById(R.id.autoCompletePants2);
+        autoCompletePattern = view.findViewById(R.id.autoCompletePattern);
+        autoCompleteColor1 = view.findViewById(R.id.autoCompleteColor1);
+        autoCompleteColor2 = view.findViewById(R.id.autoCompleteColor2);
+        autoCompleteOccasion = view.findViewById(R.id.autoCompleteOccasion);
+
+        // Setting up radio buttons
+        radioButtonSpring = view.findViewById(R.id.radioButtonSpring);
+        radioButtonSummer = view.findViewById(R.id.radioButtonSummer);
+        radioButtonFall = view.findViewById(R.id.radioButtonFall);
+        radioButtonWinter = view.findViewById(R.id.radioButtonWinter);
 
         // Get values from bundle
         Bundle bundle = this.getArguments();
@@ -100,12 +130,55 @@ public class UpdateFragment extends Fragment {
         type = bundle.getString("type");
         material = db.getClothingMaterial(ID);
         size = db.getClothingSize(ID);
+        colors = db.getClothingColor(ID); // returns all colors in one string
+        tags = db.getClothingTags(ID); // returns all tags in one String
+
+        // Break down tag values
+        pattern = tags.substring(0, tags.indexOf(","));
+
+        occasion = tags.substring(tags.indexOf(",")+2);
+        occasion = occasion.substring(0, occasion.indexOf(","));
+
+        // Lets have fun with weather....
+        weather = db.getWeatherConditions(ID); // has all weather conditions attributed to item
+
+        if (weather.substring(0, weather.indexOf(",")).equals("10")) { // ID for All seasons
+            radioButtonSpring.setChecked(true);
+            radioButtonSummer.setChecked(true);
+            radioButtonFall.setChecked(true);
+            radioButtonWinter.setChecked(true);
+        } else { // At least 3 are checked, still have to check all
+            if (weather.substring(0, weather.indexOf(",")).equals("9")) {
+                radioButtonFall.setChecked(true);
+                weather = weather.substring(weather.indexOf(","));
+                if ((weather.indexOf(",") == 0) && (weather.length() > 1)) {weather = weather.substring(weather.indexOf(",")+1);} // KEPT RUNNING INTO STRING OUT OF BOUNDS ERRORS, USING THIS TO STOP IT
+            }
+            if (weather.substring(0, weather.indexOf(",")).equals("8")) {
+                radioButtonSummer.setChecked(true);
+                weather = weather.substring(weather.indexOf(","));
+                if ((weather.indexOf(",") == 0) && (weather.length() > 1)) {weather = weather.substring(weather.indexOf(",")+1);}
+            }
+            if (weather.substring(0, weather.indexOf(",")).equals("7")) {
+                radioButtonSpring.setChecked(true);
+                weather = weather.substring(weather.indexOf(","));
+                if ((weather.indexOf(",") == 0) && (weather.length() > 1)) {weather = weather.substring(weather.indexOf(",")+1);}
+            }
+            if (weather.substring(0, weather.indexOf(",")).equals("6")) {
+                radioButtonWinter.setChecked(true);
+                weather = weather.substring(weather.indexOf(","));
+                if ((weather.indexOf(",") == 0) && (weather.length() > 1)) {weather = weather.substring(weather.indexOf(",")+1);}
+            }
+        }
+
+
+
 
         // Set up buttons and autoCompletes
         editTextUpdateName.setText(name); // Name of clothing at the top
 
         // Clothing Description
-        editTextDescription.setText(db.getClothingDescription(ID));
+        // editTextDescription.setText(db.getClothingDescription(ID)); (This is right)
+        //editTextDescription.setText(tags);
 
         // autoCompleteBrand set up
         ArrayAdapter<String> brandAdapter = new ArrayAdapter<String>(getContext(),
@@ -177,6 +250,38 @@ public class UpdateFragment extends Fragment {
             autoCompleteGeneral.setText(size);
 
         }
+
+        // Set up Pattern autoComplete
+        ArrayAdapter<String> patternAdapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_list_item_1,PATTERNS);
+        autoCompletePattern.setAdapter(patternAdapter);
+        autoCompletePattern.setText(pattern);
+
+        // set up colors autoCompletes. Find out if multi-colored
+        if (pattern.equals("Two Color")) { // Means I gotta work with 2 colors
+            autoCompleteColor2.setVisibility(View.VISIBLE);
+            c1 = colors.substring(0,colors.indexOf(","));
+            c2 = colors.substring(colors.indexOf(",")+2, colors.length()-2); //  Should get second color
+
+            ArrayAdapter<String> colorAdapter = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_list_item_1,COLOR);
+            autoCompleteColor1.setAdapter(colorAdapter);
+            autoCompleteColor2.setAdapter(colorAdapter);
+            autoCompleteColor1.setText(c1);
+            autoCompleteColor2.setText(c2);
+        } else { // One Color
+            c1 = colors.substring(0,colors.indexOf(","));
+            ArrayAdapter<String> colorAdapter = new ArrayAdapter<String>(getContext(),
+                    android.R.layout.simple_list_item_1,COLOR);
+            autoCompleteColor1.setAdapter(colorAdapter);
+            autoCompleteColor1.setText(c1);
+        }
+
+        // Set up Occasion autoComplete
+        ArrayAdapter<String> occasionAdapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_list_item_1,OCCASION);
+        autoCompleteOccasion.setAdapter(occasionAdapter);
+        autoCompleteOccasion.setText(occasion);
 
         // UPDATE BUTTON (Save Icon)
         floatingActionButtonUpdate.setOnClickListener(new View.OnClickListener() {
