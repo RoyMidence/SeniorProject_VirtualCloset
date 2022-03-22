@@ -134,11 +134,11 @@ public class UpdateFragment extends Fragment {
         tags = db.getClothingTags(ID); // returns all tags in one String
 
         // Break down tag values
-        //pattern = tags.substring(0, tags.indexOf(","));
+        pattern = tags.substring(0, tags.indexOf(","));
         editTextDescription.setText(tags);
 
-        // occasion = tags.substring(tags.indexOf(",")+2);
-        // occasion = occasion.substring(0, occasion.indexOf(","));
+        occasion = tags.substring(tags.indexOf(",")+2);
+        occasion = occasion.substring(0, occasion.indexOf(","));
 
         // Lets have fun with weather....
         weather = db.getWeatherConditions(ID); // has all weather conditions attributed to item
@@ -178,7 +178,7 @@ public class UpdateFragment extends Fragment {
         editTextUpdateName.setText(name); // Name of clothing at the top
 
         // Clothing Description
-        // editTextDescription.setText(db.getClothingDescription(ID)); (This is right)
+        editTextDescription.setText(db.getClothingDescription(ID));
         //editTextDescription.setText(tags);
 
         // autoCompleteBrand set up
