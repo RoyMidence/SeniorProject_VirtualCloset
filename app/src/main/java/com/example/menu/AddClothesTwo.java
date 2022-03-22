@@ -172,6 +172,10 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
                     boolean insertcolor2 = mDatabaseHelper.addColor(color2, mDatabaseHelper.getLatestItem());
                 }
 
+                // Add Pattern first
+                // Then Occasion
+                // Then weather
+
 
                 FragmentTransaction fr2 =getFragmentManager().beginTransaction();
                 fr2.replace(R.id.fragment_container,new TheClothesFragment());

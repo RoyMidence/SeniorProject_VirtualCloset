@@ -342,6 +342,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // CHECK IF TAGS TABLE EMPTY
+    public boolean clothingTableEmpty() {
+        String query = "SELECT COUNT(*) FROM " + CLOTHING_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // CHECK IF TAGS TABLE EMPTY
     public boolean tagTableEmpty() {
         String query = "SELECT COUNT(*) FROM " + TAGS_TABLE;
         SQLiteDatabase db = this.getReadableDatabase();

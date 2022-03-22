@@ -52,6 +52,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         if (mDatabaseHelper.colorTableEmpty()) {
             mDatabaseHelper.addToColorTable("Red");
             mDatabaseHelper.addToColorTable("Black");
+            mDatabaseHelper.addToColorTable("White");
             mDatabaseHelper.addToColorTable("Green");
             mDatabaseHelper.addToColorTable("Blue");
             mDatabaseHelper.addToColorTable("Yellow");
@@ -74,31 +75,56 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
 
         int cl; // Exists for testing purposes
 
+        if (mDatabaseHelper.clothingTableEmpty()) { // Fill Clothing Table
+            AddData("Yellow Jippy","Fruit of The Loom", "Shirt","L","Cotton","");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addColor("Yellow",cl);
+            mDatabaseHelper.addTag("One Color",cl);
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("All", cl);
+            AddData("Comfy Jeans","Lucky Brand", "Pants","34X34","Denim","");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addColor("Blue",cl);
+            mDatabaseHelper.addTag("One Color",cl);
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("All", cl);
+            AddData("White Destiny Boots","Palladium", "Shoes","10","No Clue","");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addColor("White",cl);
+            mDatabaseHelper.addTag("One Color",cl);
+            mDatabaseHelper.addTag("Formal", cl);
+            mDatabaseHelper.addTag("Spring", cl);
+            mDatabaseHelper.addTag("Summer", cl);
+            mDatabaseHelper.addTag("Winter", cl);
+            AddData("Fish Hat","No Clue", "Hat","One Size","Polyester","");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addColor("Blue",cl);
+            mDatabaseHelper.addTag("One Color",cl);
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("All", cl);
+            AddData("Die for Succ","Diesel", "Shirt","L","Cotton","");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addColor("Red",cl);
+            mDatabaseHelper.addColor("Black", cl);
+            mDatabaseHelper.addTag("Two Color",cl);
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("Fall", cl);
+            mDatabaseHelper.addTag("Winter", cl);
+            mDatabaseHelper.addTag("Summer", cl);
+            AddData("Tight Jeans","Lucky Brand", "Pants","34X32","Denim","");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addColor("Blue",cl);
+            mDatabaseHelper.addTag("One Color",cl);
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("All", cl);
+            AddData("Olive Boots","Palladium", "Shoes","10","Polyester","");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addColor("Green",cl);
+            mDatabaseHelper.addTag("One Color",cl);
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("All", cl);
+        }
 
-
-
-
-        mDatabaseHelper.deleteAllData();
-        AddData("Yellow Jippy","Fruit of The Loom", "Shirt","L","Cotton","");
-        cl = mDatabaseHelper.getLatestItem();
-        mDatabaseHelper.addColor("Yellow",cl);
-        mDatabaseHelper.addTag("One Color",cl);
-        mDatabaseHelper.addTag("Casual", cl);
-        mDatabaseHelper.addTag("All", cl);
-        AddData("Comfy Jeans","Lucky Brand", "Pants","34X34","Denim","");
-        AddData("White Destiny Boots","Palladium", "Shoes","10","No Clue","");
-        AddData("Fish Hat","No Clue", "Hat","One Size","Polyester","");
-        AddData("Die for Succ","Diesel", "Shirt","L","Cotton","");
-        cl = mDatabaseHelper.getLatestItem();
-        mDatabaseHelper.addColor("Red",cl);
-        mDatabaseHelper.addColor("Black", cl);
-        mDatabaseHelper.addTag("Two Color",cl);
-        mDatabaseHelper.addTag("Casual", cl);
-        mDatabaseHelper.addTag("Fall", cl);
-        mDatabaseHelper.addTag("Winter", cl);
-        mDatabaseHelper.addTag("Summer", cl);
-        AddData("Tight Jeans","Lucky Brand", "Pants","34X32","Denim","");
-        AddData("Olive Boots","Palladium", "Shoes","10","Polyester","");
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewClothing);
         storeValuesInArrays();
