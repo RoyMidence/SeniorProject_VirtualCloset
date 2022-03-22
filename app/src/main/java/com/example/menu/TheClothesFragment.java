@@ -69,8 +69,6 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             mDatabaseHelper.addToTagsTable("Summer");// 8
             mDatabaseHelper.addToTagsTable("Fall"); // 9
             mDatabaseHelper.addToTagsTable("All"); // 10
-            mDatabaseHelper.addToTagsTable("Winter and Fall"); // 11
-            mDatabaseHelper.addToTagsTable("Spring and Summer"); // 12
         }
 
         int cl; // Exists for testing purposes
@@ -100,9 +98,6 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         mDatabaseHelper.addTag("Summer", cl);
         AddData("Tight Jeans","Lucky Brand", "Pants","34X32","Denim","");
         AddData("Olive Boots","Palladium", "Shoes","10","Polyester","");
-
-
-
 
         RecyclerView recyclerView = view.findViewById(R.id.recyclerViewClothing);
         storeValuesInArrays();
