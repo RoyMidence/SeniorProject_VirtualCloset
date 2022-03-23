@@ -18,11 +18,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String DATABASE_NAME = "VirtualCloset.db";
     private static final int DATABASE_VERSION = 1;
 
-    // Clothing Table
+    // Clothing Table, will have User_id as FK
     private static final String CLOTHING_TABLE = "clothing_table";
     private static final String CLOTHING_ID = "clothing_id";
     private static final String CLOTHING_NAME = "Clothing_name";
     private static final String CLOTHING_BRAND = "clothing_brand";
+    private static final String CLOTHING_PATTERN = "clothing_pattern";
+    private static final String CLOTHING_FIT = "clothing_fit";
     private static final String CLOTHING_TYPE = "clothing_type";
     private static final String CLOTHING_SIZE = "clothing_size";
     private static final String CLOTHING_MATERIAL = "clothing_material";
@@ -55,11 +57,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String OUTFIT_CLOTHING_TABLE = "outfit_clothing_table";
 
     // User Table
-    private static String USER_TABLE = "user_table";
-    private static String USER_ID = "user_id";
-    private static String USER_NAME = "username";
-    private static String USER_EMAIL = "user_email";
-    private static String USER_PASSWORD = "user_password";
+    private static final String USER_TABLE = "user_table";
+    private static final String USER_ID = "user_id";
+    private static final String  USER_NAME = "username";
+    private static final String USER_PASSWORD = "user_password";
+    private static final String USER_KEY = "user_key"; // randomly generated key, might get used to share closet later
+
+    // Logged-in table, only has user_id as value, will only ever have 1 entry at a time
+    private static String LOGGED_USER_TABLE = "logged_user_table";
 
     DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -76,21 +81,41 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TAGS_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + OUTFIT_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + LOGGED_USER_TABLE);
         onCreate(db);
     }
 
     // ACTUALLY MAKING THE DB HERE
     public void onCreate(SQLiteDatabase db) {
+        // CREATE USER TABLE
+        String createTable = "CREATE TABLE " + USER_TABLE +
+                " (" + USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                USER_NAME + " TEXT, " +
+                USER_PASSWORD + " TEXT, " +
+                USER_KEY + " TEXT);";
+        db.execSQL(createTable);
+
+        // CREATE LOGGED_USER_TABLE
+        createTable = "CREATE TABLE " + LOGGED_USER_TABLE +
+                " (" + USER_ID + " INTEGER PRIMARY KEY, " +
+                "FOREIGN KEY (" + USER_ID + ") REFERENCES " + USER_TABLE + "(" + USER_ID + "));";
+        db.execSQL(createTable);
+
         // CREATE CLOTHING TABLE
-        String createTable = "CREATE TABLE " + CLOTHING_TABLE +
+        createTable = "CREATE TABLE " + CLOTHING_TABLE +
                 " (" + CLOTHING_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 CLOTHING_NAME + " TEXT, " +
                 CLOTHING_BRAND + " TEXT, " +
+                CLOTHING_PATTERN + " TEXT, " +
+                CLOTHING_FIT + " TEXT, " +
                 CLOTHING_TYPE + " TEXT, " +
                 CLOTHING_MATERIAL + " TEXT, " +
                 CLOTHING_SIZE + " TEXT, " +
                 CLOTHING_DESCRIPTION + " TEXT, " +
-                CLOTHING_STATUS + " TEXT);";
+                CLOTHING_STATUS + " TEXT, " +
+                USER_ID + " INTEGER, " +
+                "FOREIGN KEY (" + USER_ID + ") REFERENCES " + USER_TABLE + "(" + USER_ID + "));";
+
         db.execSQL(createTable);
 
         //CREATE COLOR TABLE
@@ -113,11 +138,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " (" + TAGS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 TAGS + " TEXT);";
         db.execSQL(createTable);
-
-        /*
-        // ADDING VALUES TO TAGS TABLE
-
-        */
 
         //MINI TABLE BETWEEN CLOTHING AND TAGS
         createTable = "CREATE TABLE " + CLOTHING_TAGS_TABLE +
@@ -142,23 +162,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (" + OUTFIT_ID + ") REFERENCES " + OUTFIT_TABLE + "(" + OUTFIT_ID + "), " +
                 "PRIMARY KEY (" + OUTFIT_ID + ", " + CLOTHING_ID + "));";
         db.execSQL(createTable);
-
-        // CREATE USER TABLE
-        createTable = "CREATE TABLE " + USER_TABLE +
-                " (" + USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                USER_NAME + " TEXT, " +
-                USER_EMAIL + " TEXT, " +
-                USER_PASSWORD + " TEXT);";
-        db.execSQL(createTable);
     }
 
     // ADD METHODS BEGIN HERE -----------------------------------------------------------------------------------------
     // ADD CLOTHING ITEM
-    public boolean addClothing(String item, String brand, String type, String size, String material, String desc) {
+    public boolean addClothing(String item, String brand, String pattern, String fit, String type, String size, String material, String desc) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_ID, loggedUserID());
         contentValues.put(CLOTHING_NAME, item);
         contentValues.put(CLOTHING_BRAND,brand);
+        contentValues.put(CLOTHING_PATTERN, pattern);
+        contentValues.put(CLOTHING_FIT, fit);
         contentValues.put(CLOTHING_TYPE, type);
         contentValues.put(CLOTHING_SIZE, size);
         contentValues.put(CLOTHING_MATERIAL, material);
@@ -171,6 +186,39 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return false;
         } else {
             return true;
+        }
+    }
+
+    // ADD A USER
+    public boolean addUser(String userName, String password, String key) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_NAME, userName);
+        contentValues.put(USER_PASSWORD,password);
+        contentValues.put(USER_KEY,key);
+
+
+        long result = db.insert(USER_TABLE,null,contentValues);
+
+        if (result == -1) {
+            return false; // DIDN'T WORK
+        } else {
+            return true; // WORKED
+        }
+    }
+
+    // LOG-IN USER
+    public boolean logginUser(String userID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_ID, userID);
+
+
+        long result = db.insert(LOGGED_USER_TABLE,null,contentValues);
+        if (result == -1) {
+            return false; // DIDN'T WORK
+        } else {
+            return true; // WORKED
         }
     }
 
@@ -386,15 +434,59 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    // CHECK IF USER TABLE EMPTY
+    public boolean userTableEmpty() {
+        String query = "SELECT COUNT(*) FROM " + USER_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // CHECK IF LOGGED USER TABLE EMPTY
+    public boolean loggedUserTableEmpty() {
+        String query = "SELECT COUNT(*) FROM " + LOGGED_USER_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     // GET ALL CLOTHES
-    Cursor readAllData() {
-        String query = "SELECT * FROM " + CLOTHING_TABLE;
+    Cursor readUsersClothing(String user_ID) {
+        String query = "SELECT * FROM " + CLOTHING_TABLE +
+                " WHERE " + USER_ID + " = " + user_ID;
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
         if (db != null)
             cursor = db.rawQuery(query, null);
         return cursor;
+    }
+
+    // GET ID OF LOGGED USER
+    String loggedUserID() {
+        String query = "SELECT " + USER_ID + " FROM " + LOGGED_USER_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+            cursor.moveToFirst();
+        }
+        return cursor.getString(0);
     }
 
     // GET CLOTHING COLOR
@@ -449,7 +541,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String query = "SELECT " + TAGS_ID +
                 " FROM " + CLOTHING_TAGS_TABLE +
                 " WHERE (" + CLOTHING_ID + " = " + clothingID + ") " +
-                " AND (" + TAGS_ID + " BETWEEN 11 AND 15) " +
+                " AND (" + TAGS_ID + " BETWEEN 4 AND 8) " +
                 " ORDER BY " + TAGS_ID + " DESC";
         SQLiteDatabase db = this.getReadableDatabase();
 
@@ -465,11 +557,74 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    void updateData(String row_id, String name,String brand, String type, String size, String material, String desc) {
+    public String getOccasion(String clothingID) {
+        String result = "DIDNT WORK!";
+        String query = "SELECT " + TAGS_ID +
+                " FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE (" + CLOTHING_ID + " = " + clothingID + ") " +
+                " AND (" + TAGS_ID + " BETWEEN 1 AND 3) " +
+                " ORDER BY " + TAGS_ID + " DESC";
+        String subQuery = "SELECT " + TAGS +
+                " FROM " + TAGS_TABLE +
+                " WHERE " + TAGS_ID + " IN (" + query + ")";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(subQuery, null);
+            result = "";
+            while (cursor.moveToNext()) {
+                result += cursor.getString(0);
+            }
+            return result;
+        }
+        return result;
+    }
+
+    public String getClothingPattern(String clothingID) {
+        String result = "FAILED!!";
+        String query = "SELECT " + CLOTHING_PATTERN + " FROM " + CLOTHING_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+            result = "";
+            while (cursor.moveToNext()) {
+                result += cursor.getString(0);
+            }
+            return result;
+        }
+        return result;
+    }
+
+    public String getClothingFit(String clothingID) {
+        String result = "FAILED!!";
+        String query = "SELECT " + CLOTHING_FIT + " FROM " + CLOTHING_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+            result = "";
+            while (cursor.moveToNext()) {
+                result += cursor.getString(0);
+            }
+            return result;
+        }
+        return result;
+    }
+
+    void updateData(String row_id, String name,String brand, String pattern, String fit, String type, String size, String material, String desc) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(CLOTHING_NAME, name);
         cv.put(CLOTHING_BRAND, brand);
+        cv.put(CLOTHING_PATTERN,pattern);
+        cv.put(CLOTHING_FIT,fit);
         cv.put(CLOTHING_TYPE, type);
         cv.put(CLOTHING_SIZE, size);
         cv.put(CLOTHING_MATERIAL, material);
@@ -482,6 +637,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
     }
 
+    // DELETES --------------------------------------------------------------------------------------------------------------------------------------
+
+    // Delete one clothing item
     void deleteOneItem(String row_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete(CLOTHING_TABLE, "clothing_id=?", new String[] {row_id});
@@ -492,92 +650,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    // Delete all of a specified users closet
     void deleteUserCloset(String user_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DELETE FROM " + CLOTHING_TABLE +
                 " WHERE " + USER_ID + " = " + user_id);
     }
 
-    // USING SMOOTH BRAIN TACTIC OF WORKING HARD AND NOT SMART--------------------------------------------------------------
-    // Will be using these to slowly delete very specific rows
-    // Its how I will manipulate specific tags on clothing
-    void deleteWinterTag(String clothingID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
-                " WHERE " + CLOTHING_ID + " = " + clothingID +
-                " AND " + TAGS_ID + " = 6";
-        db.execSQL(query);
-    }
-    void deleteFallTag(String clothingID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
-                " WHERE " + CLOTHING_ID + " = " + clothingID +
-                " AND " + TAGS_ID + " = 9";
-        db.execSQL(query);
-    }
-    void deleteSpringTag(String clothingID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
-                " WHERE " + CLOTHING_ID + " = " + clothingID +
-                " AND " + TAGS_ID + " = 7";
-        db.execSQL(query);
-    }
-    void deleteSummerTag(String clothingID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
-                " WHERE " + CLOTHING_ID + " = " + clothingID +
-                " AND " + TAGS_ID + " = 8";
-        db.execSQL(query);
-    }
-
-    void deleteAllTag(String clothingID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
-                " WHERE " + CLOTHING_ID + " = " + clothingID +
-                " AND " + TAGS_ID + " = 10";
-        db.execSQL(query);
-    }
-
-    void deleteOneColorTag(String clothingID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
-                " WHERE " + CLOTHING_ID + " = " + clothingID +
-                " AND " + TAGS_ID + " = 1";
-        db.execSQL(query);
-    }
-
-    void deleteTwoColorTag(String clothingID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
-                " WHERE " + CLOTHING_ID + " = " + clothingID +
-                " AND " + TAGS_ID + " = 2";
-        db.execSQL(query);
-    }
-
-    void deleteFormalTag(String clothingID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
-                " WHERE " + CLOTHING_ID + " = " + clothingID +
-                " AND " + TAGS_ID + " = 3";
-        db.execSQL(query);
-    }
-
-    void deleteCasualTag(String clothingID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
-                " WHERE " + CLOTHING_ID + " = " + clothingID +
-                " AND " + TAGS_ID + " = 4";
-        db.execSQL(query);
-    }
-
-    void deleteAthleticTag(String clothingID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        String query = "DELETE FROM " + CLOTHING_TAGS_TABLE +
-                " WHERE " + CLOTHING_ID + " = " + clothingID +
-                " AND " + TAGS_ID + " = 5";
-        db.execSQL(query);
-    }
-
+    // Delete all the tags associated to a specific clothing item, used mostly for updating
     void deleteClothingTags(String clothingID) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete(CLOTHING_TAGS_TABLE, "clothing_id=?", new String[] {clothingID});
@@ -588,6 +668,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    // Delete all the colors associated with a specific clothing item, again used for updating
     void deleteClothingColor(String clothingID) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete(CLOTHING_COLOR_TABLE, "clothing_id=?", new String[] {clothingID});
@@ -597,9 +678,4 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show();
         }
     }
-
-    // HAHA SMOOTH BRAINED
-    // NOW WE ADD SPECIFIC TAGS TO CERTAIN CLOTHING
-
-
 }

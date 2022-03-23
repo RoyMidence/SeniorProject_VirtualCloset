@@ -89,7 +89,7 @@ public class UpdateFragment extends Fragment {
             "Formal", "Casual", "Athletic"
     };
 
-    String name, ID, brand, type, material, size, colors, tags, c1, c2, pattern, occasion, weather;
+    String name, ID, brand, type, material, size, colors, c1, c2, pattern, occasion, weather;
 
     public UpdateFragment() {
 
@@ -135,41 +135,38 @@ public class UpdateFragment extends Fragment {
         material = db.getClothingMaterial(ID);
         size = db.getClothingSize(ID);
         colors = db.getClothingColor(ID); // returns all colors in one string
-        tags = db.getClothingTags(ID); // returns all tags in one String
 
         // Break down tag values
-        pattern = tags.substring(0, tags.indexOf(","));
-        editTextDescription.setText(tags);
+        pattern = db.getClothingPattern(ID);
 
-        occasion = tags.substring(tags.indexOf(",")+2);
-        occasion = occasion.substring(0, occasion.indexOf(","));
+        occasion = db.getOccasion(ID);
 
         // Lets have fun with weather....
         weather = db.getWeatherConditions(ID); // has all weather conditions attributed to item
 
         // Set value of Buttons
-        if (weather.substring(0, weather.indexOf(",")).equals("15")) { // ID for All seasons
+        if (weather.substring(0, weather.indexOf(",")).equals("8")) { // ID for All seasons
             checkBoxSpring.setChecked(true);
             checkBoxSummer.setChecked(true);
             checkBoxFall.setChecked(true);
             checkBoxWinter.setChecked(true);
         } else { // At least 3 are checked, still have to check all
-            if (weather.substring(0, weather.indexOf(",")).equals("14")) {
+            if (weather.substring(0, weather.indexOf(",")).equals("7")) {
                 checkBoxFall.setChecked(true);
                 weather = weather.substring(weather.indexOf(","));
                 if ((weather.indexOf(",") == 0) && (weather.length() > 1)) {weather = weather.substring(weather.indexOf(",")+1);} // KEPT RUNNING INTO STRING OUT OF BOUNDS ERRORS, USING THIS TO STOP IT
             }
-            if (weather.substring(0, weather.indexOf(",")).equals("13")) {
+            if (weather.substring(0, weather.indexOf(",")).equals("6")) {
                 checkBoxSummer.setChecked(true);
                 weather = weather.substring(weather.indexOf(","));
                 if ((weather.indexOf(",") == 0) && (weather.length() > 1)) {weather = weather.substring(weather.indexOf(",")+1);}
             }
-            if (weather.substring(0, weather.indexOf(",")).equals("12")) {
+            if (weather.substring(0, weather.indexOf(",")).equals("5")) {
                 checkBoxSpring.setChecked(true);
                 weather = weather.substring(weather.indexOf(","));
                 if ((weather.indexOf(",") == 0) && (weather.length() > 1)) {weather = weather.substring(weather.indexOf(",")+1);}
             }
-            if (weather.substring(0, weather.indexOf(",")).equals("11")) {
+            if (weather.substring(0, weather.indexOf(",")).equals("4")) {
                 checkBoxWinter.setChecked(true);
                 weather = weather.substring(weather.indexOf(","));
                 if ((weather.indexOf(",") == 0) && (weather.length() > 1)) {weather = weather.substring(weather.indexOf(",")+1);}
@@ -320,6 +317,7 @@ public class UpdateFragment extends Fragment {
                 type = autoCompleteType.getText().toString();
                 material = autoCompleteMaterial.getText().toString();
                 String desc = editTextDescription.getText().toString();
+                pattern = autoCompletePattern.getText().toString();
 
 
 
@@ -331,7 +329,7 @@ public class UpdateFragment extends Fragment {
                 else { size = autoCompleteGeneral.getText().toString();} // As long as it not pants all good
 
 
-                db.updateData(ID,name, brand, type, size,material,desc); // hopefully it worked lol, updated clothing table
+                db.updateData(ID,name, brand,pattern, db.getClothingFit(ID), type, size,material,desc); // hopefully it worked lol, updated clothing table
 
                 // Lets update tags and colors
                 // Start by delete all current values
@@ -340,7 +338,7 @@ public class UpdateFragment extends Fragment {
 
 
                 // Now we get and reinsert all  new values
-                pattern = autoCompletePattern.getText().toString();
+
                 db.addTag(pattern,Integer.parseInt(ID));
                 c1 = autoCompleteColor1.getText().toString();
                 db.addColor(c1,Integer.parseInt(ID));

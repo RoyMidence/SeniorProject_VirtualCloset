@@ -61,71 +61,69 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         }
 
         if (mDatabaseHelper.tagTableEmpty()) {
-            mDatabaseHelper.addToTagsTable("Solid"); // ID's: 1
-            mDatabaseHelper.addToTagsTable("Striped"); // 2
-            mDatabaseHelper.addToTagsTable("Dotted"); // 3
-            mDatabaseHelper.addToTagsTable("Floral"); // 4
-            mDatabaseHelper.addToTagsTable("Graphic"); // 5
-            mDatabaseHelper.addToTagsTable("Plaid"); // 6
-            mDatabaseHelper.addToTagsTable("Two Colors"); // 7
-            mDatabaseHelper.addToTagsTable("Formal"); // 8
-            mDatabaseHelper.addToTagsTable("Casual");// 9
-            mDatabaseHelper.addToTagsTable("Athletic"); // 10
-            mDatabaseHelper.addToTagsTable("Winter");// 11
-            mDatabaseHelper.addToTagsTable("Spring");// 12
-            mDatabaseHelper.addToTagsTable("Summer");// 13
-            mDatabaseHelper.addToTagsTable("Fall"); // 14
-            mDatabaseHelper.addToTagsTable("All"); // 15
+            mDatabaseHelper.addToTagsTable("Formal"); // 1
+            mDatabaseHelper.addToTagsTable("Casual");// 2
+            mDatabaseHelper.addToTagsTable("Athletic"); // 3
+            mDatabaseHelper.addToTagsTable("Winter");// 4
+            mDatabaseHelper.addToTagsTable("Spring");// 5
+            mDatabaseHelper.addToTagsTable("Summer");// 6
+            mDatabaseHelper.addToTagsTable("Fall"); // 7
+            mDatabaseHelper.addToTagsTable("All"); // 8
         }
+
+        if (mDatabaseHelper.userTableEmpty()) {
+            mDatabaseHelper.addUser("Person1", "abcdef", "abcd-efgh");
+            mDatabaseHelper.addUser("Person2", "abcdef", "abcd-efgh");
+            mDatabaseHelper.addUser("Person3", "abcdef", "abcd-efgh");
+            mDatabaseHelper.addUser("Person4", "abcdef", "abcd-efgh");
+        }
+
+        if (mDatabaseHelper.loggedUserTableEmpty()) {
+            mDatabaseHelper.logginUser("1");
+        }
+
 
         int cl; // Exists for testing purposes
 
         if (mDatabaseHelper.clothingTableEmpty()) { // Fill Clothing Table
-            AddData("Yellow Jippy","Fruit of The Loom", "Shirt","L","Cotton","");
+            AddData("Yellow Jippy","Fruit of The Loom","Solid","Mens", "Shirt","L","Cotton","");
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addColor("Yellow",cl);
-            mDatabaseHelper.addTag("Solid",cl);
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
-            AddData("Comfy Jeans","Lucky Brand", "Pants","34X34","Denim","");
+            AddData("Comfy Jeans","Lucky Brand", "Solid","Mens","Pants","34X34","Denim","");
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addColor("Blue",cl);
-            mDatabaseHelper.addTag("Solid",cl);
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
-            AddData("White Destiny Boots","Palladium", "Shoes","10","No Clue","");
+            AddData("White Destiny Boots","Palladium","Solid","Mens", "Shoes","10","No Clue","");
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addColor("White",cl);
-            mDatabaseHelper.addTag("Solid",cl);
             mDatabaseHelper.addTag("Formal", cl);
             mDatabaseHelper.addTag("Spring", cl);
             mDatabaseHelper.addTag("Summer", cl);
             mDatabaseHelper.addTag("Winter", cl);
-            AddData("Fish Hat","No Clue", "Hat","One Size","Polyester","");
+            AddData("Fish Hat","No Clue","Solid","Mens", "Hat","One Size","Polyester","");
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addColor("Blue",cl);
-            mDatabaseHelper.addTag("Solid",cl);
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
-            AddData("Die for Succ","Diesel", "Shirt","L","Cotton","");
+            AddData("Die for Succ","Diesel","Graphic","Mens", "Shirt","L","Cotton","");
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addColor("Red",cl);
             mDatabaseHelper.addColor("Black", cl);
-            mDatabaseHelper.addTag("Graphic",cl);
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("Fall", cl);
             mDatabaseHelper.addTag("Winter", cl);
             mDatabaseHelper.addTag("Summer", cl);
-            AddData("Tight Jeans","Lucky Brand", "Pants","34X32","Denim","");
+            AddData("Tight Jeans","Lucky Brand","Solid","Mens", "Pants","34X32","Denim","");
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addColor("Blue",cl);
-            mDatabaseHelper.addTag("Solid",cl);
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
-            AddData("Olive Boots","Palladium", "Shoes","10","Polyester","");
+            AddData("Olive Boots","Palladium","Solid","Mens", "Shoes","10","Polyester","");
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addColor("Green",cl);
-            mDatabaseHelper.addTag("Solid",cl);
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
         }
@@ -147,7 +145,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
     }
 
     private void storeValuesInArrays() {
-        Cursor cursor = mDatabaseHelper.readAllData();
+        Cursor cursor = mDatabaseHelper.readUsersClothing(mDatabaseHelper.loggedUserID());
         if (cursor.getCount() == 0) {
             emptyImageView.setVisibility(View.VISIBLE);
             textViewEmptyCloset.setVisibility(View.VISIBLE);
@@ -164,8 +162,8 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         }
     }
 
-    public void AddData(String item, String brand, String type, String size, String material, String desc) {
-        boolean insertData = mDatabaseHelper.addClothing(item, brand,type, size,material,desc);
+    public void AddData(String item, String brand, String pattern, String fit, String type, String size, String material, String desc) {
+        boolean insertData = mDatabaseHelper.addClothing(item, brand, pattern, fit, type, size,material,desc);
 
         if (insertData)
             toastMessage("Data Successfully Inserted!");

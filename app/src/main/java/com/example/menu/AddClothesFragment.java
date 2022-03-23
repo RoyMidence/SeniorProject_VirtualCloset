@@ -188,7 +188,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
                 tv_fancy_casual.setText("Casual");
                 break;
             case R.id.nav_one_color:
-                tv_pattern.setText("One Color");
+                tv_pattern.setText("Solid");
                 break;
             case R.id.nav_two_color:
                 tv_pattern.setText("Two Colors");
