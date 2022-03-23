@@ -139,6 +139,31 @@
             android:layout_alignParentBottom="true"
             android:src="@drawable/ic_add"
             app:fabSize="normal" />
+        <CheckBox
+            android:id="@+id/checkBoxSpring_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias="1.0"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxSummer_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias="0.98"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxFall_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias="0.0"/>
+
+        <CheckBox
+            android:id="@+id/checkBoxWinter_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintHorizontal_bias="1.0"
+
+            />
     </RelativeLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

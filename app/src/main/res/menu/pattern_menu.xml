@@ -2,8 +2,18 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/pattern_menu">
     <group android:id="@+id/list_pattern">
-        <item android:id="@+id/nav_one_color"
-            android:title="One Color" />
+        <item android:id="@+id/nav_solid"
+            android:title="Solid" />
+        <item android:id="@+id/nav_striped"
+            android:title="Striped" />
+        <item android:id="@+id/nav_dotted"
+            android:title="Dotted" />
+        <item android:id="@+id/nav_floral"
+            android:title="Floral" />
+        <item android:id="@+id/nav_graphic"
+            android:title="Graphic" />
+        <item android:id="@+id/nav_plaid"
+            android:title="Plaid" />
         <item android:id="@+id/nav_two_color"
             android:title="Two Colors" />
     </group>

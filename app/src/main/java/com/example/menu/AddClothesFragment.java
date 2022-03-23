@@ -38,12 +38,13 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_addclothes, container, false);
-        configureButtons();
+
         tv = (TextView)v.findViewById(R.id.clothes_type);
         tv_material = (TextView)v.findViewById(R.id.material_type);
         tv_fancy_casual= (TextView)v.findViewById(R.id.fancy_casual_type);
         tv_pattern = (TextView) v.findViewById(R.id.pattern_type);
         ed_name = (EditText) v.findViewById(R.id.edit_text_name);
+        configureButtons();
         return v;
     }
 
@@ -103,26 +104,34 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
             }
         });
 
-        fab.setOnClickListener(new View.OnClickListener()
-        {
+            fab.setOnClickListener(new View.OnClickListener() {
 
-            @Override
-            public void onClick (View v){ Bundle bundle = new Bundle();
-               bundle.putString("type",String.valueOf(tv.getText()));
-               bundle.putString("material",String.valueOf(tv_material.getText()));
-               bundle.putString("occasion",String.valueOf(tv_fancy_casual.getText()));
-               bundle.putString("pattern",String.valueOf(tv_pattern.getText()));
-               bundle.putString("name",String.valueOf(ed_name.getText()));
-                 AddClothesTwo frag = new AddClothesTwo();
-                frag.setArguments(bundle);
-                getFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        frag).commit();
+                @Override
+                public void onClick(View v) {
+                    if (String.valueOf(ed_name.getText()).equals("")) {
+                        toastMessage("Please enter a name!");
+                    } else {
 
-            }
 
-        });
+                        Bundle bundle = new Bundle();
+                        bundle.putString("type", String.valueOf(tv.getText()));
+                        bundle.putString("material", String.valueOf(tv_material.getText()));
+                        bundle.putString("occasion", String.valueOf(tv_fancy_casual.getText()));
+                        bundle.putString("pattern", String.valueOf(tv_pattern.getText()));
+                        bundle.putString("name", String.valueOf(ed_name.getText()));
+                        AddClothesTwo frag = new AddClothesTwo();
+                        frag.setArguments(bundle);
+                        getFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                frag).commit();
+
+                    }
+                }
+            });
+        }
+
+    private void toastMessage(String Message) {
+        Toast.makeText(getContext(),Message,Toast.LENGTH_SHORT).show();
     }
-
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
@@ -187,8 +196,23 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
             case R.id.nav_casual:
                 tv_fancy_casual.setText("Casual");
                 break;
-            case R.id.nav_one_color:
+            case R.id.nav_solid:
                 tv_pattern.setText("Solid");
+                break;
+            case R.id.nav_striped:
+                tv_pattern.setText("Striped");
+                break;
+            case R.id.nav_graphic:
+                tv_pattern.setText("Graphic");
+                break;
+            case R.id.nav_floral:
+                tv_pattern.setText("Floral");
+                break;
+            case R.id.nav_dotted:
+                tv_pattern.setText("Dotted");
+                break;
+            case R.id.nav_plaid:
+                tv_pattern.setText("Plaid");
                 break;
             case R.id.nav_two_color:
                 tv_pattern.setText("Two Colors");

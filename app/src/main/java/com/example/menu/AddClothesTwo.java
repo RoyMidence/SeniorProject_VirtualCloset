@@ -127,7 +127,7 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
 
         });
 
-    if(pattern.equals("Solid")){
+    if(pattern.equals("One Color")){
             btn_color2.setVisibility(View.GONE);
             tv_color2.setVisibility(View.GONE);
             isColor2 = false;
@@ -159,7 +159,8 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
                 String desc = String.valueOf(ed_desc.getText());
                 String color = String.valueOf(tv_color.getText());
                 String color2 =  String.valueOf(tv_color2.getText());
-                boolean insertData = mDatabaseHelper.addClothing(name,brand,pattern, "Mens", type,size,material,desc); // LOOK HERE! REPLACE Mens WITH CLOTHING FIT
+                //(String item, String brand, String pattern, String fit, String type, String size, String material, String desc)
+                boolean insertData = mDatabaseHelper.addClothing(name,brand,pattern,"Mens",type,size,material,desc);
 
                 if (insertData)
                     toastMessage("Data Successfully Inserted!");
@@ -172,10 +173,9 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
                     boolean insertcolor2 = mDatabaseHelper.addColor(color2, mDatabaseHelper.getLatestItem());
                 }
 
-                // The Occasion
-                // mDatabaseHelper.addTag(occasion)
-                // Then weather, will need if/else if statments to determine values.
-                // Check lines 355 367 in Update Fragment Java file to see how I did it
+                // Add Pattern first
+                // Then Occasion
+                // Then weather
 
 
                 FragmentTransaction fr2 =getFragmentManager().beginTransaction();
