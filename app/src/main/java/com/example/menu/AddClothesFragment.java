@@ -1,12 +1,16 @@
 package com.example.menu;
 // Hadia March 15
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -29,6 +33,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
     TextView tv_fancy_casual;
     TextView tv_pattern;
     EditText ed_name;
+   String fits;
 
     public AddClothesFragment() {
         // Required empty public constructor
@@ -45,9 +50,13 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
         tv_pattern = (TextView) v.findViewById(R.id.pattern_type);
         ed_name = (EditText) v.findViewById(R.id.edit_text_name);
         configureButtons();
+
         return v;
     }
-
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
     private void configureButtons() {
         // TODO Auto-generated method stub
         ImageButton btn = (ImageButton) v.findViewById(R.id.image_button);
@@ -55,7 +64,9 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
         ImageButton btn_fancy_casual = (ImageButton) v.findViewById(R.id.image_fancy_casual);
         ImageButton btn_pattern = (ImageButton) v.findViewById(R.id.image_pattern);
         FloatingActionButton fab = (FloatingActionButton) v.findViewById(R.id.second_screen);
-
+        CheckBox checkBoxMen= v.findViewById(R.id.checkBoxMen);
+        CheckBox checkBoxWomen = v.findViewById(R.id.checkBoxWomen);
+        CheckBox checkBoxUnisex = v.findViewById(R.id.checkBoxUnisex);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,7 +75,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
                 popup.setOnMenuItemClickListener(AddClothesFragment.this);
                 popup.inflate(R.menu.type_menu);
                 popup.show();
-
+                hideKeyboardFrom(getActivity(),v);
             }
         });
 
@@ -76,6 +87,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
                 popup.setOnMenuItemClickListener(AddClothesFragment.this);
                 popup.inflate(R.menu.material_menu);
                 popup.show();
+                hideKeyboardFrom(getActivity(),v);
 
             }
         });
@@ -88,6 +100,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
                 popup.setOnMenuItemClickListener(AddClothesFragment.this);
                 popup.inflate(R.menu.fancy_casual_menu);
                 popup.show();
+                hideKeyboardFrom(getActivity(),v);
 
             }
         });
@@ -100,10 +113,41 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
                 popup.setOnMenuItemClickListener(AddClothesFragment.this);
                 popup.inflate(R.menu.pattern_menu);
                 popup.show();
+                hideKeyboardFrom(getActivity(),v);
 
             }
         });
+        checkBoxMen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checkBoxMen.isChecked()){
+                    fits = "Mens";
+                    checkBoxWomen.setChecked(false);
+                    checkBoxUnisex.setChecked(false);
 
+                }
+            }
+        });
+        checkBoxWomen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checkBoxWomen.isChecked()){
+                    fits = "Women";
+                    checkBoxUnisex.setChecked(false);
+                    checkBoxMen.setChecked(false);
+                }
+            }
+        });
+        checkBoxUnisex.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(checkBoxUnisex.isChecked()){
+                    fits = "Unisex";
+                    checkBoxWomen.setChecked(false);
+                    checkBoxMen.setChecked(false);
+                }
+            }
+        });
             fab.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -119,6 +163,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
                         bundle.putString("occasion", String.valueOf(tv_fancy_casual.getText()));
                         bundle.putString("pattern", String.valueOf(tv_pattern.getText()));
                         bundle.putString("name", String.valueOf(ed_name.getText()));
+                        bundle.putString("fits",fits);
                         AddClothesTwo frag = new AddClothesTwo();
                         frag.setArguments(bundle);
                         getFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -130,8 +175,9 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
         }
 
     private void toastMessage(String Message) {
-        Toast.makeText(getContext(),Message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(getContext(), Message, Toast.LENGTH_SHORT).show();
     }
+
     @Override
     public boolean onMenuItemClick(MenuItem item) {
 
@@ -196,6 +242,8 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
             case R.id.nav_casual:
                 tv_fancy_casual.setText("Casual");
                 break;
+            case R.id.nav_athletic:
+                tv_fancy_casual.setText("Athletic");
             case R.id.nav_solid:
                 tv_pattern.setText("Solid");
                 break;

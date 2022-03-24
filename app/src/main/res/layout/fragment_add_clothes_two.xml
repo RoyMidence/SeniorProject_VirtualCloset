@@ -32,7 +32,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:layout_marginTop="120dp"
+            android:layout_marginTop="140dp"
             android:src="@drawable/ic_color" />
 
         <TextView
@@ -69,8 +69,8 @@
             android:id="@+id/image_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="120dp"
             android:layout_alignParentRight="true"
+            android:layout_marginTop="140dp"
             android:src="@drawable/ic_size" />
 
         <TextView
@@ -84,32 +84,14 @@
             android:textColor="@color/black"
             android:textSize="20sp" />
 
-        <ImageButton
-            android:id="@+id/image_season"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/size_type"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_season" />
 
-        <TextView
-            android:id="@+id/season_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/image_season"
-            android:layout_alignParentRight="true"
-            android:padding="25px"
-            android:hint="Season"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
         <ImageButton
             android:id="@+id/image_brand"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_brand"
+            android:layout_below="@+id/size_type"
             android:layout_alignParentRight="true"
-            android:layout_below="@+id/season_type"
-            />
+            android:src="@drawable/ic_brand" />
 
         <TextView
             android:id="@+id/brand_type"
@@ -139,30 +121,72 @@
             android:layout_alignParentBottom="true"
             android:src="@drawable/ic_add"
             app:fabSize="normal" />
+
+        <TextView
+            android:id="@+id/textViewSpringButton_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/brand_type"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="40dp"
+            android:text="@string/spring"
+            android:textSize="25sp" />
+
         <CheckBox
             android:id="@+id/checkBoxSpring_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintHorizontal_bias="1.0"/>
+            android:layout_below="@id/textViewSpringButton_add"
+            android:layout_marginLeft="25dp"/>
+
+        <TextView
+            android:id="@+id/textViewSummerButton_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/brand_type"            android:layout_marginLeft="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_toRightOf="@id/textViewSpringButton_add"
+            android:text="@string/summer"
+            android:textSize="25sp" />
 
         <CheckBox
             android:id="@+id/checkBoxSummer_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintHorizontal_bias="0.98"/>
+            android:layout_below="@id/textViewSummerButton_add"
+            android:layout_marginLeft="148dp" />
 
+        <TextView
+            android:id="@+id/textViewFallButton_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/brand_type"            android:layout_marginLeft="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_toRightOf="@id/textViewSummerButton_add"
+            android:text="@string/fall"
+            android:textSize="25sp" />
         <CheckBox
             android:id="@+id/checkBoxFall_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintHorizontal_bias="0.0"/>
+            android:layout_below="@id/textViewFallButton_add"
+            android:layout_marginLeft="258dp"/>
+        <TextView
+            android:id="@+id/textViewWinterButton_add"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/brand_type"            android:layout_marginLeft="40dp"
+            android:layout_marginTop="40dp"
+            android:layout_toRightOf="@id/textViewFallButton_add"
+            android:text="@string/winter"
+            android:textSize="25sp" />
 
         <CheckBox
             android:id="@+id/checkBoxWinter_add"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintHorizontal_bias="1.0"
-
+            android:layout_below="@id/textViewWinterButton_add"
+            android:layout_marginLeft="355dp"
             />
     </RelativeLayout>
 

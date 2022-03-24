@@ -1,5 +1,7 @@
 package com.example.menu;
 
+import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -13,6 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -29,14 +33,17 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
     String pattern;
     String occasion;
     String name;
+    String fits;
     boolean isColor2 = true;
     TextView tv_color;
     TextView tv_color2;
-    TextView tv_season;
     TextView tv_size;
     TextView tv_brand;
     EditText  ed_desc;
-
+    CheckBox checkBoxSpring;
+    CheckBox checkBoxFall;
+    CheckBox checkBoxSummer;
+    CheckBox checkBoxWinter;
 
     public AddClothesTwo() {
         // Required empty public constructor
@@ -52,14 +59,19 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
         pattern = bundle.getString("pattern");
         occasion = bundle.getString("occasion");
         name = bundle.getString("name");
+        fits = bundle.getString("fits");
 
         tv_color = (TextView)v.findViewById(R.id.color_type);
         tv_color2 = (TextView)v.findViewById(R.id.color2_type);
-        tv_season = (TextView)v.findViewById(R.id.season_type);
+
         tv_size= (TextView)v.findViewById(R.id.size_type);
         tv_brand =(TextView)v.findViewById(R.id.brand_type);
         ed_desc = (EditText) v.findViewById(R.id.edit_text_description);
 
+        checkBoxSpring= v.findViewById(R.id.checkBoxSpring_add);
+        checkBoxSummer = v.findViewById(R.id.checkBoxSummer_add);
+        checkBoxFall = v.findViewById(R.id.checkBoxFall_add);
+        checkBoxWinter = v.findViewById(R.id.checkBoxWinter_add);
         configureImageButton();
         configureFabButtons();
 
@@ -67,13 +79,16 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
 
         return v;
     }
-
+    public static void hideKeyboardFrom(Context context, View view) {
+        InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+    }
     private void configureImageButton() {
     // TODO Auto-generated method stub
     ImageButton btn_color = (ImageButton) v.findViewById(R.id.image_color);
     ImageButton btn_color2 = (ImageButton) v.findViewById(R.id.image_color2);
     ImageButton btn_size = (ImageButton) v.findViewById(R.id.image_size);
-    ImageButton btn_season = (ImageButton) v.findViewById(R.id.image_season);
+
     ImageButton btn_brand = (ImageButton) v.findViewById(R.id.image_brand);
 
     btn_color.setOnClickListener(v -> {
@@ -82,6 +97,7 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
         popup.setOnMenuItemClickListener(AddClothesTwo.this);
         popup.inflate(R.menu.color_menu);
         popup.show();
+        hideKeyboardFrom(getActivity(),v);
 
     });
     btn_color2.setOnClickListener(v -> {
@@ -90,6 +106,7 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
         popup.setOnMenuItemClickListener(AddClothesTwo.this);
         popup.inflate(R.menu.color2_menu);
         popup.show();
+        hideKeyboardFrom(getActivity(),v);
 
     });
     btn_size.setOnClickListener(v -> {
@@ -109,14 +126,8 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
         }
 
         popup.show();
+        hideKeyboardFrom(getActivity(),v);
 
-    });
-    btn_season.setOnClickListener(v -> {
-
-        PopupMenu popup = new PopupMenu(getActivity(), v);
-        popup.setOnMenuItemClickListener(AddClothesTwo.this);
-        popup.inflate(R.menu.season_menu);
-        popup.show();
     });
     btn_brand.setOnClickListener(v -> {
 
@@ -124,10 +135,11 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
             popup.setOnMenuItemClickListener(AddClothesTwo.this);
             popup.inflate(R.menu.brand_menu);
             popup.show();
+        hideKeyboardFrom(getActivity(),v);
 
         });
 
-    if(pattern.equals("One Color")){
+    if(pattern.equals("Solid")){
             btn_color2.setVisibility(View.GONE);
             tv_color2.setVisibility(View.GONE);
             isColor2 = false;
@@ -160,7 +172,7 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
                 String color = String.valueOf(tv_color.getText());
                 String color2 =  String.valueOf(tv_color2.getText());
                 //(String item, String brand, String pattern, String fit, String type, String size, String material, String desc)
-                boolean insertData = mDatabaseHelper.addClothing(name,brand,pattern,"Mens",type,size,material,desc);
+                boolean insertData = mDatabaseHelper.addClothing(name,brand,pattern,fits,type,size,material,desc);
 
                 if (insertData)
                     toastMessage("Data Successfully Inserted!");
@@ -173,10 +185,22 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
                     boolean insertcolor2 = mDatabaseHelper.addColor(color2, mDatabaseHelper.getLatestItem());
                 }
 
-                // Add Pattern first
                 // Then Occasion
+                mDatabaseHelper.addTag(occasion, mDatabaseHelper.getLatestItem());
                 // Then weather
-
+                if (checkBoxSpring.isChecked() && checkBoxFall.isChecked() &&
+                        checkBoxSummer.isChecked() && checkBoxWinter.isChecked()) { // ALL SEASONS
+                    mDatabaseHelper.addTag("All", mDatabaseHelper.getLatestItem());
+                } else {
+                    if (checkBoxSpring.isChecked())
+                        mDatabaseHelper.addTag("Spring",mDatabaseHelper.getLatestItem());
+                    if (checkBoxSummer.isChecked())
+                        mDatabaseHelper.addTag("Summer", mDatabaseHelper.getLatestItem());
+                    if (checkBoxFall.isChecked())
+                        mDatabaseHelper.addTag("Fall", mDatabaseHelper.getLatestItem());
+                    if (checkBoxWinter.isChecked())
+                        mDatabaseHelper.addTag("Winter",mDatabaseHelper.getLatestItem());
+                }
 
                 FragmentTransaction fr2 =getFragmentManager().beginTransaction();
                 fr2.replace(R.id.fragment_container,new TheClothesFragment());
@@ -250,34 +274,7 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
                break;
            case R.id.nav_orange2:
                tv_color2.setText("Orange");
-
                break;
-           case R.id.nav_winter:
-               tv_season.setText("Winter");
-
-               break;
-           case R.id.nav_spring:
-               tv_season.setText("Spring");
-
-               break;
-           case R.id.nav_summer:
-               tv_season.setText("Summer");
-
-               break;
-           case R.id.nav_fall:
-               tv_season.setText("Fall");
-
-               break;
-           case R.id.nav_winter_fall:
-               tv_season.setText("Winter and Fall");
-
-               break;
-           case R.id.nav_spring_summer:
-               tv_season.setText("Spring and Summer");
-
-               break;
-           case R.id.nav_all:
-               tv_season.setText("All");
            case R.id.nav_S:
                tv_size.setText("Small");
                break;
