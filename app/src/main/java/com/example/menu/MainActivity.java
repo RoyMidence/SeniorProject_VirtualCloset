@@ -25,6 +25,8 @@ private DatabaseHelper mDatabaseHelper;
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        mDatabaseHelper = new DatabaseHelper(getApplicationContext());
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);
@@ -57,6 +59,10 @@ private DatabaseHelper mDatabaseHelper;
                 break;
             case R.id.nav_logout:
                 Toast.makeText(this,"You have been logged out.",Toast.LENGTH_SHORT).show();
+                mDatabaseHelper.logOut();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new LoginScreen()).commit();
+
                 break;
         }
         drawer.closeDrawer(GravityCompat.START);

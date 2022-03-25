@@ -211,7 +211,7 @@
             app:layout_constraintTop_toBottomOf="@+id/autoCompleteOccasion" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/Username"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
@@ -256,10 +256,10 @@
             android:id="@+id/checkBoxSummer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintEnd_toEndOf="@+id/textView2"
+            app:layout_constraintEnd_toEndOf="@+id/Username"
             app:layout_constraintHorizontal_bias="0.98"
-            app:layout_constraintStart_toStartOf="@+id/textView2"
-            app:layout_constraintTop_toBottomOf="@+id/textView2" />
+            app:layout_constraintStart_toStartOf="@+id/Username"
+            app:layout_constraintTop_toBottomOf="@+id/Username" />
 
         <CheckBox
             android:id="@+id/checkBoxFall"
