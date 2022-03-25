@@ -76,12 +76,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + CLOTHING_COLOR_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + CLOTHING_TAGS_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + OUTFIT_CLOTHING_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + LOGGED_USER_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + CLOTHING_TABLE);
+        db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + COLOR_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + TAGS_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + OUTFIT_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + LOGGED_USER_TABLE);
         onCreate(db);
     }
 
@@ -151,7 +151,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // CREATE OUTFIT TABLE
         createTable = "CREATE TABLE " + OUTFIT_TABLE +
                 " (" + OUTFIT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                OUTFIT_NAME + " TEXT);";
+                OUTFIT_NAME + " TEXT, " +
+                USER_ID + " INTEGER, " +
+                "FOREIGN KEY (" + USER_ID + ") REFERENCES " + USER_TABLE + "(" + USER_ID + "));";;
         db.execSQL(createTable);
 
         // CREATE OUTFIT & CLOTHING TABLE
@@ -181,6 +183,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(CLOTHING_STATUS,"AVAILABLE");
 
         long result = db.insert(CLOTHING_TABLE, null, contentValues);
+
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // METHOD FOR CREATING AN OUTFIT
+    public boolean addOutfit(String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(OUTFIT_NAME, name);
+        contentValues.put(USER_ID, loggedUserID());
+
+        long result = db.insert(OUTFIT_TABLE, null, contentValues);
+
+        if (result == -1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    // METHOD FOR ADDING CLOTHING TO AN OUTFIT
+    public boolean addClothingToOutfit(int clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(OUTFIT_ID, getLatestOutfit());
+        contentValues.put(CLOTHING_ID, clothingID);
+
+        long result = db.insert(OUTFIT_TABLE, null, contentValues);
 
         if (result == -1) {
             return false;
@@ -290,6 +324,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int getLatestItem() {
         String query = "SELECT " + CLOTHING_ID + " FROM " + CLOTHING_TABLE +
                 " ORDER BY " + CLOTHING_ID + " DESC LIMIT 1";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            return cursor.getInt(0);
+        }
+        return -1;
+    }
+
+    public int getLatestOutfit() {
+        String query = "SELECT " + OUTFIT_ID + " FROM " + OUTFIT_TABLE +
+                " ORDER BY " + OUTFIT_ID + " DESC LIMIT 1";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {
