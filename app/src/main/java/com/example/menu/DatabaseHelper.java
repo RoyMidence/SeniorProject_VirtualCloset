@@ -23,21 +23,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CLOTHING_ID = "clothing_id";
     private static final String CLOTHING_NAME = "Clothing_name";
     private static final String CLOTHING_BRAND = "clothing_brand";
+    private static final String CLOTHING_TYPE = "clothing_type";
     private static final String CLOTHING_PATTERN = "clothing_pattern";
     private static final String CLOTHING_FIT = "clothing_fit";
-    private static final String CLOTHING_TYPE = "clothing_type";
     private static final String CLOTHING_SIZE = "clothing_size";
+    private static final String CLOTHING_COLOR_1 = "clothing_color_one";
+    private static final String CLOTHING_COLOR_2 = "clothing_color_two";
     private static final String CLOTHING_MATERIAL = "clothing_material";
     private static final String CLOTHING_DESCRIPTION = "clothing_description";
     private static final String CLOTHING_STATUS = "clothing_status";
-
-    // Color Table
-    private static final String COLOR_TABLE = "color_table";
-    private static final String COLOR_ID = "color_id";
-    private static final String COLOR = "color";
-
-    // color & clothing table, uses composite key from COLOR_ID & CLOTHING_ID
-    private static final String CLOTHING_COLOR_TABLE = "clothing_color_table";
 
     // Tags Table
     private static final String TAGS_TABLE = "tag_table";
@@ -73,13 +67,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
-        db.execSQL("DROP TABLE IF EXISTS " + CLOTHING_COLOR_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + CLOTHING_TAGS_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + OUTFIT_CLOTHING_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + LOGGED_USER_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + CLOTHING_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + USER_TABLE);
-        db.execSQL("DROP TABLE IF EXISTS " + COLOR_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + TAGS_TABLE);
         db.execSQL("DROP TABLE IF EXISTS " + OUTFIT_TABLE);
         onCreate(db);
@@ -106,31 +98,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " (" + CLOTHING_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 CLOTHING_NAME + " TEXT, " +
                 CLOTHING_BRAND + " TEXT, " +
+                CLOTHING_TYPE + " TEXT, " +
                 CLOTHING_PATTERN + " TEXT, " +
                 CLOTHING_FIT + " TEXT, " +
-                CLOTHING_TYPE + " TEXT, " +
-                CLOTHING_MATERIAL + " TEXT, " +
                 CLOTHING_SIZE + " TEXT, " +
+                CLOTHING_COLOR_1 + " TEXT, " +
+                CLOTHING_COLOR_2 + " TEXT, " +
+                CLOTHING_MATERIAL + " TEXT, " +
                 CLOTHING_DESCRIPTION + " TEXT, " +
                 CLOTHING_STATUS + " TEXT, " +
                 USER_ID + " INTEGER, " +
                 "FOREIGN KEY (" + USER_ID + ") REFERENCES " + USER_TABLE + "(" + USER_ID + "));";
 
-        db.execSQL(createTable);
-
-        //CREATE COLOR TABLE
-        createTable = "CREATE TABLE " + COLOR_TABLE +
-                " (" + COLOR_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                COLOR + " TEXT);";
-        db.execSQL(createTable);
-
-        // MINI TABLE BETWEEN CLOTHING AND COLOR
-        createTable = "CREATE TABLE " + CLOTHING_COLOR_TABLE +
-                " (" + CLOTHING_ID + " INTEGER, " +
-                COLOR_ID + " INTEGER, " +
-                "FOREIGN KEY (" + CLOTHING_ID + ") REFERENCES " + CLOTHING_TABLE + "(" + CLOTHING_ID + "), " +
-                "FOREIGN KEY (" + COLOR_ID + ") REFERENCES " + COLOR_TABLE + "(" + COLOR_ID + "), " +
-                "PRIMARY KEY (" + CLOTHING_ID + ", " + COLOR_ID + "));";
         db.execSQL(createTable);
 
         // CREATE TAGS TABLE
@@ -168,19 +147,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // ADD METHODS BEGIN HERE -----------------------------------------------------------------------------------------
     // ADD CLOTHING ITEM
-    public boolean addClothing(String item, String brand, String pattern, String fit, String type, String size, String material, String desc) {
+    public boolean addClothing(String item, String brand, String pattern,
+                               String c1, String c2, String fit, String type, String size, String material, String desc) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(USER_ID, loggedUserID());
         contentValues.put(CLOTHING_NAME, item);
         contentValues.put(CLOTHING_BRAND,brand);
+        contentValues.put(CLOTHING_TYPE, type);
         contentValues.put(CLOTHING_PATTERN, pattern);
         contentValues.put(CLOTHING_FIT, fit);
-        contentValues.put(CLOTHING_TYPE, type);
         contentValues.put(CLOTHING_SIZE, size);
+        contentValues.put(CLOTHING_COLOR_1, c1);
+        contentValues.put(CLOTHING_COLOR_2,c2);
         contentValues.put(CLOTHING_MATERIAL, material);
         contentValues.put(CLOTHING_DESCRIPTION,desc);
         contentValues.put(CLOTHING_STATUS,"AVAILABLE");
+        contentValues.put(USER_ID, loggedUserID());
 
         long result = db.insert(CLOTHING_TABLE, null, contentValues);
 
@@ -249,37 +231,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         long result = db.insert(LOGGED_USER_TABLE,null,contentValues);
-        if (result == -1) {
-            return false; // DIDN'T WORK
-        } else {
-            return true; // WORKED
-        }
-    }
-
-    // ADD A COLOR
-    public boolean addColor(String color, int clothingID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(CLOTHING_ID, clothingID);
-        contentValues.put(COLOR_ID,getColorID(color));
-
-        long result = db.insert(CLOTHING_COLOR_TABLE,null,contentValues);
-
-        if (result == -1) {
-            return false; // DIDN'T WORK
-        } else {
-            return true; // WORKED
-        }
-    }
-
-    // ADD COLORS TO TABLE
-    public boolean addToColorTable(String color) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(COLOR,color);
-
-        long result = db.insert(COLOR_TABLE,null,contentValues);
-
         if (result == -1) {
             return false; // DIDN'T WORK
         } else {
@@ -404,22 +355,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    // GET COLOR ID
-    public int getColorID(String color) {
-        String query = "SELECT * FROM " + COLOR_TABLE;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(query, null);
-        }
-
-        while (cursor.moveToNext()) {
-            if (cursor.getString(1).equalsIgnoreCase(color))
-                return cursor.getInt(0);
-        }
-        return -1;
-    }
-
     // GET TAGS ID
     public int getTagID(String tag) {
         String query = "SELECT * FROM " + TAGS_TABLE;
@@ -454,21 +389,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // CHECK IF TAGS TABLE EMPTY
     public boolean tagTableEmpty() {
         String query = "SELECT COUNT(*) FROM " + TAGS_TABLE;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(query,null);
-            cursor.moveToFirst();
-            if (cursor.getInt(0) == 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // CHECK IF COLOR TABLE EMPTY
-    public boolean colorTableEmpty() {
-        String query = "SELECT COUNT(*) FROM " + COLOR_TABLE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {
@@ -536,14 +456,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor.getString(0);
     }
 
-    // GET CLOTHING COLOR
-    public String getClothingColor(String clothingID) {
+    public String getClothingColor1(String clothingID) {
         String result = "DIDN'T WORK!";
-        String Query = "SELECT " + COLOR +
-                " FROM " + COLOR_TABLE +
-                " INNER JOIN " + CLOTHING_COLOR_TABLE +
-                " ON " + COLOR_TABLE + "." + COLOR_ID + " = " + CLOTHING_COLOR_TABLE + "." + COLOR_ID +
-                " WHERE " + CLOTHING_COLOR_TABLE + "." + CLOTHING_ID + " = " + clothingID;
+        String Query = "SELECT " + CLOTHING_COLOR_1 +
+                " FROM " + CLOTHING_TABLE +
+                " WHERE " +  CLOTHING_ID + " = " + clothingID;
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
@@ -551,7 +468,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor = db.rawQuery(Query, null);
             result = "";
             while (cursor.moveToNext()) {
-                result += cursor.getString(0) + ", ";
+                result += cursor.getString(0);
+            }
+            return result;
+        }
+
+        return result;
+    }
+
+    public String getClothingColor2(String clothingID) {
+        String result = "DIDN'T WORK!";
+        String Query = "SELECT " + CLOTHING_COLOR_2 +
+                " FROM " + CLOTHING_TABLE +
+                " WHERE " +  CLOTHING_ID + " = " + clothingID;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(Query, null);
+            result = "";
+            while (cursor.moveToNext()) {
+                result += cursor.getString(0);
             }
             return result;
         }
@@ -665,12 +602,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    void updateData(String row_id, String name,String brand, String pattern, String fit, String type, String size, String material, String desc) {
+    void updateData(String row_id, String name,String brand, String pattern, String c1, String c2, String fit, String type, String size, String material, String desc) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
         cv.put(CLOTHING_NAME, name);
         cv.put(CLOTHING_BRAND, brand);
         cv.put(CLOTHING_PATTERN,pattern);
+        cv.put(CLOTHING_COLOR_1, c1);
+        cv.put(CLOTHING_COLOR_2,c2);
         cv.put(CLOTHING_FIT,fit);
         cv.put(CLOTHING_TYPE, type);
         cv.put(CLOTHING_SIZE, size);
@@ -708,17 +647,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     void deleteClothingTags(String clothingID) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete(CLOTHING_TAGS_TABLE, "clothing_id=?", new String[] {clothingID});
-        if (result == -1) {
-            Toast.makeText(context, "Failed to delete", Toast.LENGTH_SHORT).show();
-        } else {
-            Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    // Delete all the colors associated with a specific clothing item, again used for updating
-    void deleteClothingColor(String clothingID) {
-        SQLiteDatabase db = this.getWritableDatabase();
-        long result = db.delete(CLOTHING_COLOR_TABLE, "clothing_id=?", new String[] {clothingID});
         if (result == -1) {
             Toast.makeText(context, "Failed to delete", Toast.LENGTH_SHORT).show();
         } else {

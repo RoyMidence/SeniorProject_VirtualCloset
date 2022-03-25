@@ -89,7 +89,7 @@ public class UpdateFragment extends Fragment {
             "Formal", "Casual", "Athletic"
     };
 
-    String name, ID, brand, type, material, size, colors, c1, c2, pattern, occasion, weather;
+    String name, ID, brand, type, material, size, c1, c2, pattern, occasion, weather;
 
     public UpdateFragment() {
 
@@ -134,7 +134,8 @@ public class UpdateFragment extends Fragment {
         type = bundle.getString("type");
         material = db.getClothingMaterial(ID);
         size = db.getClothingSize(ID);
-        colors = db.getClothingColor(ID); // returns all colors in one string
+        c1 = db.getClothingColor1(ID);
+        c2 = db.getClothingColor2(ID);
 
         // Break down tag values
         pattern = db.getClothingPattern(ID);
@@ -262,19 +263,15 @@ public class UpdateFragment extends Fragment {
         // Creating Color Adapter
         ArrayAdapter<String> colorAdapter = new ArrayAdapter<String>(getContext(),
                 android.R.layout.simple_list_item_1,COLOR);
+        autoCompleteColor1.setAdapter(colorAdapter);
+        autoCompleteColor2.setAdapter(colorAdapter);
 
         // set up colors autoCompletes. Find out if multi-colored
         if (!pattern.equals("Solid")) { // Means I gotta work with 2 colors
             autoCompleteColor2.setVisibility(View.VISIBLE);
-            c1 = colors.substring(0,colors.indexOf(","));
-            c2 = colors.substring(colors.indexOf(",")+2, colors.length()-2); //  Should get second color
-            autoCompleteColor1.setAdapter(colorAdapter);
-            autoCompleteColor2.setAdapter(colorAdapter);
             autoCompleteColor1.setText(c1);
             autoCompleteColor2.setText(c2);
         } else { // One Color
-            c1 = colors.substring(0,colors.indexOf(","));
-            autoCompleteColor1.setAdapter(colorAdapter);
             autoCompleteColor1.setText(c1);
         }
 
@@ -291,7 +288,7 @@ public class UpdateFragment extends Fragment {
 
             @Override
             public void afterTextChanged(Editable editable) { // Using to change color settings on demand
-                if (!autoCompletePattern.getText().toString().equalsIgnoreCase("Solid")) {
+                if (!editable.toString().equalsIgnoreCase("Solid")) {
                     // Code for multi-colored
                     autoCompleteColor2.setVisibility(View.VISIBLE);
                 } else {
@@ -318,6 +315,14 @@ public class UpdateFragment extends Fragment {
                 material = autoCompleteMaterial.getText().toString();
                 String desc = editTextDescription.getText().toString();
                 pattern = autoCompletePattern.getText().toString();
+                c1 = autoCompleteColor1.getText().toString();
+
+                if (!pattern.equalsIgnoreCase("Solid")) {
+                    c2 = autoCompleteColor2.getText().toString();
+                } else {
+                    c2 = "";
+                }
+
 
 
 
@@ -329,25 +334,13 @@ public class UpdateFragment extends Fragment {
                 else { size = autoCompleteGeneral.getText().toString();} // As long as it not pants all good
 
 
-                db.updateData(ID,name, brand,pattern, db.getClothingFit(ID), type, size,material,desc); // hopefully it worked lol, updated clothing table
+                db.updateData(ID,name, brand,pattern,c1,c2, db.getClothingFit(ID), type, size,material,desc); // hopefully it worked lol, updated clothing table
 
                 // Lets update tags and colors
                 // Start by delete all current values
                 db.deleteClothingTags(ID);
-                db.deleteClothingColor(ID);
-
 
                 // Now we get and reinsert all  new values
-
-                db.addTag(pattern,Integer.parseInt(ID));
-                c1 = autoCompleteColor1.getText().toString();
-                db.addColor(c1,Integer.parseInt(ID));
-
-                if (!pattern.equalsIgnoreCase("Solid")) {
-                    c2 = autoCompleteColor2.getText().toString();
-                    db.addColor(c2,Integer.parseInt(ID));
-                }
-
                 occasion = autoCompleteOccasion.getText().toString();
                 db.addTag(occasion, Integer.parseInt(ID));
 
@@ -392,7 +385,6 @@ public class UpdateFragment extends Fragment {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 DatabaseHelper db = new DatabaseHelper(getContext());
-                db.deleteClothingColor(ID);
                 db.deleteClothingTags(ID);
                 db.deleteOneItem(ID);
                 getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,

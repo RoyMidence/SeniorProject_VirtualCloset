@@ -23,7 +23,7 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
     private Context context;
     Fragment fragment;
 
-    private List<String> ClothingID, clothingName, clothingBrand, clothingType;
+    private List<String> clothingID, clothingName, clothingBrand, clothingType;
     private itemClickInterface mItemClickInterface;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -54,7 +54,7 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
     public ClothingAdapter(Fragment fragment, Context context, List<String> clothingID, List<String> clothingName, List<String> clothingBrand, List<String> clothingType, itemClickInterface itemClickInterface) {
         this.fragment = fragment;
         this.context = context;
-        this.ClothingID = clothingID;
+        this.clothingID = clothingID;
         this.clothingName = clothingName;
         this.clothingBrand = clothingBrand;
         this.clothingType = clothingType;
@@ -84,16 +84,32 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
         return clothingName.size();
     }
 
-    public void setData(List<String> clothingName) {
+    public void setData(List<String> clothingID, List<String> clothingName, List<String> clothingBrand, List<String> clothingType) {
+        this.clothingID = clothingID;
         this.clothingName = clothingName;
+        this.clothingBrand = clothingBrand;
+        this.clothingType = clothingType;
         notifyDataSetChanged();
+    }
+
+    // Get name value at index
+    public String getName(int pos) {
+        return clothingName.get(pos);
+    }
+    // Get brand value at index
+    public String getBrand(int pos) {
+        return clothingBrand.get(pos);
+    }
+
+    // Get type value at index
+    public String getType(int pos) {
+        return clothingType.get(pos);
     }
 
     // Attempting to solve above issue using interface
     public interface itemClickInterface {
         void onItemClick(int position);
     }
-
 
     // other code
     // goes here…

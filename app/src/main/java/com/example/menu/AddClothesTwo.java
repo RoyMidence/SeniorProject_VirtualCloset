@@ -172,18 +172,12 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
                 String color = String.valueOf(tv_color.getText());
                 String color2 =  String.valueOf(tv_color2.getText());
                 //(String item, String brand, String pattern, String fit, String type, String size, String material, String desc)
-                boolean insertData = mDatabaseHelper.addClothing(name,brand,pattern,fits,type,size,material,desc);
+                boolean insertData = mDatabaseHelper.addClothing(name,brand,pattern,color, color2,fits,type,size,material,desc);
 
                 if (insertData)
                     toastMessage("Data Successfully Inserted!");
                 else
                     toastMessage("Something went wrong");
-
-
-                    boolean insertcolor = mDatabaseHelper.addColor(color, mDatabaseHelper.getLatestItem());
-                if (isColor2) {
-                    boolean insertcolor2 = mDatabaseHelper.addColor(color2, mDatabaseHelper.getLatestItem());
-                }
 
                 // Then Occasion
                 mDatabaseHelper.addTag(occasion, mDatabaseHelper.getLatestItem());
