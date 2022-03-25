@@ -716,6 +716,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
     }
 
+    // Delete one clothing item
+    void logOut() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + LOGGED_USER_TABLE);
+    }
+
     // Delete all of a specified users closet
     void deleteUserCloset(String user_id) {
         SQLiteDatabase db = this.getWritableDatabase();
