@@ -23,7 +23,7 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
     private Context context;
     Fragment fragment;
 
-    private List<String> clothingID, clothingName, clothingBrand, clothingType;
+    private List<ClothingItem> mClothingList;
     private itemClickInterface mItemClickInterface;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -46,18 +46,13 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
         }
 
         @Override
-        public void onClick(View view) {
-            itemClickInterface.onItemClick(getAdapterPosition());
-        }
+        public void onClick(View view) { itemClickInterface.onItemClick(getBindingAdapterPosition());}
     } // end MyViewHolder
 
-    public ClothingAdapter(Fragment fragment, Context context, List<String> clothingID, List<String> clothingName, List<String> clothingBrand, List<String> clothingType, itemClickInterface itemClickInterface) {
+    public ClothingAdapter(Fragment fragment, Context context, List<ClothingItem> clothingItems, itemClickInterface itemClickInterface) {
         this.fragment = fragment;
         this.context = context;
-        this.clothingID = clothingID;
-        this.clothingName = clothingName;
-        this.clothingBrand = clothingBrand;
-        this.clothingType = clothingType;
+        mClothingList = clothingItems;
         this.mItemClickInterface = itemClickInterface;
     }
 
@@ -70,9 +65,9 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        String clothing = clothingName.get(position);
-        String brand = clothingBrand.get(position);
-        String type = clothingType.get(position);
+        String clothing = mClothingList.get(position).getName();
+        String brand = mClothingList.get(position).getBrand();
+        String type = mClothingList.get(position).getType();
 
         holder.txtviewClothingName.setText(clothing);
         holder.textViewType.setText(type);
@@ -81,29 +76,12 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
 
     @Override
     public int getItemCount() {
-        return clothingName.size();
+        return mClothingList.size();
     }
 
-    public void setData(List<String> clothingID, List<String> clothingName, List<String> clothingBrand, List<String> clothingType) {
-        this.clothingID = clothingID;
-        this.clothingName = clothingName;
-        this.clothingBrand = clothingBrand;
-        this.clothingType = clothingType;
+    public void setData(List<ClothingItem> clothingItems) {
+        mClothingList = clothingItems;
         notifyDataSetChanged();
-    }
-
-    // Get name value at index
-    public String getName(int pos) {
-        return clothingName.get(pos);
-    }
-    // Get brand value at index
-    public String getBrand(int pos) {
-        return clothingBrand.get(pos);
-    }
-
-    // Get type value at index
-    public String getType(int pos) {
-        return clothingType.get(pos);
     }
 
     // Attempting to solve above issue using interface

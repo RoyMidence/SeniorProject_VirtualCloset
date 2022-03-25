@@ -30,10 +30,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
     private TextView textViewEmptyCloset;
     private EditText editTextSearch;
 
-    private List<String> clothingName = new ArrayList<>();
-    private List<String> clothingID = new ArrayList<>();
-    private List<String> clothingBrand = new ArrayList<>();
-    private List<String> clothingType = new ArrayList<>();
+    private List<ClothingItem> clothingItems = new ArrayList<>();
     private ClothingAdapter list;
 
     @Override
@@ -77,6 +74,9 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
     }
 
     private void storeValuesInArrays() {
+        ClothingItem CI;
+
+
         Cursor cursor = mDatabaseHelper.readUsersClothing(mDatabaseHelper.loggedUserID());
         if (cursor.getCount() == 0) {
             emptyImageView.setVisibility(View.VISIBLE);
@@ -86,16 +86,22 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             textViewEmptyCloset.setVisibility(View.GONE);
 
             while (cursor.moveToNext()) {
-                clothingID.add(cursor.getString(0));
-                clothingName.add(cursor.getString(1));
-                clothingBrand.add(cursor.getString(2));
-                clothingType.add(cursor.getString(3));
+                // CLOTHING TABLE:  clothingID  : NAME  : BRAND : TYPE  : PATTERN : FIR : SIZE : COLOR1 : COLOR2 : MATERIAL : DESC : STATUS : userID
+                String id = cursor.getString(0);
+                CI = new ClothingItem(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3), cursor.getString(4),
+                        cursor.getString(5),cursor.getString(6),cursor.getString(7),cursor.getString(8),
+                        cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12),
+                        mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id));
+                clothingItems.add(CI);
             }
         }
     }
 
     public void AddData(String item, String brand, String pattern,
                         String c1, String c2, String fit, String type, String size, String material, String desc) {
+
+
+
         boolean insertData = mDatabaseHelper.addClothing(item, brand, pattern, c1, c2, fit, type, size,material,desc);
 
         if (insertData)
@@ -111,10 +117,10 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
     @Override
     public void onItemClick(int position) {
         Bundle bundle = new Bundle();
-        bundle.putString("id",clothingID.get(position));
-        bundle.putString("name", clothingName.get(position));
-        bundle.putString("brand", clothingBrand.get(position));
-        bundle.putString("type",clothingType.get(position));
+        bundle.putString("id",String.valueOf(clothingItems.get(position).getClothingID()));
+        bundle.putString("name", String.valueOf(clothingItems.get(position).getName()));
+        bundle.putString("brand", String.valueOf(clothingItems.get(position).getBrand()));
+        bundle.putString("type",String.valueOf(clothingItems.get(position).getType()));
         UpdateFragment frag = new UpdateFragment();
         frag.setArguments(bundle);
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
@@ -192,7 +198,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        list = new ClothingAdapter(TheClothesFragment.this, getContext(), clothingID,clothingName, clothingBrand, clothingType, this);
+        list = new ClothingAdapter(TheClothesFragment.this, getContext(), clothingItems, this);
         recyclerView.setAdapter(list);
     }
 

@@ -431,6 +431,86 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    // QUERIES FOR CHECKING INDIVIDUAL SEASONS
+    public boolean checkWinter(String clothingID) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT COUNT(*) FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID +
+                " AND " + TAGS_ID + " = 4";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0)
+                return false;
+        }
+        return true;
+    }
+
+    public boolean checkSpring(String clothingID) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT COUNT(*) FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID +
+                " AND " + TAGS_ID + " = 5";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0)
+                return false;
+        }
+        return true;
+    }
+
+    public boolean checkSummer(String clothingID) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT COUNT(*) FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID +
+                " AND " + TAGS_ID + " = 6";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0)
+                return false;
+        }
+        return true;
+    }
+    public boolean checkFall(String clothingID) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT COUNT(*) FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID +
+                " AND " + TAGS_ID + " = 7";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0)
+                return false;
+        }
+        return true;
+    }
+
+    public boolean checkAll(String clothingID) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT COUNT(*) FROM " + CLOTHING_TAGS_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID +
+                " AND " + TAGS_ID + " = 8";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0)
+                return false;
+        }
+        return true;
+    }
+
     // GET ALL CLOTHES
     Cursor readUsersClothing(String user_ID) {
         String query = "SELECT * FROM " + CLOTHING_TABLE +
