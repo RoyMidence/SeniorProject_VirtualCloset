@@ -22,6 +22,10 @@ public class LoginScreen extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_login_screen, container, false);
 
+        DatabaseHelper mDatabaseHelper = new DatabaseHelper(getContext());
+        System.out.println(mDatabaseHelper.loggedUserTableEmpty());
+        System.out.println("***********************************************");
+
 
         return v;
     }

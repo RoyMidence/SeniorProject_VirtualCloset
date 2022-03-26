@@ -38,10 +38,19 @@ private DatabaseHelper mDatabaseHelper;
         drawer.addDrawerListener(toggle);
         toggle.syncState();
 
+
+
         if(savedInstanceState == null){
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 new AddClothesFragment()).commit();
         navigationView.setCheckedItem(R.id.nav_add);}
+
+        if (mDatabaseHelper.loggedUserTableEmpty()) {
+            System.out.println(mDatabaseHelper.loggedUserTableEmpty());
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    new LoginScreen()).commit();
+            mDatabaseHelper.logginUser("1");
+        }
     }
 
     @Override

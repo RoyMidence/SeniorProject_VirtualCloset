@@ -4,6 +4,7 @@ package com.example.menu;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -49,6 +50,11 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
         tv_fancy_casual= (TextView)v.findViewById(R.id.fancy_casual_type);
         tv_pattern = (TextView) v.findViewById(R.id.pattern_type);
         ed_name = (EditText) v.findViewById(R.id.edit_text_name);
+
+//        DatabaseHelper mDatabaseHelper = new DatabaseHelper(getContext());
+//        System.out.println(mDatabaseHelper.loggedUserTableEmpty());
+//        System.out.println("***********************************************");
+
         configureButtons();
 
         return v;

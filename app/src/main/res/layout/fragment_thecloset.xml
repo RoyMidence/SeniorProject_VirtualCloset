@@ -10,10 +10,11 @@
         android:id="@+id/recyclerViewClothing"
         android:layout_width="match_parent"
         android:layout_height="680dp"
-        android:layout_below="@+id/editTextSearch"
+        android:layout_below="@+id/searchViewClothing"
         android:layout_alignParentBottom="true"
         android:layout_marginStart="0dp"
-        android:layout_marginTop="6dp" />
+        android:layout_marginTop="8dp"
+        />
 
     <ImageView
         android:id="@+id/emptyImageView"
@@ -45,13 +46,13 @@
         android:visibility="visible"
         tools:ignore="TextContrastCheck" />
 
-    <EditText
-        android:id="@+id/editTextSearch"
+    <SearchView
+        android:id="@+id/searchViewClothing"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:hint="@string/search"
-        android:inputType="textPersonName"
-        android:textColorHint="#757575"
-        android:autofillHints="" />
+        android:layout_height="48dp"
+        android:layout_alignParentTop="true"
+        android:queryHint="Search...."
+        android:iconifiedByDefault="false"
+        />
+
 </RelativeLayout>

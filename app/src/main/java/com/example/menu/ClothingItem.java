@@ -114,4 +114,26 @@ public class ClothingItem {
         this.winter = false;
         this.all = true;
     }
+
+    public ClothingItem(ClothingItem copy) {
+        this.clothingID = copy.clothingID;
+        this.userID = copy.userID;
+        this.name = copy.name;
+        this.brand = copy.brand;
+        this.type = copy.type;
+        this.pattern = copy.pattern;
+        this.fit = copy.fit;
+        this.size = copy.size;
+        this.color1 = copy.color1;
+        this.color2 = copy.color2;
+        this.material = copy.material;
+        this.desc = copy.desc;
+        this.status = copy.status;
+        this.occasion = copy.occasion;
+        this.spring = copy.spring;
+        this.summer = copy.summer;
+        this.fall = copy.fall;
+        this.winter = copy.winter;
+        this.all = copy.all;
+    }
 }

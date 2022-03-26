@@ -10,6 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -28,17 +29,10 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
 
     private ImageView emptyImageView;
     private TextView textViewEmptyCloset;
-    private EditText editTextSearch;
+    private SearchView searchViewClothing;
 
     private List<ClothingItem> clothingItems = new ArrayList<>();
     private ClothingAdapter list;
-
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        emptyImageView = (ImageView) getView().findViewById(R.id.emptyImageView);
-        textViewEmptyCloset = (TextView) getView().findViewById(R.id.textViewEmptyCloset);
-    }
 
     @Nullable
     @Override
@@ -48,29 +42,53 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         mDatabaseHelper = new DatabaseHelper(getContext());
         emptyImageView = view.findViewById(R.id.emptyImageView);
         textViewEmptyCloset = view.findViewById(R.id.textViewEmptyCloset);
-        editTextSearch = view.findViewById(R.id.editTextSearch);
-        fillDB();
-        setUpRecycler(view);
+        searchViewClothing = view.findViewById(R.id.searchViewClothing);
+        searchViewClothing.clearFocus();
 
-        // Setting up search bar
-        editTextSearch.addTextChangedListener(new TextWatcher() {
+        searchViewClothing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
+            public boolean onQueryTextSubmit(String s) {
+                return false;
             }
 
             @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
+            public boolean onQueryTextChange(String s) {
+                filterList(s);
+                return true;
             }
         });
 
+        System.out.println(mDatabaseHelper.loggedUserTableEmpty());
+        System.out.println("***********************************************");
+        if (mDatabaseHelper.loggedUserTableEmpty()) {
+            System.out.println(mDatabaseHelper.loggedUserTableEmpty());
+            LoginScreen frag = new LoginScreen();
+            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    frag).commit();
+            //mDatabaseHelper.logginUser("1");
+        }
+
+        fillDB();
+        setUpRecycler(view);
+
         return view;
+    }
+
+    private void filterList(String s) {
+        List<ClothingItem> filteredList = new ArrayList<>();
+        ClothingItem dupe;
+        for (ClothingItem item : clothingItems) {
+            if(item.getName().toLowerCase().contains(s.toLowerCase())) {
+                filteredList.add(item);
+                dupe = new ClothingItem(item);
+            }
+            if(item.getBrand().toLowerCase().contains(s.toLowerCase())) {
+                filteredList.add(item);
+                dupe = new ClothingItem(item);
+            }
+
+
+        }
     }
 
     private void storeValuesInArrays() {
@@ -148,12 +166,6 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             mDatabaseHelper.addUser("Person4", "abcdef", "abcd-efgh");
         }
 
-        if (mDatabaseHelper.loggedUserTableEmpty()) {
-            mDatabaseHelper.logginUser("1");
-            LoginScreen frag = new LoginScreen();
-            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    frag).commit();
-        }
         int cl; // Exists for testing purposes
 
         if (mDatabaseHelper.clothingTableEmpty()) { // Fill Clothing Table
@@ -199,7 +211,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        list = new ClothingAdapter(TheClothesFragment.this, getContext(), clothingItems, this);
+        list = new ClothingAdapter(TheClothesFragment.this, clothingItems, this);
         recyclerView.setAdapter(list);
     }
 

@@ -20,7 +20,6 @@ import java.util.List;
 
 public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyViewHolder>{
 
-    private Context context;
     Fragment fragment;
 
     private List<ClothingItem> mClothingList;
@@ -28,9 +27,7 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView txtviewClothingName;
-        public TextView textViewBrand;
-        public TextView textViewType;
+        public TextView txtviewClothingName, textViewBrand, textViewType;
         itemClickInterface itemClickInterface;
         CardView mainLayout;
 
@@ -49,9 +46,8 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
         public void onClick(View view) { itemClickInterface.onItemClick(getBindingAdapterPosition());}
     } // end MyViewHolder
 
-    public ClothingAdapter(Fragment fragment, Context context, List<ClothingItem> clothingItems, itemClickInterface itemClickInterface) {
+    public ClothingAdapter(Fragment fragment, List<ClothingItem> clothingItems, itemClickInterface itemClickInterface) {
         this.fragment = fragment;
-        this.context = context;
         mClothingList = clothingItems;
         this.mItemClickInterface = itemClickInterface;
     }
