@@ -5,12 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.database.sqlite.SQLiteQuery;
 import android.telephony.CellSignalStrengthGsm;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Locale;
+import java.util.Random;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
 
@@ -32,6 +34,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CLOTHING_MATERIAL = "clothing_material";
     private static final String CLOTHING_DESCRIPTION = "clothing_description";
     private static final String CLOTHING_STATUS = "clothing_status";
+
+    // Shared Closet Table
+    private static final String SHARED_CLOSET_TABLE = "shared_closet_table";
 
     // Tags Table
     private static final String TAGS_TABLE = "tag_table";
@@ -110,6 +115,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 USER_ID + " INTEGER, " +
                 "FOREIGN KEY (" + USER_ID + ") REFERENCES " + USER_TABLE + "(" + USER_ID + "));";
 
+        db.execSQL(createTable);
+
+        // CREATE SHARED CLOSET
+        createTable = "CREATE TABLE " + SHARED_CLOSET_TABLE +
+                " ( closet_owner INTEGER, " +
+                "allowed_user INTEGER, " +
+                "FOREIGN KEY (closet_owner) REFERENCES " + USER_TABLE + "(" + USER_ID + "), " +
+                "FOREIGN KEY (allowed_user) REFERENCES " + USER_TABLE + "(" + USER_ID + "), " +
+                "PRIMARY KEY (closet_owner, allowed_user));";
         db.execSQL(createTable);
 
         // CREATE TAGS TABLE
@@ -206,12 +220,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // ADD A USER
-    public boolean addUser(String userName, String password, String key) {
+    public boolean addUser(String userName, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(USER_NAME, userName);
         contentValues.put(USER_PASSWORD,password);
-        contentValues.put(USER_KEY,key);
+        contentValues.put(USER_KEY,generateKey());
 
 
         long result = db.insert(USER_TABLE,null,contentValues);
@@ -222,6 +236,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return true; // WORKED
         }
     }
+
+    public boolean shareCloset(String key) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put("closet_owner", loggedUserID());
+        contentValues.put("allowed_user", userKeyCheck(key));
+
+        long result = db.insert(SHARED_CLOSET_TABLE,null,contentValues);
+        if (result == -1) {
+            return false; // DIDN'T WORK
+        } else {
+            return true; // WORKED
+        }
+    }
+
+
 
     // LOG-IN USER
     public boolean logginUser(String userID) {
@@ -511,6 +541,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public int userKeyCheck(String key) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT " + USER_ID +
+                " FROM " + USER_TABLE +
+                " WHERE " + USER_KEY + " = " + key;
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            if (cursor != null && cursor.getCount() > 0) {
+                cursor.moveToFirst();
+                return cursor.getInt(0);
+            }
+        }
+        return -1;
+    }
+
     // GET ALL CLOTHES
     Cursor readUsersClothing(String user_ID) {
         String query = "SELECT * FROM " + CLOTHING_TABLE +
@@ -738,5 +785,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         } else {
             Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    // OTHER----------------------------------------------------------------------------------------------------------
+    String generateKey() {
+        // list of possible values
+        String values = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
+        Random random = new Random(); // use this to generate a random number
+        String key = "";
+
+        // Key is only 8 digits long
+        for (int i = 0; i < 8; i++) {
+            key += values.charAt(random.nextInt(values.length())); // get random letter from that list ^
+        }
+
+        return key;
     }
 }

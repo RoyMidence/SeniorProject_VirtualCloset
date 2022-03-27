@@ -174,9 +174,6 @@ public class UpdateFragment extends Fragment {
             }
         }
 
-
-
-
         // Set up buttons and autoCompletes
         editTextUpdateName.setText(name); // Name of clothing at the top
 
