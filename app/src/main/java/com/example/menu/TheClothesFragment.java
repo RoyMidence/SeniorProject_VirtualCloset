@@ -168,11 +168,11 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         }
 
         if (mDatabaseHelper.userTableEmpty()) {
-            mDatabaseHelper.addUser("Roy", "abcdef");
-            mDatabaseHelper.addUser("Trevor", "abcdef");
-            mDatabaseHelper.addUser("Hadia", "abcdef");
-            mDatabaseHelper.addUser("Luis", "abcdef");
-            mDatabaseHelper.addUser("Kieran", "abcdef");
+            mDatabaseHelper.addUser("Roy Midence","Roy", "abcdef");
+            mDatabaseHelper.addUser("Trevor Ross","Trevor", "abcdef");
+            mDatabaseHelper.addUser("Hadia Majed","Hadia", "abcdef");
+            mDatabaseHelper.addUser("Luis Garcia","Luis", "abcdef");
+            mDatabaseHelper.addUser("Kieran Sylvestre","Kieran", "abcdef");
         }
 
         int cl; // Exists for testing purposes

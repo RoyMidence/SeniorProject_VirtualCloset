@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.database.sqlite.SQLiteQuery;
+import android.icu.text.SymbolTable;
 import android.telephony.CellSignalStrengthGsm;
 import android.util.Log;
 import android.widget.Toast;
@@ -37,6 +38,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // Shared Closet Table
     private static final String SHARED_CLOSET_TABLE = "shared_closet_table";
+    private static final String CLOSET_OWNER = "closet_owner";
+    private static final String ALLOWED_USER = "allowed_user";
 
     // Tags Table
     private static final String TAGS_TABLE = "tag_table";
@@ -58,6 +61,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // User Table
     private static final String USER_TABLE = "user_table";
     private static final String USER_ID = "user_id";
+    private static final String USER_FULLNAME = "user_fullname";
     private static final String  USER_NAME = "username";
     private static final String USER_PASSWORD = "user_password";
     private static final String USER_KEY = "user_key"; // randomly generated key, might get used to share closet later
@@ -87,6 +91,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         // CREATE USER TABLE
         String createTable = "CREATE TABLE " + USER_TABLE +
                 " (" + USER_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                USER_FULLNAME + " TEXT, " +
                 USER_NAME + " TEXT, " +
                 USER_PASSWORD + " TEXT, " +
                 USER_KEY + " TEXT);";
@@ -119,11 +124,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         // CREATE SHARED CLOSET
         createTable = "CREATE TABLE " + SHARED_CLOSET_TABLE +
-                " ( closet_owner INTEGER, " +
-                "allowed_user INTEGER, " +
-                "FOREIGN KEY (closet_owner) REFERENCES " + USER_TABLE + "(" + USER_ID + "), " +
-                "FOREIGN KEY (allowed_user) REFERENCES " + USER_TABLE + "(" + USER_ID + "), " +
-                "PRIMARY KEY (closet_owner, allowed_user));";
+                " (" + CLOSET_OWNER + "  INTEGER, " +
+                ALLOWED_USER + " INTEGER, " +
+                "FOREIGN KEY ("+ CLOSET_OWNER +") REFERENCES " + USER_TABLE + "(" + USER_ID + "), " +
+                "FOREIGN KEY ("+ ALLOWED_USER +") REFERENCES " + USER_TABLE + "(" + USER_ID + "), " +
+                "PRIMARY KEY ("+ CLOSET_OWNER + ", " + ALLOWED_USER +"));";
         db.execSQL(createTable);
 
         // CREATE TAGS TABLE
@@ -220,9 +225,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // ADD A USER
-    public boolean addUser(String userName, String password) {
+    public boolean addUser(String fullname, String userName, String password) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_FULLNAME, fullname);
         contentValues.put(USER_NAME, userName);
         contentValues.put(USER_PASSWORD,password);
         contentValues.put(USER_KEY,generateKey());
@@ -240,8 +246,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public boolean shareCloset(String key) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put("closet_owner", loggedUserID());
-        contentValues.put("allowed_user", userKeyCheck(key));
+        contentValues.put(CLOSET_OWNER, userKeyCheck(key));
+        contentValues.put(ALLOWED_USER, loggedUserID());
 
         long result = db.insert(SHARED_CLOSET_TABLE,null,contentValues);
         if (result == -1) {
@@ -315,6 +321,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return -1;
     }
 
+    // RETURN ID OF LAST OUTFIT MADE
     public int getLatestOutfit() {
         String query = "SELECT " + OUTFIT_ID + " FROM " + OUTFIT_TABLE +
                 " ORDER BY " + OUTFIT_ID + " DESC LIMIT 1";
@@ -478,6 +485,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    // NEXT FEW CHECKS LOOKS TO SEE IF AN ITEM IS FOR A SPECIFIC SEASON
     public boolean checkSpring(String clothingID) {
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT COUNT(*) FROM " + CLOTHING_TAGS_TABLE +
@@ -541,6 +549,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    // CHECK IF THERE IS A USER WITH THE SPECIFIED KEY
+    // RETURNS -1 IF IT DIDN'T WORK (KEY DOESN'T EXIST)
     public int userKeyCheck(String key) {
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT " + USER_ID +
@@ -570,6 +580,25 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    // GETS LIST OF EVERYONE WHO HAS ACCESS TO A USERS CLOSET
+    public Cursor readSharedUsers() {
+        String Subquery = " SELECT " + ALLOWED_USER +
+                " FROM " + SHARED_CLOSET_TABLE +
+                " WHERE " + CLOSET_OWNER + " = " + loggedUserID();
+        String Query = "SELECT " + USER_FULLNAME +
+                " FROM " + USER_TABLE +
+                " WHERE " + USER_ID + " IN " + " (" + Subquery + ")";
+
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(Query,null);
+        }
+
+        return cursor;
+    }
+
     // GET ID OF LOGGED USER
     String loggedUserID() {
         String query = "SELECT " + USER_ID + " FROM " + LOGGED_USER_TABLE;
@@ -583,6 +612,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor.getString(0);
     }
 
+    // GET THE FIRST COLOR OF AN ITEM
     public String getClothingColor1(String clothingID) {
         String result = "DIDN'T WORK!";
         String Query = "SELECT " + CLOTHING_COLOR_1 +
@@ -603,6 +633,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    // GET THE SECOND COLOR OF AN ITEM
     public String getClothingColor2(String clothingID) {
         String result = "DIDN'T WORK!";
         String Query = "SELECT " + CLOTHING_COLOR_2 +
@@ -668,6 +699,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    // GET A CLOTHING ITEMS OCCASION
     public String getOccasion(String clothingID) {
         String result = "DIDNT WORK!";
         String query = "SELECT " + TAGS_ID +
@@ -693,6 +725,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    // GET A CLOTHING ITEMS PATTERN
     public String getClothingPattern(String clothingID) {
         String result = "FAILED!!";
         String query = "SELECT " + CLOTHING_PATTERN + " FROM " + CLOTHING_TABLE +
@@ -711,6 +744,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    // CHECK HOW A CLOTHING ITEM FITS
     public String getClothingFit(String clothingID) {
         String result = "FAILED!!";
         String query = "SELECT " + CLOTHING_FIT + " FROM " + CLOTHING_TABLE +
@@ -729,6 +763,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    // UPDATE AN ITEM
     void updateData(String row_id, String name,String brand, String pattern, String c1, String c2, String fit, String type, String size, String material, String desc) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues cv = new ContentValues();
