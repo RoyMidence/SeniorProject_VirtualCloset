@@ -62,7 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String USER_TABLE = "user_table";
     private static final String USER_ID = "user_id";
     private static final String USER_FULLNAME = "user_fullname";
-    private static final String  USER_NAME = "username";
+    private static final String USER_NAME = "username";
     private static final String USER_PASSWORD = "user_password";
     private static final String USER_KEY = "user_key"; // randomly generated key, might get used to share closet later
 
@@ -333,6 +333,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             return cursor.getInt(0);
         }
         return -1;
+    }
+
+    // RETURN  LIST OF SAVED OUTFITS
+    public Cursor readUserOutfits() {
+        String query = "SELECT * FROM " +
+                OUTFIT_CLOTHING_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null)
+            cursor = db.rawQuery(query,null);
+        return cursor;
     }
 
     // GET CLOTHING DESCRIPTION
