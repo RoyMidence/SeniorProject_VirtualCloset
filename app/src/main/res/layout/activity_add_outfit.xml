@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".AddOutfit"
+    android:background="@color/purple_200">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/txtdisplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Name of Outfit:"
+            android:textSize="50sp" />
+
+        <EditText
+            android:id="@+id/ed_outfit_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txtdisplay"
+            android:hint="Press me to type" />
+
+        <TextView
+            android:id="@+id/add_outfit_tv_shirt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="140dp"
+            android:layout_toRightOf="@id/add_outfit_btn_shirt"
+            android:gravity="center"
+            android:hint="Name of shirt"
+            android:textSize="25sp"
+
+            />
+
+        <Button
+            android:id="@+id/add_outfit_btn_shirt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="135dp"
+            android:text="Add a shirt?" />
+
+        <Button
+            android:id="@+id/add_outfit_btn_pant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/add_outfit_btn_shirt"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="50dp"
+            android:text="Add a pants?" />
+
+        <TextView
+            android:id="@+id/add_outfit_tv_pant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/add_outfit_tv_shirt"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_toRightOf="@id/add_outfit_btn_pant"
+            android:gravity="center"
+            android:hint="Name of pants"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/add_outfit_btn_socks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/add_outfit_btn_pant"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="50dp"
+            android:text="Add a sock?" />
+
+        <TextView
+            android:id="@+id/add_outfit_tv_socks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/add_outfit_tv_pant"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_toRightOf="@id/add_outfit_btn_socks"
+            android:gravity="center"
+            android:hint="Name of sock"
+            android:textSize="25sp" />
+
+        <Button
+            android:id="@+id/add_outfit_btn_shoes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/add_outfit_btn_socks"
+            android:layout_marginLeft="60dp"
+            android:layout_marginTop="50dp"
+            android:text="Add Shoes?" />
+
+        <TextView
+            android:id="@+id/add_outfit_tv_shoes"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/add_outfit_tv_socks"
+            android:layout_marginHorizontal="30dp"
+            android:layout_marginTop="50dp"
+            android:layout_toRightOf="@id/add_outfit_btn_shoes"
+            android:gravity="center"
+            android:hint="Name of shoes"
+            android:textSize="25sp" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/previous_screen_outfit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_previous"
+            app:fabSize="normal" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_outfits_fab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_add"
+            app:fabSize="normal" />
+
+
+
+
+    </RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

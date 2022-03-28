@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android ="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/outfit_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="25dp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true"
+    >
+
+
+    <GridLayout
+        android:layout_width="190dp"
+        android:layout_height="120dp"
+        android:background="@color/purple_700"
+        android:columnCount="2"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/outfitname"
+            android:layout_margin="16dp"
+            android:text="MY FIRST OUTFIT"
+            android:textSize="30sp"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            >
+
+        </TextView>
+
+
+
+    </GridLayout>
+
+
+</androidx.cardview.widget.CardView>

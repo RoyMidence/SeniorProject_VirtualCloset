@@ -1,5 +1,6 @@
 package com.example.menu;
 
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -16,72 +17,65 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
+public class OutfitAdapter extends RecyclerView.Adapter<OutfitAdapter.MyViewHolder> {
 
-public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyViewHolder>{
+    private Context context;
+    Fragment fragment;
 
-    private List<ClothingItem> mClothingList;
+    private ArrayList<String> Outfitname;
     private itemClickInterface mItemClickInterface;
-
+    private  ArrayList<String> outfitId;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-        public TextView txtviewClothingName, textViewBrand, textViewType;
-        itemClickInterface itemClickInterface;
+        public TextView txtviewOutfitName;
+
+       itemClickInterface itemClickInterface;
         CardView mainLayout;
 
         public MyViewHolder(View view, itemClickInterface itemClickInterface) {
             super(view);
-            txtviewClothingName = (TextView) view.findViewById(R.id.txtViewClothingName);
-            textViewBrand = (TextView) view.findViewById(R.id.textViewBrand);
-            textViewType = (TextView) view.findViewById(R.id.textViewType);
-            mainLayout = itemView.findViewById(R.id.mainLayout);
+            txtviewOutfitName = (TextView) view.findViewById(R.id.outfitname);
+            mainLayout = itemView.findViewById(R.id.outfit_layout);
             this.itemClickInterface = itemClickInterface;
 
             itemView.setOnClickListener(this);
         }
-
         @Override
         public void onClick(View view) { itemClickInterface.onItemClick(getBindingAdapterPosition());}
     } // end MyViewHolder
-
-    public ClothingAdapter(List<ClothingItem> clothingItems, itemClickInterface itemClickInterface) {
-        mClothingList = clothingItems;
+    public OutfitAdapter(Fragment fragment, Context context, ArrayList<String> outfitname,ArrayList<String> outfitId, itemClickInterface itemClickInterface) {
+        this.fragment = fragment;
+        this.context = context;
+        this.Outfitname= outfitname;
         this.mItemClickInterface = itemClickInterface;
+        this.outfitId = outfitId;
     }
-
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.clothing_recyclerview_item, parent, false);
+                .inflate(R.layout.outfit_recycleview_item, parent, false);
         return new MyViewHolder(itemView, mItemClickInterface);
     }
-
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
-        String clothing = mClothingList.get(position).getName();
-        String brand = mClothingList.get(position).getBrand();
-        String type = mClothingList.get(position).getType();
+        String name = Outfitname.get(position);
 
-        holder.txtviewClothingName.setText(clothing);
-        holder.textViewType.setText(type);
-        holder.textViewBrand.setText(brand);
+        holder.txtviewOutfitName.setText(name);
+
     }
-
     @Override
-    public int getItemCount() {
-        return mClothingList.size();
-    }
+    public int getItemCount() { return Outfitname.size();}
 
-    public void setData(List<ClothingItem> clothingItems) {
-        mClothingList = clothingItems;
+    public void setData(ArrayList<String> outfits,ArrayList<String>outfitId) {
+        Outfitname = outfits;
+        outfitId = outfitId;
         notifyDataSetChanged();
     }
 
-    // Attempting to solve above issue using interface
+
     public interface itemClickInterface {
         void onItemClick(int position);
     }
-
-    // other code
-    // goes here…
 }

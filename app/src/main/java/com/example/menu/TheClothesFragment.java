@@ -1,28 +1,22 @@
 package com.example.menu;
 
+
 import android.database.Cursor;
-import android.media.Image;
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.SearchView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
 
 public class TheClothesFragment extends Fragment implements ClothingAdapter.itemClickInterface {
     private DatabaseHelper mDatabaseHelper;
@@ -30,9 +24,15 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
     private ImageView emptyImageView;
     private TextView textViewEmptyCloset;
     private SearchView searchViewClothing;
-
     private List<ClothingItem> clothingItems = new ArrayList<>();
     private ClothingAdapter list;
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        emptyImageView = (ImageView) getView().findViewById(R.id.emptyImageView);
+        textViewEmptyCloset = (TextView) getView().findViewById(R.id.textViewEmptyCloset);
+    }
 
     @Nullable
     @Override
@@ -43,8 +43,8 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         emptyImageView = view.findViewById(R.id.emptyImageView);
         textViewEmptyCloset = view.findViewById(R.id.textViewEmptyCloset);
         searchViewClothing = view.findViewById(R.id.searchViewClothing);
-        searchViewClothing.clearFocus();
-
+        fillDB();
+        setUpRecycler(view);
         searchViewClothing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -58,52 +58,15 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             }
         });
 
-        fillDB();
-        setUpRecycler(view);
-
         return view;
-    }
-
-    private void filterList(String s) {
-        s = s.trim(); // gets rid of extra spaces
-        while (s.indexOf(" ") != -1) { // Theres multiple words
-            s = s.substring(s.indexOf(" "));
-            s = s.trim();
-        }
-
-        List<ClothingItem> rawList = new ArrayList<>(); // Might grab duplicates
-        List<ClothingItem> filteredList = new ArrayList<>(); // Will have no duplicates
-        for (ClothingItem item : clothingItems) {
-            if (item.getName().toLowerCase().contains(s.toLowerCase())) {
-                rawList.add(item);
-
-            }
-            if (item.getBrand().toLowerCase().contains(s.toLowerCase())) {
-                rawList.add(item);
-            }
-            if (item.getType().toLowerCase().contains(s.toLowerCase())) {
-                rawList.add(item);
-            }
-        }
-
-        if (rawList.isEmpty()) {
-
-        } else {
-            for (ClothingItem item :  rawList) {
-                if (!filteredList.contains(item))
-                    filteredList.add(item);
-            }
-            list.setData(filteredList);
-        }
-
-
     }
 
     private void storeValuesInArrays() {
         ClothingItem CI;
+        clothingItems.clear();
 
 
-        Cursor cursor = mDatabaseHelper.readUsersClothing(mDatabaseHelper.loggedUserID());
+        Cursor cursor = mDatabaseHelper.readUsersClothing();
         if (cursor.getCount() == 0) {
             emptyImageView.setVisibility(View.VISIBLE);
             textViewEmptyCloset.setVisibility(View.VISIBLE);
@@ -147,12 +110,34 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         bundle.putString("name", String.valueOf(clothingItems.get(position).getName()));
         bundle.putString("brand", String.valueOf(clothingItems.get(position).getBrand()));
         bundle.putString("type",String.valueOf(clothingItems.get(position).getType()));
+        bundle.putString("fit", String.valueOf(clothingItems.get(position).getFit()));
         UpdateFragment frag = new UpdateFragment();
         frag.setArguments(bundle);
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                frag).commit();
+                frag).addToBackStack(null).commit();
     }
+    private void filterList(String s) {
+        s = s.trim(); // gets rid of extra spaces
+        while (s.indexOf(" ") != -1) { // Theres multiple words
+            s = s.substring(s.indexOf(" "));
+            s = s.trim();
+        }
 
+        List<ClothingItem> rawList = new ArrayList<>(); // Might grab duplicates
+        List<ClothingItem> filteredList = new ArrayList<>(); // Will have no duplicates
+        for (ClothingItem item : clothingItems) {
+            if (item.getName().toLowerCase().contains(s.toLowerCase())) {
+                rawList.add(item);
+
+            }
+            if (item.getBrand().toLowerCase().contains(s.toLowerCase())) {
+                rawList.add(item);
+            }
+            if (item.getType().toLowerCase().contains(s.toLowerCase())) {
+                rawList.add(item);
+            }
+        }
+    }
     private void fillDB() {
         // I use this to fill database
         // Checking if my lap top is connected to github
@@ -168,13 +153,18 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         }
 
         if (mDatabaseHelper.userTableEmpty()) {
-            mDatabaseHelper.addUser("Roy Midence","Roy", "abcdef");
-            mDatabaseHelper.addUser("Trevor Ross","Trevor", "abcdef");
-            mDatabaseHelper.addUser("Hadia Majed","Hadia", "abcdef");
-            mDatabaseHelper.addUser("Luis Garcia","Luis", "abcdef");
-            mDatabaseHelper.addUser("Kieran Sylvestre","Kieran", "abcdef");
+            mDatabaseHelper.addUser("Person1", "abcdef", "abcd-efgh");
+            mDatabaseHelper.addUser("Person2", "abcdef", "abcd-efgh");
+            mDatabaseHelper.addUser("Person3", "abcdef", "abcd-efgh");
+            mDatabaseHelper.addUser("Person4", "abcdef", "abcd-efgh");
         }
 
+        if (mDatabaseHelper.loggedUserTableEmpty()) {
+            mDatabaseHelper.logginUser("1");
+            LoginScreen frag = new LoginScreen();
+            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    frag).commit();
+        }
         int cl; // Exists for testing purposes
 
         if (mDatabaseHelper.clothingTableEmpty()) { // Fill Clothing Table
@@ -192,7 +182,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             mDatabaseHelper.addTag("Spring", cl);
             mDatabaseHelper.addTag("Summer", cl);
             mDatabaseHelper.addTag("Winter", cl);
-            AddData("Fish Hat","No Clue","Solid","Blue", "","Mens", "Hat","One Size","Polyester","");
+            AddData("Fish Hat","No Clue","Solid","Blue", "","Unisex", "Hat","One Size","Polyester","");
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
@@ -220,7 +210,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        list = new ClothingAdapter(TheClothesFragment.this, clothingItems, this);
+        list = new ClothingAdapter(clothingItems, this);
         recyclerView.setAdapter(list);
     }
 }

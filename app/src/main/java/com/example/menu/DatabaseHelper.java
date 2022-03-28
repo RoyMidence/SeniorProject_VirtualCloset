@@ -62,7 +62,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String USER_TABLE = "user_table";
     private static final String USER_ID = "user_id";
     private static final String USER_FULLNAME = "user_fullname";
-    private static final String  USER_NAME = "username";
+    private static final String USER_NAME = "username";
     private static final String USER_PASSWORD = "user_password";
     private static final String USER_KEY = "user_key"; // randomly generated key, might get used to share closet later
 
@@ -209,13 +209,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // METHOD FOR ADDING CLOTHING TO AN OUTFIT
-    public boolean addClothingToOutfit(int clothingID) {
+    public boolean addClothingToOutfit(String clothingID) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(OUTFIT_ID, getLatestOutfit());
         contentValues.put(CLOTHING_ID, clothingID);
 
-        long result = db.insert(OUTFIT_TABLE, null, contentValues);
+        long result = db.insert(OUTFIT_CLOTHING_TABLE, null, contentValues);
 
         if (result == -1) {
             return false;
@@ -335,6 +335,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return -1;
     }
 
+    // RETURN  LIST OF SAVED OUTFITS
+    public Cursor readUserOutfits() {
+        String query = "SELECT * FROM " +
+                OUTFIT_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null)
+            cursor = db.rawQuery(query,null);
+        return cursor;
+    }
+
     // GET CLOTHING DESCRIPTION
     public String getClothingDescription(String clothingID) {
         String result = "FAILED!!";
@@ -395,6 +407,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // CHECK IF TAGS TABLE EMPTY
     public boolean clothingTableEmpty() {
         String query = "SELECT COUNT(*) FROM " + CLOTHING_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    // Check if Outfit table is empty
+    public boolean outfitTableEmpty() {
+        String query = "SELECT COUNT(*) FROM " + OUTFIT_TABLE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {
@@ -508,9 +534,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // GET ALL CLOTHES
-    Cursor readUsersClothing(String user_ID) {
+    Cursor readUsersClothing() {
         String query = "SELECT * FROM " + CLOTHING_TABLE +
-                " WHERE " + USER_ID + " = " + user_ID;
+                " WHERE " + USER_ID + " = " + loggedUserID();
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null)
+            cursor = db.rawQuery(query, null);
+        return cursor;
+    }
+
+    Cursor readOutfitClothing(String outfitID) {
+        String Subquery = " SELECT " + CLOTHING_ID +
+                " FROM " + OUTFIT_CLOTHING_TABLE +
+                " WHERE " + OUTFIT_ID + " = " + outfitID;
+        String query = "SELECT * FROM " + CLOTHING_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID() +
+                " AND " + CLOTHING_ID + " IN " + "(" + Subquery + ")";
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
@@ -578,6 +619,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String Query = "SELECT " + CLOTHING_COLOR_2 +
                 " FROM " + CLOTHING_TABLE +
                 " WHERE " +  CLOTHING_ID + " = " + clothingID;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(Query, null);
+            result = "";
+            while (cursor.moveToNext()) {
+                result += cursor.getString(0);
+            }
+            return result;
+        }
+
+        return result;
+    }
+
+    public String getClothingType(String clothingID) {
+        String result = "DIDN'T WORK!";
+        String Query = "SELECT " + CLOTHING_TYPE +
+                " FROM " + CLOTHING_TABLE +
+                " WHERE " +  CLOTHING_ID + " = " + clothingID ;
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
@@ -824,6 +885,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
     }
 
+    void updateOutfit() {
+
+    }
+
     // DELETES --------------------------------------------------------------------------------------------------------------------------------------
 
     // Delete one clothing item
@@ -866,6 +931,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + SHARED_CLOSET_TABLE +
                 " WHERE " + CLOSET_OWNER + " = " + loggedUserID() +
                 " AND " + ALLOWED_USER + " = " + userID);
+    }
+
+    void deleteClothingItemFromOutfit(String outfitID, String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + OUTFIT_CLOTHING_TABLE +
+                " WHERE " + OUTFIT_ID + " = " + outfitID +
+                " AND " + CLOTHING_ID + " = " + clothingID);
+    }
+
+    void deleteAllClothingFromOutfit(String outfitID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + OUTFIT_CLOTHING_TABLE +
+                " WHERE " + OUTFIT_ID + " = " + outfitID);
+    }
+
+    void deleteOutfit(String outfitID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + OUTFIT_CLOTHING_TABLE +
+                " WHERE " + OUTFIT_ID + " = " + outfitID);
+        db.execSQL("DELETE FROM " + OUTFIT_TABLE +
+                " WHERE " + OUTFIT_ID + " = " + outfitID);
     }
 
 
