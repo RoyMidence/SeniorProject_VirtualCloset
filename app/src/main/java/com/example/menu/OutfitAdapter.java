@@ -67,6 +67,13 @@ public class OutfitAdapter extends RecyclerView.Adapter<OutfitAdapter.MyViewHold
     public int getItemCount() {
         return Outfitname.size();
     }
+
+    public void setData(List<String> outfits) {
+        Outfitname = outfits;
+        notifyDataSetChanged();
+    }
+
+
     public interface itemClickInterface {
         void onItemClick(int position);
     }

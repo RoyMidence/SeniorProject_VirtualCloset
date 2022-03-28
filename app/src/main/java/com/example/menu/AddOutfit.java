@@ -21,34 +21,31 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
-
-import com.example.menu.databinding.ActivityAddOutfitBinding;
+import java.util.List;
 
 public class AddOutfit extends AppCompatActivity {
-
-    private AppBarConfiguration appBarConfiguration;
-    private ActivityAddOutfitBinding binding;
     private EditText ed_name;
     private TextView shirt,pants,socks,shoes;
-    private String type,brand,name,id_of_shirt,id_of_pants,id_of_socks,id_of_shoes;
+    private String name,id_of_shirt,id_of_pants,id_of_socks,id_of_shoes;
     private DatabaseHelper mDatabaseHelper;
+    private List<String> list;
     ActivityResultLauncher<Intent> otherActivityLauncher;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_add_outfit);
 
-        binding = ActivityAddOutfitBinding.inflate(getLayoutInflater());
-        setContentView(binding.getRoot());
         ed_name = (EditText) findViewById(R.id.ed_outfit_name);
         shirt = (TextView)  findViewById(R.id.add_outfit_tv_shirt);
         pants = (TextView) findViewById(R.id.add_outfit_tv_pant);
         socks = (TextView) findViewById(R.id.add_outfit_tv_socks);
         shoes = (TextView) findViewById(R.id.add_outfit_tv_shoes);
+
+        list = getIntent().getExtras().getStringArrayList("list");
+
+
+
         FloatingActionButton fab_add = (FloatingActionButton)findViewById(R.id.add_outfits_fab);
         configureButtons();
         mDatabaseHelper = new DatabaseHelper(getApplicationContext());
@@ -120,6 +117,12 @@ public class AddOutfit extends AppCompatActivity {
                     mDatabaseHelper.addClothingToOutfit(id_of_shirt);
                     mDatabaseHelper.addClothingToOutfit(id_of_pants);
                     mDatabaseHelper.addClothingToOutfit(id_of_shoes);
+
+                    list.add(String.valueOf(ed_name.getText()));
+
+                    Intent resultIntent = new Intent();
+                    resultIntent.putExtra("name", name);
+                    setResult(0,resultIntent);
                     finish();
 
                }

@@ -4,6 +4,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
@@ -27,6 +31,8 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
     private List<String> outfit_name = new ArrayList<>();
     private DatabaseHelper mDatabaseHelper;
     private TextView textViewEmptyCloset;
+    private OutfitAdapter outfitAdapter;
+    ActivityResultLauncher<Intent> otherActivityLauncher;
 
 
 
@@ -45,6 +51,26 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
         mDatabaseHelper =  new DatabaseHelper(getContext());
         textViewEmptyCloset = (TextView) v.findViewById(R.id.textViewEmpty_Outfit);
 
+
+        // Method for getting ready to receive data
+        // For Kieran this will go in the onCreate method in addOutfit
+        otherActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == 0) {
+                            Intent resultIntent = result.getData();
+                            if (resultIntent != null) {
+                                List<String> newList =  resultIntent.getStringArrayListExtra("list");
+                                outfitAdapter.setData(newList);
+                            }
+                        }
+                    }
+                });
+
+
+
+
         configureFabButton();
         fillDB();
         storeValuesInArray();
@@ -52,7 +78,8 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
         RecyclerView.LayoutManager layoutManager =
                 new GridLayoutManager(getContext(),2);
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new OutfitAdapter(OutfitFragment.this, getContext(),outfit_name,this));
+        outfitAdapter = new OutfitAdapter(OutfitFragment.this, getContext(),outfit_name,this);
+        recyclerView.setAdapter(outfitAdapter);
     return v;
     }
     private void configureFabButton() {
@@ -63,7 +90,7 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
 
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddOutfit.class);
-                startActivity(intent);
+                otherActivityLauncher.launch(intent);
             }
 
         });
