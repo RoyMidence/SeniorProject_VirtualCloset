@@ -279,6 +279,16 @@
             app:layout_constraintStart_toStartOf="@+id/textView4"
             app:layout_constraintTop_toBottomOf="@+id/textView4" />
 
+        <AutoCompleteTextView
+            android:id="@+id/autoCompleteTextViewFit"
+            android:layout_width="147dp"
+            android:layout_height="48dp"
+            android:layout_marginEnd="8dp"
+            android:hint="@string/fit"
+            android:textAlignment="center"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/autoCompletePattern" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </FrameLayout>

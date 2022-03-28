@@ -28,7 +28,7 @@ public class UpdateFragment extends Fragment {
 
     AutoCompleteTextView autoCompleteBrand, autoCompleteType, autoCompleteMaterial, autoCompleteGeneral,
             autoCompletePants1, autoCompletePants2, autoCompletePattern, autoCompleteColor1, autoCompleteColor2,
-            autoCompleteOccasion;
+            autoCompleteOccasion, autoCompleteTextViewFit;
 
     CheckBox checkBoxSpring, checkBoxSummer, checkBoxFall, checkBoxWinter;
 
@@ -89,7 +89,12 @@ public class UpdateFragment extends Fragment {
             "Formal", "Casual", "Athletic"
     };
 
-    String name, ID, brand, type, material, size, c1, c2, pattern, occasion, weather;
+    // Fit for Clothing
+    private static final String[] FIT = new String[] {
+            "Mens", "Womens", "Unisex"
+    };
+
+    String name, ID, brand, type, material, size, c1, c2, pattern, occasion, weather,fit;
 
     public UpdateFragment() {
 
@@ -119,6 +124,7 @@ public class UpdateFragment extends Fragment {
         autoCompleteColor1 = view.findViewById(R.id.autoCompleteColor1);
         autoCompleteColor2 = view.findViewById(R.id.autoCompleteColor2);
         autoCompleteOccasion = view.findViewById(R.id.autoCompleteOccasion);
+        autoCompleteTextViewFit = view.findViewById(R.id.autoCompleteTextViewFit);
 
         // Setting up radio buttons
         checkBoxSpring = view.findViewById(R.id.checkBoxSpring);
@@ -132,6 +138,7 @@ public class UpdateFragment extends Fragment {
         name = bundle.getString("name");
         brand = bundle.getString("brand");
         type = bundle.getString("type");
+        fit = bundle.getString("fit");
         material = db.getClothingMaterial(ID);
         size = db.getClothingSize(ID);
         c1 = db.getClothingColor1(ID);
@@ -301,6 +308,12 @@ public class UpdateFragment extends Fragment {
         autoCompleteOccasion.setAdapter(occasionAdapter);
         autoCompleteOccasion.setText(occasion);
 
+        // autoCompleteMaterial set up
+        ArrayAdapter<String> FitAdapter = new ArrayAdapter<String>(getContext(),
+                android.R.layout.simple_list_item_1,FIT);
+        autoCompleteTextViewFit.setAdapter(FitAdapter);
+        autoCompleteTextViewFit.setText(fit);
+
         // UPDATE BUTTON (Save Icon)
         floatingActionButtonUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -309,6 +322,7 @@ public class UpdateFragment extends Fragment {
                 name = editTextUpdateName.getText().toString();
                 brand = autoCompleteBrand.getText().toString();
                 type = autoCompleteType.getText().toString();
+                fit = autoCompleteTextViewFit.getText().toString();
                 material = autoCompleteMaterial.getText().toString();
                 String desc = editTextDescription.getText().toString();
                 pattern = autoCompletePattern.getText().toString();
@@ -320,9 +334,6 @@ public class UpdateFragment extends Fragment {
                     c2 = "";
                 }
 
-
-
-
                 // gotta check if pants and reformat size again
                 if (type.equalsIgnoreCase("Pants"))
                 {
@@ -331,7 +342,7 @@ public class UpdateFragment extends Fragment {
                 else { size = autoCompleteGeneral.getText().toString();} // As long as it not pants all good
 
 
-                db.updateData(ID,name, brand,pattern,c1,c2, db.getClothingFit(ID), type, size,material,desc); // hopefully it worked lol, updated clothing table
+                db.updateData(ID,name, brand,pattern,c1,c2, fit, type, size,material,desc); // hopefully it worked lol, updated clothing table
 
                 // Lets update tags and colors
                 // Start by delete all current values

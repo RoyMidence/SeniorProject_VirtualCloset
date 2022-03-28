@@ -17,6 +17,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -101,6 +103,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
 
     private void storeValuesInArrays() {
         ClothingItem CI;
+        clothingItems.clear();
 
 
         Cursor cursor = mDatabaseHelper.readUsersClothing(mDatabaseHelper.loggedUserID());
@@ -147,10 +150,11 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         bundle.putString("name", String.valueOf(clothingItems.get(position).getName()));
         bundle.putString("brand", String.valueOf(clothingItems.get(position).getBrand()));
         bundle.putString("type",String.valueOf(clothingItems.get(position).getType()));
+        bundle.putString("fit", String.valueOf(clothingItems.get(position).getFit()));
         UpdateFragment frag = new UpdateFragment();
         frag.setArguments(bundle);
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                frag).commit();
+                frag).addToBackStack(null).commit();
     }
 
     private void fillDB() {
@@ -192,7 +196,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             mDatabaseHelper.addTag("Spring", cl);
             mDatabaseHelper.addTag("Summer", cl);
             mDatabaseHelper.addTag("Winter", cl);
-            AddData("Fish Hat","No Clue","Solid","Blue", "","Mens", "Hat","One Size","Polyester","");
+            AddData("Fish Hat","No Clue","Solid","Blue", "","Unisex", "Hat","One Size","Polyester","");
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
