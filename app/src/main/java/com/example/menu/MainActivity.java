@@ -39,10 +39,10 @@ private DatabaseHelper mDatabaseHelper;
         }
 
         if (mDatabaseHelper.userTableEmpty()) {
-            mDatabaseHelper.addUser("Person1", "abcdef", "abcd-efgh");
-            mDatabaseHelper.addUser("Person2", "abcdef", "abcd-efgh");
-            mDatabaseHelper.addUser("Person3", "abcdef", "abcd-efgh");
-            mDatabaseHelper.addUser("Person4", "abcdef", "abcd-efgh");
+            mDatabaseHelper.addUser("Person1", "Roy", "abcd");
+            mDatabaseHelper.addUser("Person2", "abcdef", "abcd");
+            mDatabaseHelper.addUser("Person3", "abcdef", "abcd");
+            mDatabaseHelper.addUser("Person4", "abcdef", "abcd");
         }
 
         Toolbar toolbar = findViewById(R.id.toolbar);
