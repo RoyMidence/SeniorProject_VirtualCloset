@@ -32,7 +32,7 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
     private DatabaseHelper mDatabaseHelper;
     private TextView textViewEmptyCloset;
     private OutfitAdapter outfitAdapter;
-    private ArrayList<String> outfitId;
+    private ArrayList<String> outfitId = new ArrayList<>();
     ActivityResultLauncher<Intent> otherActivityLauncher;
 
 
@@ -100,6 +100,7 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
 
     private void storeValuesInArray(){
         outfit_name.clear();
+        outfitId.clear();
 
         Cursor cursor = mDatabaseHelper.readUserOutfits();
         if (cursor.getCount() == 0) {

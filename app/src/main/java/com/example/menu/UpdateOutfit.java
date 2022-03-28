@@ -14,16 +14,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.itemClickInterface {
-    String outfitID;
+    String outfitID, outfitName;
+    int position;
 
     private EditText editTextOutfitName;
     private Button buttonAddToOutfit;
 
-    private ArrayList<String> list;
+    private ArrayList<String> list = new ArrayList<>();
 
     private RecyclerView recyclerViewUpdateClothing;
     private ClothingAdapter clothingAdapter;
-    private List<ClothingItem> outfitClothing;
+    private List<ClothingItem> outfitClothing = new ArrayList<>();
 
     DatabaseHelper mDatabaseHelper;
 
@@ -37,11 +38,12 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
         buttonAddToOutfit = findViewById(R.id.buttonAddToOutfit);
 
 
+        position = getIntent().getExtras().getInt("itemposition");
         outfitID = getIntent().getExtras().getString("outfitID");
-        list = getIntent().getExtras().getStringArrayList("list");
-
-
+        list = getIntent().getExtras().getStringArrayList("namelist");
         setUpRecycler();
+
+
 
     }
 
@@ -63,7 +65,7 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
 
         Cursor cursor = mDatabaseHelper.readOutfitClothing(outfitID);
         while (cursor.moveToNext()) {
-            // CLOTHING TABLE:  clothingID  : NAME  : BRAND : TYPE  : PATTERN : FIR : SIZE : COLOR1 : COLOR2 : MATERIAL : DESC : STATUS : userID
+            // CLOTHING TABLE:  clothingID  : NAME  : BRAND : TYPE  : PATTERN : FIT : SIZE : COLOR1 : COLOR2 : MATERIAL : DESC : STATUS : userID
             String id = cursor.getString(0);
             CI = new ClothingItem(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3), cursor.getString(4),
                     cursor.getString(5),cursor.getString(6),cursor.getString(7),cursor.getString(8),

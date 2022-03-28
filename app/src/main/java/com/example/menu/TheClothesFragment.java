@@ -213,16 +213,4 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         list = new ClothingAdapter(clothingItems, this);
         recyclerView.setAdapter(list);
     }
-
-    private void filter(String s) {
-        List<String> filteredName = new ArrayList<>();
-        List<String> filteredID = new ArrayList<>();
-        List<String> filteredBrand = new ArrayList<>();
-        List<String> filteredType = new ArrayList<>();
-
-        for (int i = 0; i < list.getItemCount(); i++) {
-            //if()
-
-        }
-    }
 }
