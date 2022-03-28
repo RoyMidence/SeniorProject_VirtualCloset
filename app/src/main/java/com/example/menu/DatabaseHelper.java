@@ -885,6 +885,10 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
     }
 
+    void updateOutfit() {
+
+    }
+
     // DELETES --------------------------------------------------------------------------------------------------------------------------------------
 
     // Delete one clothing item
@@ -927,6 +931,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + SHARED_CLOSET_TABLE +
                 " WHERE " + CLOSET_OWNER + " = " + loggedUserID() +
                 " AND " + ALLOWED_USER + " = " + userID);
+    }
+
+    void deleteClothingItemFromOutfit(String outfitID, String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + OUTFIT_CLOTHING_TABLE +
+                " WHERE " + OUTFIT_ID + " = " + outfitID +
+                " AND " + CLOTHING_ID + " = " + clothingID);
+    }
+
+    void deleteAllClothingFromOutfit(String outfitID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + OUTFIT_CLOTHING_TABLE +
+                " WHERE " + OUTFIT_ID + " = " + outfitID);
+    }
+
+    void deleteOutfit(String outfitID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + OUTFIT_CLOTHING_TABLE +
+                " WHERE " + OUTFIT_ID + " = " + outfitID);
+        db.execSQL("DELETE FROM " + OUTFIT_TABLE +
+                " WHERE " + OUTFIT_ID + " = " + outfitID);
     }
 
 

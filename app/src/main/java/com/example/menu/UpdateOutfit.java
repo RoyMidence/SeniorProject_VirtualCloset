@@ -1,9 +1,11 @@
 package com.example.menu;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.DialogInterface;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +17,7 @@ import java.util.List;
 
 public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.itemClickInterface {
     String outfitID, outfitName;
-    int position;
+    int outfitPosition;
 
     private EditText editTextOutfitName;
     private Button buttonAddToOutfit;
@@ -38,7 +40,7 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
         buttonAddToOutfit = findViewById(R.id.buttonAddToOutfit);
 
 
-        position = getIntent().getExtras().getInt("itemposition");
+        outfitPosition = getIntent().getExtras().getInt("itemposition");
         outfitID = getIntent().getExtras().getString("outfitID");
         list = getIntent().getExtras().getStringArrayList("namelist");
         setUpRecycler();
@@ -77,7 +79,29 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
 
     @Override
     public void onItemClick(int position) {
+        confirmDialog(position);
+    }
 
+    void confirmDialog(int pos) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setTitle("Remove " + outfitClothing.get(pos).getName() + "From Outfit?");
+        builder.setMessage("Are you sure you want to remove " + outfitClothing.get(pos).getName() + "from this outfit?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Data to delete
+                mDatabaseHelper.deleteClothingItemFromOutfit(outfitID,String.valueOf(outfitClothing.get(pos).getClothingID()));
+                storeValuesInArrays();
+                clothingAdapter.setData(outfitClothing);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create().show();
     }
 
 
