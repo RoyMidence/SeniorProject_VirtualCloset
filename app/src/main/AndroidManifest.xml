@@ -10,6 +10,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Menu">
         <activity
+            android:name=".SelectClothes"
+            android:exported="false" />
+        <activity
+            android:name=".AddOutfit"
+            android:exported="false"
+
+            android:theme="@style/Theme.Menu.NoActionBar" />
+        <activity
             android:name=".MainActivity"
             android:exported="true"
             android:theme="@style/AppTheme.NoActionBar">

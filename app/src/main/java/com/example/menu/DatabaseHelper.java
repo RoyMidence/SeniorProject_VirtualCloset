@@ -209,7 +209,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // METHOD FOR ADDING CLOTHING TO AN OUTFIT
-    public boolean addClothingToOutfit(int clothingID) {
+    public boolean addClothingToOutfit(String clothingID) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(OUTFIT_ID, getLatestOutfit());
@@ -338,7 +338,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // RETURN  LIST OF SAVED OUTFITS
     public Cursor readUserOutfits() {
         String query = "SELECT * FROM " +
-                OUTFIT_CLOTHING_TABLE +
+                OUTFIT_TABLE +
                 " WHERE " + USER_ID + " = " + loggedUserID();
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
@@ -407,6 +407,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // CHECK IF TAGS TABLE EMPTY
     public boolean clothingTableEmpty() {
         String query = "SELECT COUNT(*) FROM " + CLOTHING_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+    // Check if Outfit table is empty
+    public boolean outfitTableEmpty() {
+        String query = "SELECT COUNT(*) FROM " + OUTFIT_TABLE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {
@@ -530,6 +544,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor = db.rawQuery(query, null);
         return cursor;
     }
+//    Cursor readUsersOutfit(String user_ID){
+//        String query = "SELECT * FROM " + OUTFIT_TABLE +
+//                " WHERE " + USER_ID + " = " + user_ID;
+//        SQLiteDatabase db = this.getReadableDatabase();
+//
+//        Cursor cursor = null;
+//        if (db != null)
+//            cursor = db.rawQuery(query, null);
+//        return cursor;
+//    }
 
     // GETS LIST OF EVERYONE WHO HAS ACCESS TO A USERS CLOSET
     public Cursor readSharedUsers() {
@@ -590,6 +614,26 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String Query = "SELECT " + CLOTHING_COLOR_2 +
                 " FROM " + CLOTHING_TABLE +
                 " WHERE " +  CLOTHING_ID + " = " + clothingID;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(Query, null);
+            result = "";
+            while (cursor.moveToNext()) {
+                result += cursor.getString(0);
+            }
+            return result;
+        }
+
+        return result;
+    }
+
+    public String getClothingType(String clothingID) {
+        String result = "DIDN'T WORK!";
+        String Query = "SELECT " + CLOTHING_TYPE +
+                " FROM " + CLOTHING_TABLE +
+                " WHERE " +  CLOTHING_ID + " = " + clothingID ;
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;

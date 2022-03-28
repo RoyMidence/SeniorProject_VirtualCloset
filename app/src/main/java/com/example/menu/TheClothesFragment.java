@@ -32,9 +32,15 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
     private ImageView emptyImageView;
     private TextView textViewEmptyCloset;
     private SearchView searchViewClothing;
-
     private List<ClothingItem> clothingItems = new ArrayList<>();
     private ClothingAdapter list;
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        emptyImageView = (ImageView) getView().findViewById(R.id.emptyImageView);
+        textViewEmptyCloset = (TextView) getView().findViewById(R.id.textViewEmptyCloset);
+    }
 
     @Nullable
     @Override
@@ -45,8 +51,8 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         emptyImageView = view.findViewById(R.id.emptyImageView);
         textViewEmptyCloset = view.findViewById(R.id.textViewEmptyCloset);
         searchViewClothing = view.findViewById(R.id.searchViewClothing);
-        searchViewClothing.clearFocus();
-
+        fillDB();
+        setUpRecycler(view);
         searchViewClothing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -60,45 +66,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             }
         });
 
-        fillDB();
-        setUpRecycler(view);
-
         return view;
-    }
-
-    private void filterList(String s) {
-        s = s.trim(); // gets rid of extra spaces
-        while (s.indexOf(" ") != -1) { // Theres multiple words
-            s = s.substring(s.indexOf(" "));
-            s = s.trim();
-        }
-
-        List<ClothingItem> rawList = new ArrayList<>(); // Might grab duplicates
-        List<ClothingItem> filteredList = new ArrayList<>(); // Will have no duplicates
-        for (ClothingItem item : clothingItems) {
-            if (item.getName().toLowerCase().contains(s.toLowerCase())) {
-                rawList.add(item);
-
-            }
-            if (item.getBrand().toLowerCase().contains(s.toLowerCase())) {
-                rawList.add(item);
-            }
-            if (item.getType().toLowerCase().contains(s.toLowerCase())) {
-                rawList.add(item);
-            }
-        }
-
-        if (rawList.isEmpty()) {
-
-        } else {
-            for (ClothingItem item :  rawList) {
-                if (!filteredList.contains(item))
-                    filteredList.add(item);
-            }
-            list.setData(filteredList);
-        }
-
-
     }
 
     private void storeValuesInArrays() {
@@ -156,7 +124,28 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 frag).addToBackStack(null).commit();
     }
+    private void filterList(String s) {
+        s = s.trim(); // gets rid of extra spaces
+        while (s.indexOf(" ") != -1) { // Theres multiple words
+            s = s.substring(s.indexOf(" "));
+            s = s.trim();
+        }
 
+        List<ClothingItem> rawList = new ArrayList<>(); // Might grab duplicates
+        List<ClothingItem> filteredList = new ArrayList<>(); // Will have no duplicates
+        for (ClothingItem item : clothingItems) {
+            if (item.getName().toLowerCase().contains(s.toLowerCase())) {
+                rawList.add(item);
+
+            }
+            if (item.getBrand().toLowerCase().contains(s.toLowerCase())) {
+                rawList.add(item);
+            }
+            if (item.getType().toLowerCase().contains(s.toLowerCase())) {
+                rawList.add(item);
+            }
+        }
+    }
     private void fillDB() {
         // I use this to fill database
         // Checking if my lap top is connected to github
@@ -172,13 +161,18 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         }
 
         if (mDatabaseHelper.userTableEmpty()) {
-            mDatabaseHelper.addUser("Roy Midence","Roy", "abcdef");
-            mDatabaseHelper.addUser("Trevor Ross","Trevor", "abcdef");
-            mDatabaseHelper.addUser("Hadia Majed","Hadia", "abcdef");
-            mDatabaseHelper.addUser("Luis Garcia","Luis", "abcdef");
-            mDatabaseHelper.addUser("Kieran Sylvestre","Kieran", "abcdef");
+            mDatabaseHelper.addUser("Person1", "abcdef", "abcd-efgh");
+            mDatabaseHelper.addUser("Person2", "abcdef", "abcd-efgh");
+            mDatabaseHelper.addUser("Person3", "abcdef", "abcd-efgh");
+            mDatabaseHelper.addUser("Person4", "abcdef", "abcd-efgh");
         }
 
+        if (mDatabaseHelper.loggedUserTableEmpty()) {
+            mDatabaseHelper.logginUser("1");
+            LoginScreen frag = new LoginScreen();
+            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                    frag).commit();
+        }
         int cl; // Exists for testing purposes
 
         if (mDatabaseHelper.clothingTableEmpty()) { // Fill Clothing Table
@@ -226,5 +220,17 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         recyclerView.setLayoutManager(layoutManager);
         list = new ClothingAdapter(clothingItems, this);
         recyclerView.setAdapter(list);
+    }
+
+    private void filter(String s) {
+        List<String> filteredName = new ArrayList<>();
+        List<String> filteredID = new ArrayList<>();
+        List<String> filteredBrand = new ArrayList<>();
+        List<String> filteredType = new ArrayList<>();
+
+        for (int i = 0; i < list.getItemCount(); i++) {
+            //if()
+
+        }
     }
 }
