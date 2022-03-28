@@ -17,13 +17,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.w3c.dom.Text;
 
+import java.util.ArrayList;
 import java.util.List;
 public class OutfitAdapter extends RecyclerView.Adapter<OutfitAdapter.MyViewHolder> {
 
     private Context context;
     Fragment fragment;
 
-    private List<String> Outfitname;
+    private ArrayList<String> Outfitname;
     private itemClickInterface mItemClickInterface;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -44,7 +45,7 @@ public class OutfitAdapter extends RecyclerView.Adapter<OutfitAdapter.MyViewHold
         @Override
         public void onClick(View view) { itemClickInterface.onItemClick(getBindingAdapterPosition());}
     } // end MyViewHolder
-    public OutfitAdapter(Fragment fragment, Context context, List<String> outfitname, itemClickInterface itemClickInterface) {
+    public OutfitAdapter(Fragment fragment, Context context, ArrayList<String> outfitname, itemClickInterface itemClickInterface) {
         this.fragment = fragment;
         this.context = context;
         this.Outfitname= outfitname;
@@ -64,11 +65,9 @@ public class OutfitAdapter extends RecyclerView.Adapter<OutfitAdapter.MyViewHold
 
     }
     @Override
-    public int getItemCount() {
-        return Outfitname.size();
-    }
+    public int getItemCount() { return Outfitname.size();}
 
-    public void setData(List<String> outfits) {
+    public void setData(ArrayList<String> outfits) {
         Outfitname = outfits;
         notifyDataSetChanged();
     }

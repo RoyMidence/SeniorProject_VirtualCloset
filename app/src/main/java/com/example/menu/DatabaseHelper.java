@@ -215,7 +215,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(OUTFIT_ID, getLatestOutfit());
         contentValues.put(CLOTHING_ID, clothingID);
 
-        long result = db.insert(OUTFIT_TABLE, null, contentValues);
+        long result = db.insert(OUTFIT_CLOTHING_TABLE, null, contentValues);
 
         if (result == -1) {
             return false;

@@ -28,13 +28,11 @@ import java.util.List;
 public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickInterface{
     private View v;
     private String name;
-    private List<String> outfit_name = new ArrayList<>();
+    private ArrayList<String> outfit_name = new ArrayList<>();
     private DatabaseHelper mDatabaseHelper;
     private TextView textViewEmptyCloset;
     private OutfitAdapter outfitAdapter;
     ActivityResultLauncher<Intent> otherActivityLauncher;
-
-
 
 
     public OutfitFragment() {
@@ -51,6 +49,10 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
         mDatabaseHelper =  new DatabaseHelper(getContext());
         textViewEmptyCloset = (TextView) v.findViewById(R.id.textViewEmpty_Outfit);
 
+        configureFabButton();
+        fillDB();
+        storeValuesInArray();
+
 
         // Method for getting ready to receive data
         // For Kieran this will go in the onCreate method in addOutfit
@@ -61,19 +63,13 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
                         if (result.getResultCode() == 0) {
                             Intent resultIntent = result.getData();
                             if (resultIntent != null) {
-                                List<String> newList =  resultIntent.getStringArrayListExtra("list");
+                                ArrayList<String> newList =  resultIntent.getStringArrayListExtra("list");
                                 outfitAdapter.setData(newList);
                             }
                         }
                     }
                 });
 
-
-
-
-        configureFabButton();
-        fillDB();
-        storeValuesInArray();
         RecyclerView recyclerView = v.findViewById(R.id.recyclerViewOutfit);
         RecyclerView.LayoutManager layoutManager =
                 new GridLayoutManager(getContext(),2);
@@ -82,6 +78,7 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
         recyclerView.setAdapter(outfitAdapter);
     return v;
     }
+
     private void configureFabButton() {
 
 
@@ -90,11 +87,13 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
 
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddOutfit.class);
+                intent.putStringArrayListExtra("list",outfit_name);
                 otherActivityLauncher.launch(intent);
             }
 
         });
     }
+
     private void storeValuesInArray(){
         outfit_name.clear();
         Cursor cursor = mDatabaseHelper.readUserOutfits();
@@ -110,6 +109,7 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
             }
         }
     }
+
     private void fillDB(){
         if(mDatabaseHelper.outfitTableEmpty()) {
             mDatabaseHelper.addOutfit("Kieran's Outfit");
@@ -119,11 +119,6 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
             mDatabaseHelper.addOutfit("Trevor's Outfit");
             mDatabaseHelper.addOutfit("inside Outfit");
             mDatabaseHelper.addOutfit("Outside Outfit");
-
-
-
-
-
         }
     }
 

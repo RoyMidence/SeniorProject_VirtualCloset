@@ -21,6 +21,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class AddOutfit extends AppCompatActivity {
@@ -28,7 +29,7 @@ public class AddOutfit extends AppCompatActivity {
     private TextView shirt,pants,socks,shoes;
     private String name,id_of_shirt,id_of_pants,id_of_socks,id_of_shoes;
     private DatabaseHelper mDatabaseHelper;
-    private List<String> list;
+    private ArrayList<String> list;
     ActivityResultLauncher<Intent> otherActivityLauncher;
     
     @Override
@@ -121,7 +122,7 @@ public class AddOutfit extends AppCompatActivity {
                     list.add(String.valueOf(ed_name.getText()));
 
                     Intent resultIntent = new Intent();
-                    resultIntent.putExtra("name", name);
+                    resultIntent.putStringArrayListExtra("list",list);
                     setResult(0,resultIntent);
                     finish();
 
