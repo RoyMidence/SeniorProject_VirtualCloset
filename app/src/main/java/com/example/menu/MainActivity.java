@@ -27,6 +27,24 @@ private DatabaseHelper mDatabaseHelper;
 
         mDatabaseHelper = new DatabaseHelper(getApplicationContext());
 
+        if (mDatabaseHelper.tagTableEmpty()) {
+            mDatabaseHelper.addToTagsTable("Formal"); // 1
+            mDatabaseHelper.addToTagsTable("Casual");// 2
+            mDatabaseHelper.addToTagsTable("Athletic"); // 3
+            mDatabaseHelper.addToTagsTable("Winter");// 4
+            mDatabaseHelper.addToTagsTable("Spring");// 5
+            mDatabaseHelper.addToTagsTable("Summer");// 6
+            mDatabaseHelper.addToTagsTable("Fall"); // 7
+            mDatabaseHelper.addToTagsTable("All"); // 8
+        }
+
+        if (mDatabaseHelper.userTableEmpty()) {
+            mDatabaseHelper.addUser("Person1", "Roy", "abcd");
+            mDatabaseHelper.addUser("Person2", "abcdef", "abcd");
+            mDatabaseHelper.addUser("Person3", "abcdef", "abcd");
+            mDatabaseHelper.addUser("Person4", "abcdef", "abcd");
+        }
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         drawer = findViewById(R.id.drawer_layout);

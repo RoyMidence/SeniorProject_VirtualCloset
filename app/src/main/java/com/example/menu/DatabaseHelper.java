@@ -862,6 +862,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    // CHECKS FOR OUTFIT
+    // CHECK IF OUTFIT HAS SHIRT
+    public boolean checkOutfitTypes(String outfitID, String clothingType) {
+        String subquery = " SELECT " + CLOTHING_ID +
+                " FROM " + OUTFIT_CLOTHING_TABLE +
+                " WHERE " + OUTFIT_ID + " = " + outfitID;
+
+        String query = "SELECT COUNT(*) "
+                + " FROM " + CLOTHING_TABLE +
+                " WHERE " + CLOTHING_TYPE + " = '" + clothingType + "' " +
+                " AND " + CLOTHING_ID + " IN (" + subquery + ")";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0)
+                return false;
+        }
+
+        return true;
+    }
+
     // UPDATES-----------------------------------------------------------------------------------------
     // UPDATE AN ITEM
     void updateData(String row_id, String name,String brand, String pattern, String c1, String c2, String fit, String type, String size, String material, String desc) {
@@ -885,8 +910,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
     }
 
-    void updateOutfit() {
+    void updateOutfit(String row_id, String name) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(OUTFIT_NAME,name);
 
+        long result = db.update(OUTFIT_TABLE, contentValues, "outfit_id=?", new String[] {row_id});
+        if (result == -1)
+            Toast.makeText(context, "Failed to Update!", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
     }
 
     // DELETES --------------------------------------------------------------------------------------------------------------------------------------
