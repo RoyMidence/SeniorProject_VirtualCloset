@@ -29,7 +29,8 @@ public class AddOutfit extends AppCompatActivity {
     private TextView shirt,pants,socks,shoes;
     private String name,id_of_shirt,id_of_pants,id_of_socks,id_of_shoes;
     private DatabaseHelper mDatabaseHelper;
-    private ArrayList<String> list;
+    private ArrayList<String> namelist;
+    private ArrayList<String> idlist;
     ActivityResultLauncher<Intent> otherActivityLauncher;
     
     @Override
@@ -43,7 +44,8 @@ public class AddOutfit extends AppCompatActivity {
         socks = (TextView) findViewById(R.id.add_outfit_tv_socks);
         shoes = (TextView) findViewById(R.id.add_outfit_tv_shoes);
 
-        list = getIntent().getExtras().getStringArrayList("list");
+        namelist = getIntent().getExtras().getStringArrayList("namelist");
+        idlist = getIntent().getExtras().getStringArrayList("idlist");
 
 
 
@@ -119,10 +121,12 @@ public class AddOutfit extends AppCompatActivity {
                     mDatabaseHelper.addClothingToOutfit(id_of_pants);
                     mDatabaseHelper.addClothingToOutfit(id_of_shoes);
 
-                    list.add(String.valueOf(ed_name.getText()));
+                    namelist.add(String.valueOf(ed_name.getText()));
+                 idlist.add(String.valueOf(mDatabaseHelper.getLatestOutfit()));
 
                     Intent resultIntent = new Intent();
-                    resultIntent.putStringArrayListExtra("list",list);
+                    resultIntent.putStringArrayListExtra("namelist",namelist);
+                    resultIntent.putStringArrayListExtra("idlist",idlist);
                     setResult(0,resultIntent);
                     finish();
 

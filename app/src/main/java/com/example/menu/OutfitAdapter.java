@@ -26,7 +26,7 @@ public class OutfitAdapter extends RecyclerView.Adapter<OutfitAdapter.MyViewHold
 
     private ArrayList<String> Outfitname;
     private itemClickInterface mItemClickInterface;
-
+    private  ArrayList<String> outfitId;
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView txtviewOutfitName;
@@ -45,11 +45,12 @@ public class OutfitAdapter extends RecyclerView.Adapter<OutfitAdapter.MyViewHold
         @Override
         public void onClick(View view) { itemClickInterface.onItemClick(getBindingAdapterPosition());}
     } // end MyViewHolder
-    public OutfitAdapter(Fragment fragment, Context context, ArrayList<String> outfitname, itemClickInterface itemClickInterface) {
+    public OutfitAdapter(Fragment fragment, Context context, ArrayList<String> outfitname,ArrayList<String> outfitId, itemClickInterface itemClickInterface) {
         this.fragment = fragment;
         this.context = context;
         this.Outfitname= outfitname;
         this.mItemClickInterface = itemClickInterface;
+        this.outfitId = outfitId;
     }
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
@@ -67,8 +68,9 @@ public class OutfitAdapter extends RecyclerView.Adapter<OutfitAdapter.MyViewHold
     @Override
     public int getItemCount() { return Outfitname.size();}
 
-    public void setData(ArrayList<String> outfits) {
+    public void setData(ArrayList<String> outfits,ArrayList<String>outfitId) {
         Outfitname = outfits;
+        outfitId = outfitId;
         notifyDataSetChanged();
     }
 
