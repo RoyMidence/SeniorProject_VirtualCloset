@@ -793,8 +793,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public String checkLogin(String userName, String password) {
         String Query = "SELECT " + USER_ID +
                 " FROM " + USER_TABLE +
-                " WHERE " + USER_NAME + " = " + userName +
-                " AND " + USER_PASSWORD + " = " + password;
+                " WHERE " + USER_NAME + " = '" + userName + "' " +
+                " AND " + USER_PASSWORD + " = '" + password + "' ";
 
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;

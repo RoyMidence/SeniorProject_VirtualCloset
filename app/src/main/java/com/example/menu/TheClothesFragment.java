@@ -159,12 +159,12 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             mDatabaseHelper.addUser("Person4", "abcdef", "abcd-efgh");
         }
 
-        if (mDatabaseHelper.loggedUserTableEmpty()) {
-            mDatabaseHelper.logginUser("1");
-            LoginScreen frag = new LoginScreen();
-            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    frag).commit();
-        }
+//        if (mDatabaseHelper.loggedUserTableEmpty()) {
+//            mDatabaseHelper.logginUser("1");
+//            LoginScreen frag = new LoginScreen();
+//            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
+//                    frag).commit();
+//        }
         int cl; // Exists for testing purposes
 
         if (mDatabaseHelper.clothingTableEmpty()) { // Fill Clothing Table

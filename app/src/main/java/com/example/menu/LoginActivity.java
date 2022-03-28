@@ -65,6 +65,7 @@ public class LoginActivity extends AppCompatActivity {
             db.logginUser(result);
             finish();
         } else {
+
             Toast.makeText(this, "Username or password does not exist", Toast.LENGTH_SHORT).show();
         }
     }

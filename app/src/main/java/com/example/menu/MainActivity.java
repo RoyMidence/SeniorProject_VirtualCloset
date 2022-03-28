@@ -46,10 +46,9 @@ private DatabaseHelper mDatabaseHelper;
         navigationView.setCheckedItem(R.id.nav_add);}
 
         if (mDatabaseHelper.loggedUserTableEmpty()) {
-            System.out.println(mDatabaseHelper.loggedUserTableEmpty());
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                    new LoginScreen()).commit();
-            mDatabaseHelper.logginUser("1");
+            Intent go = new Intent(MainActivity.this,LoginActivity.class);
+                   startActivity(go);
+//            mDatabaseHelper.logginUser("1");
         }
     }
 
@@ -69,8 +68,8 @@ private DatabaseHelper mDatabaseHelper;
             case R.id.nav_logout:
                 Toast.makeText(this,"You have been logged out.",Toast.LENGTH_SHORT).show();
                 mDatabaseHelper.logOut();
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new LoginScreen()).commit();
+                Intent go = new Intent(MainActivity.this,LoginActivity.class);
+                startActivity(go);
 
                 break;
             case R.id.nav_shareCloset:
