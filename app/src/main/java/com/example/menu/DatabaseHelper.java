@@ -534,9 +534,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // GET ALL CLOTHES
-    Cursor readUsersClothing(String user_ID) {
+    Cursor readUsersClothing() {
         String query = "SELECT * FROM " + CLOTHING_TABLE +
-                " WHERE " + USER_ID + " = " + user_ID;
+                " WHERE " + USER_ID + " = " + loggedUserID();
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;
@@ -544,16 +544,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor = db.rawQuery(query, null);
         return cursor;
     }
-//    Cursor readUsersOutfit(String user_ID){
-//        String query = "SELECT * FROM " + OUTFIT_TABLE +
-//                " WHERE " + USER_ID + " = " + user_ID;
-//        SQLiteDatabase db = this.getReadableDatabase();
-//
-//        Cursor cursor = null;
-//        if (db != null)
-//            cursor = db.rawQuery(query, null);
-//        return cursor;
-//    }
+
+    Cursor readOutfitClothing(String outfitID) {
+        String Subquery = " SELECT " + CLOTHING_ID +
+                " FROM " + OUTFIT_CLOTHING_TABLE +
+                " WHERE " + OUTFIT_ID + " = " + outfitID;
+        String query = "SELECT * FROM " + CLOTHING_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID() +
+                " AND " + CLOTHING_ID + " IN " + "(" + Subquery + ")";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null)
+            cursor = db.rawQuery(query, null);
+        return cursor;
+    }
 
     // GETS LIST OF EVERYONE WHO HAS ACCESS TO A USERS CLOSET
     public Cursor readSharedUsers() {

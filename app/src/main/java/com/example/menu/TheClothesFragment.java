@@ -66,7 +66,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         clothingItems.clear();
 
 
-        Cursor cursor = mDatabaseHelper.readUsersClothing(mDatabaseHelper.loggedUserID());
+        Cursor cursor = mDatabaseHelper.readUsersClothing();
         if (cursor.getCount() == 0) {
             emptyImageView.setVisibility(View.VISIBLE);
             textViewEmptyCloset.setVisibility(View.VISIBLE);

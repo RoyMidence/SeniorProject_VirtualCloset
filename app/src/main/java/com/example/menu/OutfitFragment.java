@@ -124,6 +124,9 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
 
     @Override
     public void onItemClick(int position) {
-
+        Intent intent = new Intent(getActivity(),UpdateOutfit.class);
+        intent.putExtra("outfitID","1");
+        intent.putStringArrayListExtra("list",outfit_name);
+        otherActivityLauncher.launch(intent);
     }
 }

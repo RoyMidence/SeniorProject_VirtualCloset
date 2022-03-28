@@ -44,7 +44,7 @@ public class SelectClothes extends AppCompatActivity implements ClothingAdapter.
     }
     private void storeValuesInArrays() {
         ClothingItem CI;
-        Cursor cursor = mDatabaseHelper.readUsersClothing(mDatabaseHelper.loggedUserID());
+        Cursor cursor = mDatabaseHelper.readUsersClothing();
         if (cursor.getCount() == 0) {
             emptyImageView.setVisibility(View.VISIBLE);
             textViewEmptyCloset.setVisibility(View.VISIBLE);
