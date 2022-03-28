@@ -727,6 +727,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    // checks if user is logged in
+    // returns user ID if passed and failed other wise
+    public String checkLogin(String userName, String password) {
+        String Query = "SELECT " + USER_ID +
+                " FROM " + USER_TABLE +
+                " WHERE " + USER_NAME + " = " + userName +
+                " AND " + USER_PASSWORD + " = " + password;
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(Query,null);
+            cursor.moveToFirst();
+            return cursor.getString(0);
+        }
+        return "failed";
+    }
+
 
     // GETS FOR TAGS-------------------------------------------------------------------
     // GET CLOTHING TAGS
