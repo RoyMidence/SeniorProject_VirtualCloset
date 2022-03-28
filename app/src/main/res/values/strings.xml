@@ -32,5 +32,10 @@
     <string name="login">LOGIN</string>
     <string name="password">Password</string>
     <string name="username">Username</string>
+    <string name="your_key">Your Key</string>
+    <string name="sharing_your_closet_with">Sharing your closet with:</string>
+    <string name="enter_key">Enter Key...</string>
+    <string name="enter_key_button">Enter Key</string>
+    <string name="enter_friend_s_key">Enter Friend\'s key</string>
 
 </resources>

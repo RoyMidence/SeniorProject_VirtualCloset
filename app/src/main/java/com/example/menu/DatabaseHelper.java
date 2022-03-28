@@ -392,70 +392,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
-    // GET TAGS ID
-    public int getTagID(String tag) {
-        String query = "SELECT * FROM " + TAGS_TABLE;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(query, null);
-            while (cursor.moveToNext()) {
-                if (cursor.getString(1).equalsIgnoreCase(tag))
-                    return cursor.getInt(0);
-            }
-        }
-
-        return -1;
-    }
-
     // CHECK IF TAGS TABLE EMPTY
     public boolean clothingTableEmpty() {
         String query = "SELECT COUNT(*) FROM " + CLOTHING_TABLE;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(query,null);
-            cursor.moveToFirst();
-            if (cursor.getInt(0) == 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // CHECK IF TAGS TABLE EMPTY
-    public boolean tagTableEmpty() {
-        String query = "SELECT COUNT(*) FROM " + TAGS_TABLE;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(query,null);
-            cursor.moveToFirst();
-            if (cursor.getInt(0) == 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // CHECK IF USER TABLE EMPTY
-    public boolean userTableEmpty() {
-        String query = "SELECT COUNT(*) FROM " + USER_TABLE;
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(query,null);
-            cursor.moveToFirst();
-            if (cursor.getInt(0) == 0) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    // CHECK IF LOGGED USER TABLE EMPTY
-    public boolean loggedUserTableEmpty() {
-        String query = "SELECT COUNT(*) FROM " + LOGGED_USER_TABLE;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {
@@ -585,7 +524,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         String Subquery = " SELECT " + ALLOWED_USER +
                 " FROM " + SHARED_CLOSET_TABLE +
                 " WHERE " + CLOSET_OWNER + " = " + loggedUserID();
-        String Query = "SELECT " + USER_FULLNAME +
+        String Query = "SELECT " + USER_FULLNAME + ", " + USER_ID +
                 " FROM " + USER_TABLE +
                 " WHERE " + USER_ID + " IN " + " (" + Subquery + ")";
 
@@ -647,29 +586,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             result = "";
             while (cursor.moveToNext()) {
                 result += cursor.getString(0);
-            }
-            return result;
-        }
-
-        return result;
-    }
-
-    // GET CLOTHING TAGS
-    public String getClothingTags(String clothingID) {
-        String result = "DIDN'T WORK!";
-        String Query = "SELECT " + TAGS +
-                " FROM " + TAGS_TABLE +
-                " INNER JOIN " + CLOTHING_TAGS_TABLE +
-                " ON " + TAGS_TABLE + "." + TAGS_ID + " = " + CLOTHING_TAGS_TABLE + "." + TAGS_ID +
-                " WHERE " + CLOTHING_TAGS_TABLE + "." + CLOTHING_ID + " = " + clothingID;
-        SQLiteDatabase db = this.getReadableDatabase();
-
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(Query, null);
-            result = "";
-            while (cursor.moveToNext()) {
-                result += cursor.getString(0) + ", ";
             }
             return result;
         }
@@ -763,6 +679,111 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    // GETS FOR USERS---------------------------------------------------------------------
+    // CHECK IF USER TABLE EMPTY
+    public boolean userTableEmpty() {
+        String query = "SELECT COUNT(*) FROM " + USER_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // CHECK IF LOGGED USER TABLE EMPTY
+    public boolean loggedUserTableEmpty() {
+        String query = "SELECT COUNT(*) FROM " + LOGGED_USER_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public String getUserKey() {
+        String result = "DIDN'T WORK";
+        String Query = "SELECT " + USER_KEY +
+                " FROM " + USER_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(Query,null);
+            cursor.moveToFirst();
+            return cursor.getString(0);
+        }
+
+        return result;
+    }
+
+
+    // GETS FOR TAGS-------------------------------------------------------------------
+    // GET CLOTHING TAGS
+    public String getClothingTags(String clothingID) {
+        String result = "DIDN'T WORK!";
+        String Query = "SELECT " + TAGS +
+                " FROM " + TAGS_TABLE +
+                " INNER JOIN " + CLOTHING_TAGS_TABLE +
+                " ON " + TAGS_TABLE + "." + TAGS_ID + " = " + CLOTHING_TAGS_TABLE + "." + TAGS_ID +
+                " WHERE " + CLOTHING_TAGS_TABLE + "." + CLOTHING_ID + " = " + clothingID;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(Query, null);
+            result = "";
+            while (cursor.moveToNext()) {
+                result += cursor.getString(0) + ", ";
+            }
+            return result;
+        }
+
+        return result;
+    }
+
+    // GET TAGS ID
+    public int getTagID(String tag) {
+        String query = "SELECT * FROM " + TAGS_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+            while (cursor.moveToNext()) {
+                if (cursor.getString(1).equalsIgnoreCase(tag))
+                    return cursor.getInt(0);
+            }
+        }
+
+        return -1;
+    }
+
+    // CHECK IF TAGS TABLE EMPTY
+    public boolean tagTableEmpty() {
+        String query = "SELECT COUNT(*) FROM " + TAGS_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    // UPDATES-----------------------------------------------------------------------------------------
     // UPDATE AN ITEM
     void updateData(String row_id, String name,String brand, String pattern, String c1, String c2, String fit, String type, String size, String material, String desc) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -821,6 +842,14 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show();
         }
     }
+
+    void stopSharing(String userID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + SHARED_CLOSET_TABLE +
+                " WHERE " + CLOSET_OWNER + " = " + loggedUserID() +
+                " AND " + ALLOWED_USER + " = " + userID);
+    }
+
 
     // OTHER----------------------------------------------------------------------------------------------------------
     String generateKey() {

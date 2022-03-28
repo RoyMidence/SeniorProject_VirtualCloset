@@ -11,7 +11,7 @@
         android:layout_height="match_parent">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
+            android:id="@+id/recyclerViewAllowedUsers"
             android:layout_width="0dp"
             android:layout_height="270dp"
             android:layout_marginStart="16dp"
@@ -40,7 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Your Key"
+            android:text="@string/your_key"
             app:layout_constraintEnd_toEndOf="@+id/textView"
             app:layout_constraintStart_toStartOf="@+id/textView"
             app:layout_constraintTop_toBottomOf="@+id/textView" />
@@ -61,9 +61,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
-            android:text="Sharing your closet with:"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerView"
-            app:layout_constraintStart_toStartOf="@+id/recyclerView" />
+            android:text="@string/sharing_your_closet_with"
+            app:layout_constraintBottom_toTopOf="@+id/recyclerViewAllowedUsers"
+            app:layout_constraintStart_toStartOf="@+id/recyclerViewAllowedUsers" />
 
         <EditText
             android:id="@+id/editTextEnterKey"
@@ -71,29 +71,31 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:ems="10"
-            android:hint="Enter Key..."
+            android:hint="@string/enter_key"
             android:inputType="textPersonName"
             android:minHeight="48dp"
+            android:textColorHint="#757575"
             app:layout_constraintEnd_toEndOf="@+id/textView7"
             app:layout_constraintStart_toStartOf="@+id/textView7"
-            app:layout_constraintTop_toBottomOf="@+id/textView7" />
+            app:layout_constraintTop_toBottomOf="@+id/textView7"
+            android:autofillHints="" />
 
         <TextView
             android:id="@+id/textView7"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="72dp"
-            android:text="Enter Friend's key"
+            android:text="@string/enter_friend_s_key"
             app:layout_constraintEnd_toEndOf="@+id/textViewUserKey"
             app:layout_constraintStart_toStartOf="@+id/textViewUserKey"
             app:layout_constraintTop_toBottomOf="@+id/textViewUserKey" />
 
         <Button
-            android:id="@+id/button2"
+            android:id="@+id/buttonEnterKey"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
-            android:text="Enter Key"
+            android:text="@string/enter_key_button"
             app:layout_constraintEnd_toEndOf="@+id/editTextEnterKey"
             app:layout_constraintStart_toStartOf="@+id/editTextEnterKey"
             app:layout_constraintTop_toBottomOf="@+id/editTextEnterKey" />

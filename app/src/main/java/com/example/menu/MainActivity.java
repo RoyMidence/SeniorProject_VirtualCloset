@@ -73,6 +73,10 @@ private DatabaseHelper mDatabaseHelper;
                         new LoginScreen()).commit();
 
                 break;
+            case R.id.nav_shareCloset:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new ShareCloset()).commit();
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;
