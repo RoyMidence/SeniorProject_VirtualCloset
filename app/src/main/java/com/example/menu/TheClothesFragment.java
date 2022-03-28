@@ -220,7 +220,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        list = new ClothingAdapter(TheClothesFragment.this, clothingItems, this);
+        list = new ClothingAdapter(clothingItems, this);
         recyclerView.setAdapter(list);
     }
 }

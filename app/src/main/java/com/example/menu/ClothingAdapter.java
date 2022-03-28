@@ -20,8 +20,6 @@ import java.util.List;
 
 public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyViewHolder>{
 
-    Fragment fragment;
-
     private List<ClothingItem> mClothingList;
     private itemClickInterface mItemClickInterface;
 
@@ -46,8 +44,7 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
         public void onClick(View view) { itemClickInterface.onItemClick(getBindingAdapterPosition());}
     } // end MyViewHolder
 
-    public ClothingAdapter(Fragment fragment, List<ClothingItem> clothingItems, itemClickInterface itemClickInterface) {
-        this.fragment = fragment;
+    public ClothingAdapter(List<ClothingItem> clothingItems, itemClickInterface itemClickInterface) {
         mClothingList = clothingItems;
         this.mItemClickInterface = itemClickInterface;
     }
