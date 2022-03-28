@@ -38,5 +38,7 @@
     <string name="enter_key_button">Enter Key</string>
     <string name="enter_friend_s_key">Enter Friend\'s key</string>
     <string name="fit">Fit</string>
+    <string name="fullName" />
+    <string name="register">register</string>
 
 </resources>

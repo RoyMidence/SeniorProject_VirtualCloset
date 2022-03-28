@@ -10,6 +10,9 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Menu">
         <activity
+            android:name=".RegisterActivity"
+            android:exported="false" />
+        <activity
             android:name=".UpdateOutfit"
             android:exported="false" />
         <activity
@@ -19,8 +22,9 @@
             android:name=".AddOutfit"
             android:exported="false"
             android:theme="@style/Theme.Menu.NoActionBar" />
-        <activity android:name=".LoginActivity"
-            android:exported="false"/>
+        <activity
+            android:name=".LoginActivity"
+            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true"

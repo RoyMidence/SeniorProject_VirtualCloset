@@ -17,42 +17,18 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-//        Button button = (Button) findViewById(R.id.login);
-//        button.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                EditText user = (EditText) findViewById(R.id.editTextUsername);
-//                EditText pass = (EditText) findViewById(R.id.editTextPassword);
-//                String username = user.getText().toString();
-//                String password = pass.getText().toString();
-//
-//                DatabaseHelper db = new DatabaseHelper(getApplicationContext());
-//                String result = db.checkLogin(username, password);
-//                if (!result.equals("failed")) {
-//                    db.logginUser(result);
-//                    Intent go = new Intent(LoginActivity.this,MainActivity.class);
-//                    startActivity(go);
-//                    finish();
-//                } else {
-//                    // Toast.makeText(this, "Username or password does not exist", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        });
-//        DatabaseHelper mDatabaseHelper = new DatabaseHelper(getApplicationContext());
-//        if (mDatabaseHelper.userTableEmpty()) {
-//            mDatabaseHelper.addUser("Roy Midence","Roy", "abcdef");
-//            mDatabaseHelper.addUser("Trevor Ross","Trevor", "admin");
-//            mDatabaseHelper.addUser("Hadia Majed","Hadia", "abcdef");
-//            mDatabaseHelper.addUser("Luis Garcia","Luis", "abcdef");
-//            mDatabaseHelper.addUser("Kieran Sylvestre","Kieran", "abcdef");
-//        }
-
-}
+    }
 
 
 
 
-    public void sendMessage(View view) {
+    public void register(View view){
+      Intent go = new Intent(LoginActivity.this,RegisterActivity.class);
+      startActivity(go);
+     finish();
+    }
+
+    public void login(View view) {
         EditText user = (EditText) findViewById(R.id.editTextUsername);
         EditText pass = (EditText) findViewById(R.id.editTextPassword);
         String username = user.getText().toString();
@@ -65,7 +41,6 @@ public class LoginActivity extends AppCompatActivity {
             db.logginUser(result);
             finish();
         } else {
-
             Toast.makeText(this, "Username or password does not exist", Toast.LENGTH_SHORT).show();
         }
     }
