@@ -1,9 +1,13 @@
 package com.example.menu;
 
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -12,9 +16,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,8 +32,14 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
     private ImageView emptyImageView;
     private TextView textViewEmptyCloset;
     private SearchView searchViewClothing;
+    private FloatingActionButton floatingActionButtonSharedClosets;
+    private PopupMenu popupMenu;
+    RecyclerView recyclerView;
     private List<ClothingItem> clothingItems = new ArrayList<>();
+    private List<String> sharedUserNames = new ArrayList<>();
+    private List<String> sharedUserID = new ArrayList<>();
     private ClothingAdapter list;
+    private View view;
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -37,14 +51,18 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_thecloset,container,false);
+        view = LayoutInflater.from(getContext()).inflate(R.layout.fragment_thecloset,container,false);
 
         mDatabaseHelper = new DatabaseHelper(getContext());
         emptyImageView = view.findViewById(R.id.emptyImageView);
         textViewEmptyCloset = view.findViewById(R.id.textViewEmptyCloset);
         searchViewClothing = view.findViewById(R.id.searchViewClothing);
+        floatingActionButtonSharedClosets = view.findViewById(R.id.floatingActionButtonSharedClosets);
+        recyclerView = view.findViewById(R.id.recyclerViewClothing);
         fillDB();
         setUpRecycler(view);
+        checkAndSetShared();
+
         searchViewClothing.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
@@ -55,6 +73,37 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             public boolean onQueryTextChange(String s) {
                 filterList(s);
                 return true;
+            }
+        });
+
+        floatingActionButtonSharedClosets.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                popupMenu = new PopupMenu(getContext(), floatingActionButtonSharedClosets);
+                for (int i = 0; i < sharedUserNames.size(); i++) {
+                        popupMenu.getMenu().add(0,i,Menu.NONE,sharedUserNames.get(i));
+                }
+                popupMenu.getMenu().add(0,sharedUserNames.size(),Menu.NONE,mDatabaseHelper.getUserName());
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        // DO SOMETHING
+                        if (item.getItemId() == sharedUserNames.size()) {
+                            setUpRecycler(view);
+                        } else {
+                            for (int i = 0; i < sharedUserNames.size() + 1; i++) {
+                                if (i == item.getItemId()) {
+                                    // DO HERE
+                                    setUpRecycler(view, sharedUserID.get(i));
+                                }
+                            }
+                        }
+
+
+                        return false;
+                    }
+                });
+                popupMenu.show();
             }
         });
 
@@ -174,12 +223,6 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             mDatabaseHelper.addUser("Person4", "abcdef", "abcd-efgh");
         }
 
-//        if (mDatabaseHelper.loggedUserTableEmpty()) {
-//            mDatabaseHelper.logginUser("1");
-//            LoginScreen frag = new LoginScreen();
-//            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
-//                    frag).commit();
-//        }
         int cl; // Exists for testing purposes
 
         if (mDatabaseHelper.clothingTableEmpty()) { // Fill Clothing Table
@@ -219,13 +262,56 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
     }
 
     private void setUpRecycler(View view) {
-        RecyclerView recyclerView = view.findViewById(R.id.recyclerViewClothing);
         storeValuesInArrays();
 
-        RecyclerView.LayoutManager layoutManager =
-                new LinearLayoutManager(getContext());
-        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         list = new ClothingAdapter(clothingItems, this);
         recyclerView.setAdapter(list);
     }
+
+    public void checkAndSetShared() {
+        if (!mDatabaseHelper.isSharing()) {
+            floatingActionButtonSharedClosets.setVisibility(View.VISIBLE);
+            Cursor cursor = mDatabaseHelper.getSharedUsers();
+            while(cursor.moveToNext()) {
+                sharedUserNames.add(cursor.getString(0));
+                sharedUserID.add(cursor.getString(1));
+            }
+        }
+    }
+
+    private void storeValuesInArrays(String userID) {
+        ClothingItem CI;
+        clothingItems.clear();
+
+
+        Cursor cursor = mDatabaseHelper.readSharedCloset(userID);
+        if (cursor.getCount() == 0) {
+            emptyImageView.setVisibility(View.VISIBLE);
+            textViewEmptyCloset.setVisibility(View.VISIBLE);
+        } else {
+            emptyImageView.setVisibility(View.GONE);
+            textViewEmptyCloset.setVisibility(View.GONE);
+
+            while (cursor.moveToNext()) {
+                // CLOTHING TABLE:  clothingID  : NAME  : BRAND : TYPE  : PATTERN : FIR : SIZE : COLOR1 : COLOR2 : MATERIAL : DESC : STATUS : userID
+                String id = cursor.getString(0);
+                CI = new ClothingItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+                        cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),
+                        cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),
+                        mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id));
+                clothingItems.add(CI);
+            }
+        }
+    }
+
+    private void setUpRecycler(View view, String userID) {
+        storeValuesInArrays(userID);
+
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        list = new ClothingAdapter(clothingItems, this);
+        recyclerView.setAdapter(list);
+    }
+
+
 }
