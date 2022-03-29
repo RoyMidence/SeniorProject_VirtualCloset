@@ -69,15 +69,7 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
                                 setUpRecycler(v);
                             }
                         }
-                        if (result.getResultCode() == 1) {
-                            Intent resultIntent = result.getData();
-                            if (resultIntent != null) {
-                                int pos = resultIntent.getExtras().getInt("pos");
-                                outfitId.remove(pos);
-                                outfit_name.remove(pos);
-                                outfitAdapter.setData(outfit_name, outfitId);
-                            }
-                        }
+
                     }
                 });
 
@@ -140,7 +132,7 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
         intent.putExtra("outfitID",outfitId.get(position));
         intent.putStringArrayListExtra("namelist",outfit_name);
         intent.putExtra("itemposition",position);
-
+        intent.putExtra("outfitname",outfit_name.get(position));
         otherActivityLauncher.launch(intent);
     }
     private void setUpRecycler(View v){

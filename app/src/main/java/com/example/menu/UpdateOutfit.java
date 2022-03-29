@@ -45,7 +45,7 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
         editTextOutfitName = findViewById(R.id.editTextOutfitName);
         buttonAddToOutfit = findViewById(R.id.buttonAddToOutfit);
 
-
+        outfitName=getIntent().getExtras().getString("outfitname");
         outfitPosition = getIntent().getExtras().getInt("itemposition");
         outfitID = getIntent().getExtras().getString("outfitID");
         list = getIntent().getExtras().getStringArrayList("namelist");
@@ -69,16 +69,18 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
 private void configureButtons(){
     fabUpdateButton= findViewById(R.id.floatingActionButtonUpdateOutfit);
     fabDeleteButton= findViewById(R.id.floatingActionButtonDeleteOutfit);
-        editTextOutfitName.setText(outfitName);
+    editTextOutfitName.setText(outfitName);
         fabUpdateButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
-
-        if(mDatabaseHelper.checkOutfitTypes(outfitID,"Shirt")||
-                mDatabaseHelper.checkOutfitTypes(outfitID,"Pants")||
-                mDatabaseHelper.checkOutfitTypes(outfitID,"Shoes")){
             outfitName = editTextOutfitName.getText().toString();
+        if(mDatabaseHelper.checkOutfitTypes(outfitID,"Shirt")||
+            mDatabaseHelper.checkOutfitTypes(outfitID,"Pants")||
+            mDatabaseHelper.checkOutfitTypes(outfitID,"Shoes")){
+            Intent resultIntent = new Intent();
+            setResult(0,resultIntent);
+
             mDatabaseHelper.updateOutfit(outfitID,outfitName);
             finish();
         }else{
@@ -94,8 +96,7 @@ private void configureButtons(){
         public void onClick(View v) {
             mDatabaseHelper.deleteOutfit(outfitID);
             Intent resultIntent = new Intent();
-            resultIntent.putExtra("pos", outfitPosition);
-            setResult(1,resultIntent);
+            setResult(0,resultIntent);
             finish();
 
 
@@ -129,6 +130,7 @@ private void configureButtons(){
         mDatabaseHelper.deleteClothingItemFromOutfit(outfitID,String.valueOf(outfitClothing.get(position).getClothingID()));
         storeValuesInArrays();
         clothingAdapter.setData(outfitClothing);
+
 
     }
 
