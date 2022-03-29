@@ -65,7 +65,8 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
                         if (result.getResultCode() == 0) {
                             Intent resultIntent = result.getData();
                             if (resultIntent != null) {
-                                mDatabaseHelper.addClothingToOutfit(resultIntent.getExtras().getString("name"));
+                                mDatabaseHelper.addClothingToOutfit(resultIntent.getExtras().getString("id"));
+                                setUpRecycler();
                             }
                         }
                     }
@@ -77,6 +78,7 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(UpdateOutfit.this, SelectClothes.class);
+                intent.putExtra("type","all");
                 otherActivityLauncher.launch(intent);
             }
         });
@@ -104,8 +106,8 @@ private void configureButtons(){
         public void onClick(View v) {
 
             outfitName = editTextOutfitName.getText().toString();
-        if(mDatabaseHelper.checkOutfitTypes(outfitID,"Shirt")||
-            mDatabaseHelper.checkOutfitTypes(outfitID,"Pants")||
+        if(mDatabaseHelper.checkOutfitTypes(outfitID,"Shirt")&&
+            mDatabaseHelper.checkOutfitTypes(outfitID,"Pants")&&
             mDatabaseHelper.checkOutfitTypes(outfitID,"Shoes")){
             Intent resultIntent = new Intent();
             setResult(0,resultIntent);
