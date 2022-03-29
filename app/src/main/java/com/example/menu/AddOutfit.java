@@ -122,7 +122,7 @@ public class AddOutfit extends AppCompatActivity {
                     mDatabaseHelper.addClothingToOutfit(id_of_shoes);
 
                     namelist.add(String.valueOf(ed_name.getText()));
-                 idlist.add(String.valueOf(mDatabaseHelper.getLatestOutfit()));
+                    idlist.add(String.valueOf(mDatabaseHelper.getLatestOutfit()));
 
                     Intent resultIntent = new Intent();
                     resultIntent.putStringArrayListExtra("namelist",namelist);

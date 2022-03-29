@@ -52,6 +52,7 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
 
         configureFabButton();
         fillDB();
+        storeValuesInArray();
 
 
         // Method for getting ready to receive data

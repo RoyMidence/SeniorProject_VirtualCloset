@@ -1,5 +1,9 @@
 package com.example.menu;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -34,6 +38,8 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
     private ClothingAdapter clothingAdapter;
     private List<ClothingItem> outfitClothing = new ArrayList<>();
 
+    ActivityResultLauncher<Intent> otherActivityLauncher;
+
     DatabaseHelper mDatabaseHelper;
 
     @Override
@@ -51,6 +57,29 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
         list = getIntent().getExtras().getStringArrayList("namelist");
         configureButtons();
         setUpRecycler();
+
+        otherActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == 0) {
+                            Intent resultIntent = result.getData();
+                            if (resultIntent != null) {
+                                mDatabaseHelper.addClothingToOutfit(resultIntent.getExtras().getString("name"));
+                            }
+                        }
+                    }
+                });
+
+
+
+        buttonAddToOutfit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(UpdateOutfit.this, SelectClothes.class);
+                otherActivityLauncher.launch(intent);
+            }
+        });
 
 
 
@@ -86,8 +115,6 @@ private void configureButtons(){
         }else{
             toastMessage("you need shirt, pants and shoes");
         }
-
-
 
         }
     });

@@ -84,6 +84,8 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
                 clothingItems.add(CI);
             }
         }
+
+
     }
 
     public void AddData(String item, String brand, String pattern,
@@ -116,6 +118,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
                 frag).addToBackStack(null).commit();
     }
+
     private void filterList(String s) {
         s = s.trim(); // gets rid of extra spaces
         while (s.indexOf(" ") != -1) { // Theres multiple words
