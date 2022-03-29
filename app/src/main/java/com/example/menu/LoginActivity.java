@@ -17,6 +17,8 @@ public class LoginActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+        DatabaseHelper mDatabaseHelper = new DatabaseHelper(getApplicationContext());
+
     }
 
 
@@ -37,11 +39,11 @@ public class LoginActivity extends AppCompatActivity {
         DatabaseHelper db = new DatabaseHelper(getApplicationContext());
         String result = db.checkLogin(username, password);
 
-        if (!result.equals("failed")) {
+        if (result != null) {
             db.logginUser(result);
             finish();
-        } else {
-            Toast.makeText(this, "Username or password does not exist", Toast.LENGTH_SHORT).show();
+        }else {
+            runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Username or password does not exist", Toast.LENGTH_SHORT).show());
         }
     }
 }

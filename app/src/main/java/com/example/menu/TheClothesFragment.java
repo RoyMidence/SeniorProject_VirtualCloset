@@ -167,6 +167,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         }
 
         if (mDatabaseHelper.userTableEmpty()) {
+            mDatabaseHelper.addUser("The Admin", "admin", "admin");
             mDatabaseHelper.addUser("Person1", "abcdef", "abcd-efgh");
             mDatabaseHelper.addUser("Person2", "abcdef", "abcd-efgh");
             mDatabaseHelper.addUser("Person3", "abcdef", "abcd-efgh");

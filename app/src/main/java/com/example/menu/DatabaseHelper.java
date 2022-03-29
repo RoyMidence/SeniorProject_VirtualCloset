@@ -796,14 +796,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " WHERE " + USER_NAME + " = '" + userName + "' " +
                 " AND " + USER_PASSWORD + " = '" + password + "' ";
 
+
         SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(Query,null);
-            cursor.moveToFirst();
-            return cursor.getString(0);
-        }
-        return "failed";
+        Cursor cursor =  db.rawQuery(Query, null);
+            if (db != null) {
+                cursor.moveToFirst();
+                if( cursor != null && cursor.moveToFirst() ) {
+//                    cursor = db.rawQuery(Query, null);
+                    return cursor.getString(0);
+                }
+            }
+
+         return null;
+
     }
 
 
