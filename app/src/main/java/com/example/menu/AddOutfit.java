@@ -148,7 +148,6 @@ public class AddOutfit extends AppCompatActivity {
         Button btn_pants = (Button) findViewById(R.id.add_outfit_btn_pant);
         Button btn_socks = (Button) findViewById(R.id.add_outfit_btn_socks);
         Button btn_shoes = (Button) findViewById(R.id.add_outfit_btn_shoes);
-        FloatingActionButton fab_back = (FloatingActionButton)findViewById(R.id.previous_screen_outfit);
 
 
         btn_shirt.setOnClickListener(new View.OnClickListener() {
@@ -204,15 +203,7 @@ public class AddOutfit extends AppCompatActivity {
                 }
             }
         });
-        fab_back.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-
-
-
-            }
-        });
 
     }
     private void toastMessage(String Message) {

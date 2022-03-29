@@ -5,12 +5,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,8 +26,9 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
 
     private EditText editTextOutfitName;
     private Button buttonAddToOutfit;
-
+    private FloatingActionButton fabUpdateButton, fabDeleteButton;
     private ArrayList<String> list = new ArrayList<>();
+
 
     private RecyclerView recyclerViewUpdateClothing;
     private ClothingAdapter clothingAdapter;
@@ -43,6 +49,7 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
         outfitPosition = getIntent().getExtras().getInt("itemposition");
         outfitID = getIntent().getExtras().getString("outfitID");
         list = getIntent().getExtras().getStringArrayList("namelist");
+        configureButtons();
         setUpRecycler();
 
 
@@ -59,7 +66,47 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
         clothingAdapter = new ClothingAdapter(outfitClothing, this);
         recyclerViewUpdateClothing.setAdapter(clothingAdapter);
     }
+private void configureButtons(){
+    fabUpdateButton= findViewById(R.id.floatingActionButtonUpdateOutfit);
+    fabDeleteButton= findViewById(R.id.floatingActionButtonDeleteOutfit);
+        editTextOutfitName.setText(outfitName);
+        fabUpdateButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
 
+
+        if(mDatabaseHelper.checkOutfitTypes(outfitID,"Shirt")||
+                mDatabaseHelper.checkOutfitTypes(outfitID,"Pants")||
+                mDatabaseHelper.checkOutfitTypes(outfitID,"Shoes")){
+            outfitName = editTextOutfitName.getText().toString();
+            mDatabaseHelper.updateOutfit(outfitID,outfitName);
+            finish();
+        }else{
+            toastMessage("you need shirt, pants and shoes");
+        }
+
+
+
+        }
+    });
+    fabDeleteButton.setOnClickListener(new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            mDatabaseHelper.deleteOutfit(outfitID);
+            Intent resultIntent = new Intent();
+            resultIntent.putExtra("pos", outfitPosition);
+            setResult(1,resultIntent);
+            finish();
+
+
+        }
+    });
+
+
+}
+    private void toastMessage(String Message) {
+        Toast.makeText(getApplicationContext(),Message,Toast.LENGTH_SHORT).show();
+    }
     private void storeValuesInArrays() {
         ClothingItem CI;
         outfitClothing.clear();
@@ -79,7 +126,10 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
 
     @Override
     public void onItemClick(int position) {
-        confirmDialog(position);
+        mDatabaseHelper.deleteClothingItemFromOutfit(outfitID,String.valueOf(outfitClothing.get(position).getClothingID()));
+        storeValuesInArrays();
+        clothingAdapter.setData(outfitClothing);
+
     }
 
     void confirmDialog(int pos) {
@@ -93,6 +143,29 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
                 mDatabaseHelper.deleteClothingItemFromOutfit(outfitID,String.valueOf(outfitClothing.get(pos).getClothingID()));
                 storeValuesInArrays();
                 clothingAdapter.setData(outfitClothing);
+            }
+        });
+        builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+
+            }
+        });
+        builder.create().show();
+    }
+    void confirmDeleteDialog(int pos) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+        builder.setTitle("Delete " + outfitName + " ?");
+        builder.setMessage("Are you sure you want to delete " + outfitName + "?");
+        builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                // Data to delete
+            mDatabaseHelper.deleteOutfit(outfitID);
+                Intent resultIntent = new Intent();
+                resultIntent.putExtra("pos", pos);
+                setResult(1,resultIntent);
+                finish();
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {

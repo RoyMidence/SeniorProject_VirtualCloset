@@ -137,7 +137,18 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
                 rawList.add(item);
             }
         }
-    }
+
+        if (rawList.isEmpty()) {
+
+        } else {
+            for (ClothingItem item :  rawList) {
+                if (!filteredList.contains(item))
+                    filteredList.add(item);
+            }
+            list.setData(filteredList);
+        }
+        }
+
     private void fillDB() {
         // I use this to fill database
         // Checking if my lap top is connected to github

@@ -52,7 +52,6 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
 
         configureFabButton();
         fillDB();
-        storeValuesInArray();
 
 
         // Method for getting ready to receive data
@@ -64,20 +63,25 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
                         if (result.getResultCode() == 0) {
                             Intent resultIntent = result.getData();
                             if (resultIntent != null) {
-                                ArrayList<String> newNameList =  resultIntent.getStringArrayListExtra("namelist");
-                                ArrayList<String> newIdList =  resultIntent.getStringArrayListExtra("idlist");
-                                outfitAdapter.setData(newNameList,newIdList);
+//                                ArrayList<String> newNameList =  resultIntent.getStringArrayListExtra("namelist");
+//                                ArrayList<String> newIdList =  resultIntent.getStringArrayListExtra("idlist");
+//                                outfitAdapter.setData(newNameList,newIdList);
+                                setUpRecycler(v);
+                            }
+                        }
+                        if (result.getResultCode() == 1) {
+                            Intent resultIntent = result.getData();
+                            if (resultIntent != null) {
+                                int pos = resultIntent.getExtras().getInt("pos");
+                                outfitId.remove(pos);
+                                outfit_name.remove(pos);
+                                outfitAdapter.setData(outfit_name, outfitId);
                             }
                         }
                     }
                 });
 
-        RecyclerView recyclerView = v.findViewById(R.id.recyclerViewOutfit);
-        RecyclerView.LayoutManager layoutManager =
-                new GridLayoutManager(getContext(),2);
-        recyclerView.setLayoutManager(layoutManager);
-        outfitAdapter = new OutfitAdapter(OutfitFragment.this, getContext(),outfit_name,outfitId,this);
-        recyclerView.setAdapter(outfitAdapter);
+        setUpRecycler(v);
     return v;
     }
 
@@ -138,5 +142,14 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
         intent.putExtra("itemposition",position);
 
         otherActivityLauncher.launch(intent);
+    }
+    private void setUpRecycler(View v){
+        RecyclerView recyclerView = v.findViewById(R.id.recyclerViewOutfit);
+        storeValuesInArray();
+        RecyclerView.LayoutManager layoutManager =
+                new GridLayoutManager(getContext(),2);
+        recyclerView.setLayoutManager(layoutManager);
+        outfitAdapter = new OutfitAdapter(OutfitFragment.this, getContext(),outfit_name,outfitId,this);
+        recyclerView.setAdapter(outfitAdapter);
     }
 }

@@ -110,15 +110,6 @@
             android:textSize="25sp" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/previous_screen_outfit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/ic_previous"
-            app:fabSize="normal" />
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_outfits_fab"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -126,9 +117,6 @@
             android:layout_alignParentBottom="true"
             android:src="@drawable/ic_add"
             app:fabSize="normal" />
-
-
-
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
