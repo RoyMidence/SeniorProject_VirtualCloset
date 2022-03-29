@@ -520,7 +520,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String query = "SELECT " + USER_ID +
                 " FROM " + USER_TABLE +
-                " WHERE " + USER_KEY + " = " + key;
+                " WHERE " + USER_KEY + " = '" + key + "' ";
 
         Cursor cursor = null;
         if (db != null) {
@@ -562,9 +562,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     // GETS LIST OF EVERYONE WHO HAS ACCESS TO A USERS CLOSET
     public Cursor readSharedUsers() {
-        String Subquery = " SELECT " + ALLOWED_USER +
+        String Subquery = " SELECT " + CLOSET_OWNER +
                 " FROM " + SHARED_CLOSET_TABLE +
-                " WHERE " + CLOSET_OWNER + " = " + loggedUserID();
+                " WHERE " + ALLOWED_USER + " = " + loggedUserID();
         String Query = "SELECT " + USER_FULLNAME + ", " + USER_ID +
                 " FROM " + USER_TABLE +
                 " WHERE " + USER_ID + " IN " + " (" + Subquery + ")";
@@ -756,6 +756,48 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return false;
     }
 
+    // GET SHARED USER NAMES
+    public Cursor getSharedUsers() {
+        String subquery = " SELECT " + CLOSET_OWNER +
+                " FROM " + SHARED_CLOSET_TABLE +
+                " WHERE " + ALLOWED_USER + " = " + loggedUserID();
+        String Query = "SELECT " + USER_FULLNAME + ", " + USER_ID +
+                " FROM " + USER_TABLE +
+                " WHERE " + USER_ID + " IN (" + subquery + ")";
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null)
+            cursor = db.rawQuery(Query,null);
+        return cursor;
+    }
+
+    public String getUserName() {
+        String query = "SELECT " + USER_FULLNAME +
+                " FROM " + USER_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            return cursor.getString(0);
+        }
+        return "FAILED";
+    }
+
+    public Cursor readSharedCloset(String userID) {
+        String query = "SELECT * FROM " + CLOTHING_TABLE +
+                " WHERE " + USER_ID + " = " + userID;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null)
+            cursor = db.rawQuery(query, null);
+        return cursor;
+    }
+
     // CHECK IF LOGGED USER TABLE EMPTY
     public boolean loggedUserTableEmpty() {
         String query = "SELECT COUNT(*) FROM " + LOGGED_USER_TABLE;
@@ -763,6 +805,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Cursor cursor = null;
         if (db != null) {
             cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public boolean isSharing() {
+        String Query = "SELECT COUNT(*) " +
+                " FROM " + SHARED_CLOSET_TABLE +
+                " WHERE " + ALLOWED_USER + " = " + loggedUserID();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(Query,null);
             cursor.moveToFirst();
             if (cursor.getInt(0) == 0) {
                 return true;
