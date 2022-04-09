@@ -99,6 +99,9 @@ private DatabaseHelper mDatabaseHelper;
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new OutfitFragment()).commit();
                 break;
+            case R.id.temp_access:
+                Intent intent = new Intent(MainActivity.this,FilterChosenOutfit.class);
+                startActivity(intent);
 
         }
         drawer.closeDrawer(GravityCompat.START);

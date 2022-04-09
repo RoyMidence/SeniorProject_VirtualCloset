@@ -11,20 +11,18 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder>{
-    Fragment fragment;
+public class TypeAdapter  extends RecyclerView.Adapter<TypeAdapter.MyViewHolder>{
 
-    private List<String> mUserList;
-    private List<String> mUserID;
-    private UserAdapter.itemClickInterface mItemClickInterface;
+    private List<String> mTypeList;
+    private TypeAdapter.itemClickInterface mItemClickInterface;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView textViewUserFullName;
-        UserAdapter.itemClickInterface itemClickInterface;
+        TypeAdapter.itemClickInterface itemClickInterface;
         ConstraintLayout userLayout;
 
-        public MyViewHolder(View view, UserAdapter.itemClickInterface itemClickInterface) {
+        public MyViewHolder(View view, TypeAdapter.itemClickInterface itemClickInterface) {
             super(view);
             textViewUserFullName = (TextView) view.findViewById(R.id.textViewUserFullName);
             userLayout = itemView.findViewById(R.id.userLayout);
@@ -37,35 +35,32 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder>{
         public void onClick(View view) { itemClickInterface.onItemClick(getBindingAdapterPosition());}
     } // end MyViewHolder
 
-    public UserAdapter(Fragment fragment, List<String> userList, List<String> userID, UserAdapter.itemClickInterface itemClickInterface) {
-        this.fragment = fragment;
-        mUserList = userList;
-        mUserID = userID;
+    public TypeAdapter(List<String> typeList, TypeAdapter.itemClickInterface itemClickInterface) {
+        mTypeList = typeList;
         this.mItemClickInterface = itemClickInterface;
     }
 
     @Override
-    public UserAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public TypeAdapter.MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.user_recyclerview_item, parent, false);
-        return new UserAdapter.MyViewHolder(itemView, mItemClickInterface);
+        return new TypeAdapter.MyViewHolder(itemView, mItemClickInterface);
     }
 
     @Override
-    public void onBindViewHolder(UserAdapter.MyViewHolder holder, int position) {
-        String user = mUserList.get(position);
+    public void onBindViewHolder(TypeAdapter.MyViewHolder holder, int position) {
+        String type = mTypeList.get(position);
 
-        holder.textViewUserFullName.setText(user);
+        holder.textViewUserFullName.setText(type);
     }
 
     @Override
     public int getItemCount() {
-        return mUserList.size();
+        return mTypeList.size();
     }
 
-    public void setData(List<String> users, List<String> id) {
-        mUserList = users;
-        mUserID = id;
+    public void setData(List<String> types) {
+        mTypeList = types;
         notifyDataSetChanged();
     }
 
@@ -73,5 +68,5 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder>{
     public interface itemClickInterface {
         void onItemClick(int position);
     }
-}
 
+}

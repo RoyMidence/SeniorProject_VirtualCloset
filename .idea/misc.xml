@@ -11,13 +11,17 @@
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable/ic_closet.xml" value="0.5025" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable/ic_hanger.xml" value="0.5025" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/activity_add.xml" value="0.5505208333333333" />
+        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/activity_filter_chosen_outfit.xml" value="0.5546875" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/activity_main.xml" value="0.5505208333333333" />
+        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/activity_select_types.xml" value="0.5546875" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/activity_update.xml" value="0.5364583333333334" />
+        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/activity_update_outfit.xml" value="0.5546875" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/clothing_recyclerview_item.xml" value="0.5505208333333333" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/fragment_addclothes.xml" value="0.5505208333333333" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/fragment_thecloset.xml" value="0.5505208333333333" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/fragment_update.xml" value="0.5546875" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/nav_header.xml" value="0.5505208333333333" />
+        <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/layout/user_recyclerview_item.xml" value="0.5546875" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/menu/closet_menu.xml" value="0.5505208333333333" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/SeniorProject_VirtualCloset/app/src/main/res/layout/activity_main.xml" value="0.17617753623188406" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/SeniorProject_VirtualCloset/app/src/main/res/layout/clothing_recyclerview_item.xml" value="0.17617753623188406" />

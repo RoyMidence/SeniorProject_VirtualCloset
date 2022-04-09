@@ -10,12 +10,17 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Menu">
         <activity
+            android:name=".SelectTypes"
+            android:exported="false" />
+        <activity
+            android:name=".FilterChosenOutfit"
+            android:exported="false" />
+        <activity
             android:name=".RegisterActivity"
             android:exported="false" />
         <activity
             android:name=".UpdateOutfit"
-            android:exported="false"
-            />
+            android:exported="false" />
         <activity
             android:name=".SelectClothes"
             android:exported="false" />

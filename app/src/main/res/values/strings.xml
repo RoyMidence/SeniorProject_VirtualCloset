@@ -40,5 +40,12 @@
     <string name="fit">Fit</string>
     <string name="fullName" />
     <string name="register">register</string>
+    <string name="colors">Colors</string>
+    <string name="type_of_clothing">Type of Clothing</string>
+    <string name="done">Done</string>
+    <string name="add_types">Add Types</string>
+    <string name="list_of_types">List of Types</string>
+    <string name="added_types">Added Types</string>
+    <string name="save_types">Save Types</string>
 
 </resources>

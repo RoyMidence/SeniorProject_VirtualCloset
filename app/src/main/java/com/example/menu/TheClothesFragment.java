@@ -41,13 +41,6 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
     private ClothingAdapter list;
     private View view;
 
-    @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        emptyImageView = (ImageView) getView().findViewById(R.id.emptyImageView);
-        textViewEmptyCloset = (TextView) getView().findViewById(R.id.textViewEmptyCloset);
-    }
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
