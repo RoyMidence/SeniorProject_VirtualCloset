@@ -44,7 +44,7 @@
         app:layout_constraintTop_toBottomOf="@+id/radioGroup" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName"
+        android:id="@+id/editTextFilterColor1"
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:ems="10"
@@ -56,7 +56,7 @@
         android:autofillHints="" />
 
     <EditText
-        android:id="@+id/editTextTextPersonName2"
+        android:id="@+id/editTextFilterColor2"
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:ems="10"
@@ -64,7 +64,7 @@
         android:inputType="textPersonName"
         android:minHeight="48dp"
         android:textColorHint="#757575"
-        app:layout_constraintStart_toEndOf="@+id/editTextTextPersonName"
+        app:layout_constraintStart_toEndOf="@+id/editTextFilterColor1"
         app:layout_constraintTop_toBottomOf="@+id/textView5"
         android:autofillHints="" />
 
@@ -74,8 +74,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="@string/type_of_clothing"
-        app:layout_constraintStart_toStartOf="@+id/editTextTextPersonName"
-        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+        app:layout_constraintStart_toStartOf="@+id/editTextFilterColor1"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFilterColor1" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewFilteredTypes"
