@@ -97,7 +97,8 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
         clothingAdapter = new ClothingAdapter(getApplicationContext() ,outfitClothing, this);
         recyclerViewUpdateClothing.setAdapter(clothingAdapter);
     }
-private void configureButtons(){
+
+    private void configureButtons(){
     fabUpdateButton= findViewById(R.id.floatingActionButtonUpdateOutfit);
     fabDeleteButton= findViewById(R.id.floatingActionButtonDeleteOutfit);
     editTextOutfitName.setText(outfitName);

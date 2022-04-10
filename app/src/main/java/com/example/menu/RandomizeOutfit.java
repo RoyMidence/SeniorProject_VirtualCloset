@@ -43,6 +43,7 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
     // Globals for filter parameters
     private ArrayList<String> types = new ArrayList<>();
     private String c1, c2;
+    private boolean createOutfit;
 
     public RandomizeOutfit() {
         // Required empty public constructor
@@ -67,6 +68,7 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
         types.add("Shoes");
         c1 = "Any";
         c2 = "Any";
+        createOutfit = true;
 
 
         outfitNameRandom = (EditText) v.findViewById(R.id.randomOutfit);
@@ -86,6 +88,7 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
                                 types = resultIntent.getStringArrayListExtra("types");
                                 c1 = resultIntent.getExtras().getString("c1");
                                 c2 = resultIntent.getExtras().getString("c2");
+                                createOutfit = resultIntent.getExtras().getBoolean("createOutfit");
 
                             }
                         }
@@ -107,14 +110,15 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
         ClothingItem CI;
         List<ClothingItem> temp = new ArrayList<>(); // will hold all of a specific type
 
+
         Cursor cursor = mDatabaseHelper.readClothingType(type); // table of specified type
         if (cursor.getCount() != 0) {
             while (cursor.moveToNext()) {
                 // CLOTHING TABLE:  clothingID  : NAME  : BRAND : TYPE  : PATTERN : FIR : SIZE : COLOR1 : COLOR2 : MATERIAL : DESC : STATUS : userID
                 String id = cursor.getString(0);
-                CI = new ClothingItem(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3), cursor.getString(4),
-                        cursor.getString(5),cursor.getString(6),cursor.getString(7),cursor.getString(8),
-                        cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12),
+                CI = new ClothingItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+                        cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),
+                        cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),
                         mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id));
                 temp.add(CI);
             }
@@ -134,7 +138,7 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
                         temp.remove(i);
                         i--;
                     }
-                } else  if (!c2.equals("Any")){ // Looking for secondary color
+                } else if (!c2.equals("Any")) { // Looking for secondary color
                     if (!temp.get(i).getColor2().equals(c2)) {
                         temp.remove(i);
                         i--;
@@ -153,6 +157,44 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
         return true;
     }
 
+    private void chooseOutfit() {
+        clothingItems.clear();
+        ClothingItem CI;
+        List<Outfit> of = new ArrayList<>();
+
+        // Create Outfit Object
+        // Create list of them
+        // select one from list
+
+
+        // Creating list of outfits
+        Cursor cursor = mDatabaseHelper.readUserOutfits();
+        if (cursor.getCount() != 0) {
+            while (cursor.moveToNext()) {
+                // OUTFIT TABLE ID : NAME
+                of.add(new Outfit(cursor.getString(0), cursor.getString(1)));
+            }
+        } // Now have a list with the outfits
+
+        // SELECT OUTFIT
+        Random random = new Random(); // use this to generate a random number
+        int outfit = random.nextInt(of.size());
+        String outfitID = of.get(outfit).getOutfitID();
+        cursor = mDatabaseHelper.readOutfitClothing(outfitID); // reading the clothing of randomly selected outfit
+        while (cursor.moveToNext()) {
+            // CLOTHING TABLE:  clothingID  : NAME  : BRAND : TYPE  : PATTERN : FIT : SIZE : COLOR1 : COLOR2 : MATERIAL : DESC : STATUS : userID
+            String id = cursor.getString(0);
+            CI = new ClothingItem(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3), cursor.getString(4),
+                    cursor.getString(5),cursor.getString(6),cursor.getString(7),cursor.getString(8),
+                    cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12),
+                    mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id));
+            clothingItems.add(CI);
+        }
+
+        outfitNameRandom.setText(of.get(outfit).getOutfitName());
+        // LIST CLOTHING
+    }
+
     private void configureButtons() {
         Button randomButton = (Button) v.findViewById(R.id.randomizeButton);
         FloatingActionButton  filter = (FloatingActionButton)v.findViewById(R.id.filterFAB);
@@ -165,12 +207,17 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
                 boolean worked = true;
                 clothingItems.clear(); // new outfit everytime
 
-                for (int i = 0; i < types.size();i++) { // Will cycle through the types of clothing
-                    if (!chooseClothingItem(types.get(i))) {
-                        Toast.makeText(getContext(), "No shirt with that color", Toast.LENGTH_SHORT).show();
-                        worked = false;
-                        break;
+
+                if (createOutfit) {
+                    for (int i = 0; i < types.size(); i++) { // Will cycle through the types of clothing
+                        if (!chooseClothingItem(types.get(i))) {
+                            Toast.makeText(getContext(), "No shirt with that color", Toast.LENGTH_SHORT).show();
+                            worked = false;
+                            break;
+                        }
                     }
+                } else {
+                    chooseOutfit();
                 }
 
                 if (worked) {

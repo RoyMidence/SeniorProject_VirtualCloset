@@ -29,10 +29,11 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
     private View v;
     private String name;
     private ArrayList<String> outfit_name = new ArrayList<>();
+    private ArrayList<String> outfitId = new ArrayList<>();
     private DatabaseHelper mDatabaseHelper;
     private TextView textViewEmptyCloset;
     private OutfitAdapter outfitAdapter;
-    private ArrayList<String> outfitId = new ArrayList<>();
+
     ActivityResultLauncher<Intent> otherActivityLauncher;
 
 

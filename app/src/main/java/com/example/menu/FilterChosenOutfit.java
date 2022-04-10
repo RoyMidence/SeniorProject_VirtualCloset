@@ -14,6 +14,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +27,7 @@ public class FilterChosenOutfit extends AppCompatActivity implements TypeAdapter
 
     ActivityResultLauncher<Intent> otherActivityLauncher;
 
+    RadioButton radioButtonCreateOutfit;
     EditText editTextFilterColor1, editTextFilterColor2;
     Button buttonAddTypes, buttonDone;
 
@@ -35,6 +37,7 @@ public class FilterChosenOutfit extends AppCompatActivity implements TypeAdapter
         setContentView(R.layout.activity_filter_chosen_outfit);
 
         recyclerViewFilteredTypes = findViewById(R.id.recyclerViewFilteredTypes);
+        radioButtonCreateOutfit = findViewById(R.id.radioButtonCreateOutfit);
         editTextFilterColor1 = findViewById(R.id.editTextFilterColor1);
         editTextFilterColor2 = findViewById(R.id.editTextFilterColor2);
         buttonAddTypes = findViewById(R.id.buttonAddTypes);
@@ -102,6 +105,7 @@ public class FilterChosenOutfit extends AppCompatActivity implements TypeAdapter
                 resultIntent.putStringArrayListExtra("types",newTypes);
                 resultIntent.putExtra("c1",c1);
                 resultIntent.putExtra("c2",c2);
+                resultIntent.putExtra("createOutfit", radioButtonCreateOutfit.isChecked());
                 setResult(0,resultIntent);
                 finish(); // Come back later, when other screen done
             }
