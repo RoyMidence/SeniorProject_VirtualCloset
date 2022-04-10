@@ -16,11 +16,16 @@
                 android:icon="@drawable/ic_outfit"
                 android:title="Outfits"
                 />
+            <item android:id="@+id/nav_randomOutfitFragment"
+                android:title="Randomize Outfits"
+                />
         </group>
     <item android:title="Profile">
         <menu>
             <item android:title="Share Closet"
                 android:id="@+id/nav_shareCloset"/>
+            <item android:title="User Preferences"
+                android:id="@+id/nav_userPreferences"/>
             <item android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_logout"
                 android:title="Logout" />

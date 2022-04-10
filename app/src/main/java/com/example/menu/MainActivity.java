@@ -102,7 +102,11 @@ private DatabaseHelper mDatabaseHelper;
             case R.id.temp_access:
                 Intent intent = new Intent(MainActivity.this,FilterChosenOutfit.class);
                 startActivity(intent);
-
+                break;
+            case R.id.nav_randomOutfitFragment:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new RandomizeOutfit()).commit();
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

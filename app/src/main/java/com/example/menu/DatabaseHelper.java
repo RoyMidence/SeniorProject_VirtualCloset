@@ -64,7 +64,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String USER_FULLNAME = "user_fullname";
     private static final String USER_NAME = "username";
     private static final String USER_PASSWORD = "user_password";
-    private static final String USER_KEY = "user_key"; // randomly generated key, might get used to share closet later
+    private static final String USER_KEY = "user_key";// randomly generated key, might get used to share closet later
+    private static final String User_Hot = "user_hot";
+    private static final String User_Cold="user_cold";
+    private static final String User_Freezing="user_freezing";
+    private static final String User_Warm="user_warm";
 
     // Logged-in table, only has user_id as value, will only ever have 1 entry at a time
     private static String LOGGED_USER_TABLE = "logged_user_table";
@@ -94,7 +98,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 USER_FULLNAME + " TEXT, " +
                 USER_NAME + " TEXT, " +
                 USER_PASSWORD + " TEXT, " +
-                USER_KEY + " TEXT);";
+                USER_KEY + " TEXT, " +
+                User_Hot + " TEXT, " +
+                User_Freezing + " TEXT, " +
+                User_Warm + " TEXT, " +
+                User_Cold + " TEXT);";
         db.execSQL(createTable);
 
         // CREATE LOGGED_USER_TABLE
@@ -225,13 +233,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // ADD A USER
-    public boolean addUser(String fullname, String userName, String password) {
+    public boolean addUser(String fullname, String userName, String password,String hot,String freezing,String warm,String cold) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(USER_FULLNAME, fullname);
         contentValues.put(USER_NAME, userName);
         contentValues.put(USER_PASSWORD,password);
         contentValues.put(USER_KEY,generateKey());
+        contentValues.put(User_Hot,hot);
+        contentValues.put(User_Freezing,freezing);
+        contentValues.put(User_Warm,warm);
+        contentValues.put(User_Cold,cold);
+
+
 
 
         long result = db.insert(USER_TABLE,null,contentValues);

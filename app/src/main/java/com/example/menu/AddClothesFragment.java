@@ -250,6 +250,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
                 break;
             case R.id.nav_athletic:
                 tv_fancy_casual.setText("Athletic");
+                break;
             case R.id.nav_solid:
                 tv_pattern.setText("Solid");
                 break;

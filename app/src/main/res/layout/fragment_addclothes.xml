@@ -34,7 +34,9 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="140dp"
-            android:src="@drawable/ic_clothes" />
+            android:src="@drawable/ic_clothes"
+            android:background="#0000"
+            />
 
         <TextView
             android:id="@+id/clothes_type"
@@ -53,7 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginTop="140dp"
-            android:src="@drawable/ic_business" />
+            android:src="@drawable/ic_business"
+            android:background="#0000"/>
 
         <TextView
             android:id="@+id/fancy_casual_type"
@@ -72,7 +75,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/fancy_casual_type"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_pattern" />
+            android:src="@drawable/ic_pattern"
+            android:background="#0000"/>
 
         <TextView
             android:id="@+id/pattern_type"
@@ -91,7 +95,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/clothes_type"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_material" />
+            android:src="@drawable/ic_material"
+            android:background="#0000"/>
 
         <TextView
             android:id="@+id/material_type"
@@ -144,7 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/textViewMen"
-            android:layout_marginLeft="25dp"/>
+            android:layout_marginLeft="25dp" />
 
         <CheckBox
             android:id="@+id/checkBoxWomen"

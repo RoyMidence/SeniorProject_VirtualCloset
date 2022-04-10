@@ -26,8 +26,8 @@
             android:layout_below="@id/description"
             android:hint="Click me"
             android:maxLength="30"
-            android:textSize="25sp"
-            android:textColor="@color/orange"/>
+            android:textColor="@color/orange"
+            android:textSize="25sp" />
 
         <ImageButton
             android:id="@+id/image_color"
@@ -35,6 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="140dp"
+            android:background="#0000"
             android:src="@drawable/ic_color" />
 
         <TextView
@@ -54,7 +55,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/color_type"
             android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_color" />
+            android:src="@drawable/ic_color"
+            android:background="#0000"/>
 
         <TextView
             android:id="@+id/color2_type"
@@ -73,7 +75,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_marginTop="140dp"
-            android:src="@drawable/ic_size" />
+            android:src="@drawable/ic_size"
+            android:background="#0000"/>
 
         <TextView
             android:id="@+id/size_type"
@@ -93,7 +96,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/size_type"
             android:layout_alignParentRight="true"
-            android:src="@drawable/ic_brand" />
+            android:src="@drawable/ic_brand"
+            android:background="#0000"/>
 
         <TextView
             android:id="@+id/brand_type"
