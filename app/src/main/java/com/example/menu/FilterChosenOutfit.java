@@ -37,6 +37,8 @@ public class FilterChosenOutfit extends AppCompatActivity implements TypeAdapter
         buttonDone = findViewById(R.id.buttonDone);
         setUpRecycler();
 
+
+
         otherActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
@@ -68,6 +70,15 @@ public class FilterChosenOutfit extends AppCompatActivity implements TypeAdapter
         buttonDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent resultIntent = new Intent();
+
+                ArrayList<String> newTypes = new ArrayList<>();
+                for (int i = 0; i < listTypes.size(); i++) {
+                    newTypes.add(listTypes.get(i));
+                }
+
+                resultIntent.putStringArrayListExtra("types",newTypes);
+                setResult(0,resultIntent);
                 finish(); // Come back later, when other screen done
             }
         });
@@ -77,9 +88,13 @@ public class FilterChosenOutfit extends AppCompatActivity implements TypeAdapter
 
     private void storeValuesInArrays() {
         listTypes.clear();
-        listTypes.add("Shirts");
-        listTypes.add("pants");
-        listTypes.add("Shoes");
+
+        ArrayList<String> newTypes = getIntent().getStringArrayListExtra("types");
+        for (int i = 0; i < newTypes.size(); i++) {
+            if (!listTypes.contains(newTypes.get(i))) { // checks for duplicates
+                listTypes.add(newTypes.get(i));
+            }
+        }
     }
 
     private void setUpRecycler() {

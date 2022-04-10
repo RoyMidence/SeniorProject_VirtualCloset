@@ -1,9 +1,14 @@
 package com.example.menu;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.media.Image;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,6 +37,7 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
     private DatabaseHelper mDatabaseHelper;
     private ClothingAdapter list;
     EditText outfitNameRandom;
+    ActivityResultLauncher<Intent> otherActivityLauncher;
 
     public RandomizeOutfit() {
         // Required empty public constructor
@@ -49,6 +55,8 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_randomize_outfit, container, false);
+
+
         outfitNameRandom = (EditText) v.findViewById(R.id.randomOutfit);
         types.add("Shirt");
         types.add("Pants");
@@ -57,6 +65,23 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
         recyclerViewRandomOutfit = v.findViewById(R.id.recyclerViewRandom);
         configureButtons();
         setUpRecycler(v);
+
+        otherActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == 0) {
+                            Intent resultIntent = result.getData();
+                            if (resultIntent != null) {
+                                types. clear();
+                                types = resultIntent.getStringArrayListExtra("types");
+                            }
+                        }
+
+                    }
+                });
+
+
         return v;
     }
 
@@ -110,6 +135,16 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
 
             }
         });
+
+        filter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), FilterChosenOutfit.class);
+                intent.putStringArrayListExtra("types",types);
+                otherActivityLauncher.launch(intent);
+            }
+        });
+
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

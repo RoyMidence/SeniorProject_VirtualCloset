@@ -35,7 +35,7 @@ public class SelectClothes extends AppCompatActivity implements ClothingAdapter.
         textViewEmptyCloset = findViewById(R.id.textViewEmpty_select);
         mDatabaseHelper = new DatabaseHelper(getApplicationContext());
         RecyclerView recyclerView = findViewById(R.id.recyclerViewClothing_outfit);
-       type = getIntent().getExtras().getString("type");
+        type = getIntent().getExtras().getString("type");
         storeValuesInArrays();
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getApplicationContext());
