@@ -30,6 +30,7 @@ import java.util.Calendar;
 public class WeatherFragment extends Fragment {
 
     private View v;
+    private String url = "https://api.openweathermap.org/data/2.5/weather?lat=40.733471&lon=-73.445083&units=imperial&appid=ae4124b573a94aec76337478a86b3885";
     TextView temp, city, date, description;
 
     public WeatherFragment() {
@@ -84,13 +85,12 @@ public class WeatherFragment extends Fragment {
 //        queue.add(jor);
         findWeather();
 
-        return inflater.inflate(R.layout.fragment_weather, container, false);
+        return v;
     }
 
     public void findWeather() {
-        String url = "https://api.openweathermap.org/data/2.5/weather?lat=40.733471&lon=-73.445083&units=imperial&appid=ae4124b573a94aec76337478a86b3885";
         RequestQueue queue = Volley.newRequestQueue(getContext());
-       JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
            @Override
            public void onResponse(JSONObject response) {
                 try{
