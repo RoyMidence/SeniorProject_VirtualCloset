@@ -83,6 +83,10 @@ private DatabaseHelper mDatabaseHelper;
                         new TheClothesFragment()).commit();
 
                 break;
+            case R.id.nav_weather:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new WeatherFragment()).commit();
+                break;
             case R.id.nav_logout:
                 Toast.makeText(this,"You have been logged out.",Toast.LENGTH_SHORT).show();
                 mDatabaseHelper.logOut();
