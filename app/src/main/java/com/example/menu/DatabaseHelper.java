@@ -489,6 +489,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return true;
     }
 
+    public boolean checkOutfitName(String outfitName) {
+        SQLiteDatabase db = getReadableDatabase();
+        String query = "SELECT COUNT(*) FROM " + OUTFIT_TABLE +
+                " WHERE " + OUTFIT_NAME + " = '" + outfitName + "' ";
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0)
+                return false;
+        }
+        return true;
+    }
+
     // CHECK IF THERE IS A USER WITH THE SPECIFIED KEY
     // RETURNS -1 IF IT DIDN'T WORK (KEY DOESN'T EXIST)
     public int userKeyCheck(String key) {

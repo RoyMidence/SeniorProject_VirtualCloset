@@ -45,44 +45,6 @@ public class WeatherFragment extends Fragment {
         city = (TextView) v.findViewById(R.id.city);
         date = (TextView) v.findViewById(R.id.date);
         description = (TextView) v.findViewById(R.id.description);
-//        String url = "https://api.openweathermap.org/data/2.5/weather?lat=40.733471&lon=-73.445083&units=imperial&appid=ae4124b573a94aec76337478a86b3885";
-//
-//        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-//            @Override
-//            public void onResponse(JSONObject response) {
-//                try{
-//                    JSONObject main = response.getJSONObject("main");
-//                    JSONArray array = response.getJSONArray("weather");
-//                    String t = String.valueOf(main.getDouble("temp"));
-//                    String d1 = String.valueOf(main.getDouble("description"));
-//                    String d2 = String.valueOf(main.getDouble("date"));
-//                    String c = String.valueOf(main.getDouble("name"));
-//
-//                    temp.setText(t);
-//                    city.setText(c);
-////                    date.setText(d2);
-//                    description.setText(d1);
-//
-//                    Calendar calendar = Calendar.getInstance();
-//                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-DD-EEEE");
-//                    String formattedDate = simpleDateFormat.format(calendar.getTime());
-//                    date.setText(formattedDate);
-//
-////                    double tempInt = Double.parseDouble(temp);
-//
-//
-//                } catch(JSONException e){
-//                    e.printStackTrace();
-//                }
-//            }
-//        }, new Response.ErrorListener() {
-//            @Override
-//            public void onErrorResponse(VolleyError error) {
-//
-//            }
-//        });
-//        RequestQueue queue = Volley.newRequestQueue(getParentFragment().getContext());
-//        queue.add(jor);
         findWeather();
 
         return v;
@@ -106,12 +68,11 @@ public class WeatherFragment extends Fragment {
                     city.setText(c);
                     description.setText(d);
 
-//                    Calendar calendar = Calendar.getInstance();
-//                    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
-//                    String formattedDate = simpleDateFormat.format(calendar.getTime());
-//                    date.setText(formattedDate);
+                   Calendar calendar = Calendar.getInstance();
+                   SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM-dd-yyyy");
+                   String formattedDate = simpleDateFormat.format(calendar.getTime());
+                   date.setText(formattedDate);
 
-//                    double tempInt = Double.parseDouble(temp);
 
 
                 } catch(JSONException e){
