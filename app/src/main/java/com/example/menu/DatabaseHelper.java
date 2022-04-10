@@ -520,6 +520,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    Cursor readClothingType(String type) {
+        String query = "SELECT * FROM " + CLOTHING_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID() +
+                " AND " + CLOTHING_TYPE + " = '" + type + "' ";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null)
+            cursor = db.rawQuery(query, null);
+        return cursor;
+    }
+
     Cursor readOutfitClothing(String outfitID) {
         String Subquery = " SELECT " + CLOTHING_ID +
                 " FROM " + OUTFIT_CLOTHING_TABLE +
