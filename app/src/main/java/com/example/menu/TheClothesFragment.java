@@ -258,7 +258,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         storeValuesInArrays();
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        list = new ClothingAdapter(clothingItems, this);
+        list = new ClothingAdapter(getContext() ,clothingItems, this);
         recyclerView.setAdapter(list);
     }
 
@@ -302,7 +302,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         storeValuesInArrays(userID);
 
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        list = new ClothingAdapter(clothingItems, this);
+        list = new ClothingAdapter(getContext() ,clothingItems, this);
         recyclerView.setAdapter(list);
     }
 

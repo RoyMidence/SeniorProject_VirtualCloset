@@ -4,15 +4,22 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
+import androidx.appcompat.widget.PopupMenu;
 import androidx.cardview.widget.CardView;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import org.w3c.dom.Text;
 
@@ -20,12 +27,15 @@ import java.util.List;
 
 public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyViewHolder>{
 
+    private Context context;
+
     private List<ClothingItem> mClothingList;
     private itemClickInterface mItemClickInterface;
 
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView txtviewClothingName, textViewBrand, textViewType;
+        ImageButton imageButtonStatus;
         itemClickInterface itemClickInterface;
         CardView mainLayout;
 
@@ -34,6 +44,7 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
             txtviewClothingName = (TextView) view.findViewById(R.id.txtViewClothingName);
             textViewBrand = (TextView) view.findViewById(R.id.textViewBrand);
             textViewType = (TextView) view.findViewById(R.id.textViewType);
+            imageButtonStatus = (ImageButton) view.findViewById(R.id.imageButtonStatus);
             mainLayout = itemView.findViewById(R.id.mainLayout);
             this.itemClickInterface = itemClickInterface;
 
@@ -44,7 +55,8 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
         public void onClick(View view) { itemClickInterface.onItemClick(getBindingAdapterPosition());}
     } // end MyViewHolder
 
-    public ClothingAdapter(List<ClothingItem> clothingItems, itemClickInterface itemClickInterface) {
+    public ClothingAdapter(Context c,List<ClothingItem> clothingItems, itemClickInterface itemClickInterface) {
+        context = c;
         mClothingList = clothingItems;
         this.mItemClickInterface = itemClickInterface;
     }
@@ -59,12 +71,51 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         String clothing = mClothingList.get(position).getName();
-        String brand = mClothingList.get(position).getBrand();
+        String pattern = mClothingList.get(position).getPattern();
         String type = mClothingList.get(position).getType();
+        String status = mClothingList.get(position).getStatus();
+        String id = String.valueOf(mClothingList.get(position).getClothingID());
 
         holder.txtviewClothingName.setText(clothing);
         holder.textViewType.setText(type);
-        holder.textViewBrand.setText(brand);
+        holder.textViewBrand.setText(pattern);
+
+        holder.imageButtonStatus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseHelper db = new DatabaseHelper(context);
+                PopupMenu popupMenu = new PopupMenu(context, holder.imageButtonStatus);
+
+                popupMenu.getMenu().add(0,0,Menu.NONE,"Available");
+                popupMenu.getMenu().add(0,1,Menu.NONE,"Unavailable");
+                popupMenu.getMenu().add(0,2,Menu.NONE,"Borrowed");
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        // DO SOMETHING
+                        if (item.getItemId() == 0) {
+                            db.updateClothingStatus(id,"Available");
+                            holder.imageButtonStatus.setImageResource(R.drawable.ic_hanger);
+                        } else if (item.getItemId() == 1){
+                            db.updateClothingStatus(id,"Unavailable");
+                            holder.imageButtonStatus.setImageResource(R.drawable.ic_logout);
+                        } else {
+                            db.updateClothingStatus(id,"Borrowed");
+                            holder.imageButtonStatus.setImageResource(R.drawable.ic_borrowed);
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
+            }
+        });
+
+        if (status.equals("Unavailable")) {
+            holder.imageButtonStatus.setImageResource(R.drawable.ic_logout);
+        } else if(status.equals("Borrowed")) {
+            holder.imageButtonStatus.setImageResource(R.drawable.ic_borrowed);
+        }
     }
 
     @Override

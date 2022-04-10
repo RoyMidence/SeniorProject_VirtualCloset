@@ -59,7 +59,7 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
         storeValuesInArrays();
 
         recyclerViewRandomOutfit.setLayoutManager(new LinearLayoutManager(getContext()));
-        list = new ClothingAdapter(clothingItems, this);
+        list = new ClothingAdapter(getContext(), clothingItems, this);
         recyclerViewRandomOutfit.setAdapter(list);
     }
     private void storeValuesInArrays() {

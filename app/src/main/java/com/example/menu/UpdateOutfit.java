@@ -94,7 +94,7 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getApplicationContext());
         recyclerViewUpdateClothing.setLayoutManager(layoutManager);
-        clothingAdapter = new ClothingAdapter(outfitClothing, this);
+        clothingAdapter = new ClothingAdapter(getApplicationContext() ,outfitClothing, this);
         recyclerViewUpdateClothing.setAdapter(clothingAdapter);
     }
 private void configureButtons(){

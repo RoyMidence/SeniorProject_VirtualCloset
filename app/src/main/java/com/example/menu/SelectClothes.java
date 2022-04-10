@@ -40,7 +40,7 @@ public class SelectClothes extends AppCompatActivity implements ClothingAdapter.
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(new ClothingAdapter(clothingItems, this));
+        recyclerView.setAdapter(new ClothingAdapter(getApplicationContext() ,clothingItems, this));
     }
     private void storeValuesInArrays() {
         ClothingItem CI;

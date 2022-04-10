@@ -5,14 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.database.sqlite.SQLiteQuery;
-import android.icu.text.SymbolTable;
-import android.telephony.CellSignalStrengthGsm;
-import android.util.Log;
 import android.widget.Toast;
-
-import java.util.ArrayList;
-import java.util.Locale;
 import java.util.Random;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -71,7 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String User_Warm="user_warm";
 
     // Logged-in table, only has user_id as value, will only ever have 1 entry at a time
-    private static String LOGGED_USER_TABLE = "logged_user_table";
+    private static final String LOGGED_USER_TABLE = "logged_user_table";
 
     DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -159,7 +152,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " (" + OUTFIT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 OUTFIT_NAME + " TEXT, " +
                 USER_ID + " INTEGER, " +
-                "FOREIGN KEY (" + USER_ID + ") REFERENCES " + USER_TABLE + "(" + USER_ID + "));";;
+                "FOREIGN KEY (" + USER_ID + ") REFERENCES " + USER_TABLE + "(" + USER_ID + "));";
         db.execSQL(createTable);
 
         // CREATE OUTFIT & CLOTHING TABLE
@@ -193,11 +186,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.insert(CLOTHING_TABLE, null, contentValues);
 
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
 
     // METHOD FOR CREATING AN OUTFIT
@@ -209,11 +198,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.insert(OUTFIT_TABLE, null, contentValues);
 
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
 
     // METHOD FOR ADDING CLOTHING TO AN OUTFIT
@@ -225,11 +210,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.insert(OUTFIT_CLOTHING_TABLE, null, contentValues);
 
-        if (result == -1) {
-            return false;
-        } else {
-            return true;
-        }
+        return result != -1;
     }
 
     // ADD A USER
@@ -250,11 +231,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.insert(USER_TABLE,null,contentValues);
 
-        if (result == -1) {
-            return false; // DIDN'T WORK
-        } else {
-            return true; // WORKED
-        }
+        return result != -1;
     }
 
     public boolean shareCloset(String key) {
@@ -264,11 +241,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(ALLOWED_USER, loggedUserID());
 
         long result = db.insert(SHARED_CLOSET_TABLE,null,contentValues);
-        if (result == -1) {
-            return false; // DIDN'T WORK
-        } else {
-            return true; // WORKED
-        }
+        return result != -1;
     }
 
 
@@ -281,11 +254,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
         long result = db.insert(LOGGED_USER_TABLE,null,contentValues);
-        if (result == -1) {
-            return false; // DIDN'T WORK
-        } else {
-            return true; // WORKED
-        }
+        return result != -1;
     }
 
     // ADD A TAG
@@ -297,11 +266,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.insert(CLOTHING_TAGS_TABLE,null,contentValues);
 
-        if (result == -1) {
-            return false; // DIDN'T WORK
-        } else {
-            return true; // WORKED
-        }
+        return result != -1;
     }
 
     // ADD TAGS TO TABLE
@@ -312,11 +277,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         long result = db.insert(TAGS_TABLE,null,contentValues);
 
-        if (result == -1) {
-            return false; // DIDN'T WORK
-        } else {
-            return true; // WORKED
-        }
+        return result != -1;
     }
 
     // QUERIES HERE-------------------------------------------------------------------------
@@ -982,6 +943,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         cv.put(CLOTHING_DESCRIPTION, desc);
 
         long result = db.update(CLOTHING_TABLE, cv, "clothing_id=?", new String[] {row_id});
+        if (result == -1)
+            Toast.makeText(context, "Failed to Update!", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
+    }
+
+    void updateClothingStatus(String id, String status) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(CLOTHING_STATUS, status);
+
+        long result = db.update(CLOTHING_TABLE, cv, "clothing_id=?", new String[] {id});
         if (result == -1)
             Toast.makeText(context, "Failed to Update!", Toast.LENGTH_SHORT).show();
         else
