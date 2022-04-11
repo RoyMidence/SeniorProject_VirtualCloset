@@ -22,13 +22,21 @@
         android:id="@+id/randomizeButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="149dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="174dp"
+        android:layout_marginStart="72dp"
+        android:layout_marginTop="24dp"
         android:text="ready?"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/recyclerViewRandom" />
+
+    <Button
+        android:id="@+id/wearButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Wear"
+        android:visibility="gone"
+        android:layout_marginStart="56dp"
+        android:layout_marginTop="28dp"
+        app:layout_constraintStart_toEndOf="@+id/randomizeButton"
         app:layout_constraintTop_toBottomOf="@+id/recyclerViewRandom" />
 
     <androidx.recyclerview.widget.RecyclerView
@@ -58,10 +66,11 @@
         android:id="@+id/save"
         android:layout_width="67dp"
         android:layout_height="66dp"
-        android:layout_marginEnd="76dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="68dp"
         android:background="#0000"
         android:src="@drawable/ic_add_random"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/randomizeButton" />
 
@@ -69,10 +78,11 @@
         android:id="@+id/cancel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="50dp"
+        android:layout_marginStart="52dp"
+        android:layout_marginTop="76dp"
         android:background="#0000"
         android:src="@drawable/ic_cancel_random"
-        android:visibility="invisible"
+        android:visibility="gone"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/randomizeButton" />
 

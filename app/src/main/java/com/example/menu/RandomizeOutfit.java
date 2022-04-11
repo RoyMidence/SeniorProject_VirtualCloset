@@ -11,6 +11,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -29,14 +30,14 @@ import java.util.List;
 import java.util.Random;
 
 
-public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemClickInterface{
+public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickInterface{
 
  private View v;
  private RecyclerView recyclerViewRandomOutfit;
     private List<ClothingItem> clothingItems = new ArrayList<>();
 
     private DatabaseHelper mDatabaseHelper;
-    private ClothingAdapter list;
+    private NameAdapter list;
     EditText outfitNameRandom;
     ActivityResultLauncher<Intent> otherActivityLauncher;
 
@@ -102,7 +103,7 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
 
     private void setUpRecycler(View view) {
         recyclerViewRandomOutfit.setLayoutManager(new LinearLayoutManager(getContext()));
-        list = new ClothingAdapter(getContext(), clothingItems, this);
+        list = new NameAdapter(clothingItems, this);
         recyclerViewRandomOutfit.setAdapter(list);
     }
 
@@ -200,6 +201,7 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
         FloatingActionButton  filter = (FloatingActionButton)v.findViewById(R.id.filterFAB);
         ImageButton cancel = (ImageButton) v.findViewById(R.id.cancel);
         ImageButton save = (ImageButton) v.findViewById(R.id.save);
+        Button wearbutton = (Button) v.findViewById(R.id.wearButton);
 
         randomButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -224,12 +226,37 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
                     list.notifyDataSetChanged();
                     cancel.setVisibility(View.VISIBLE);
                     save.setVisibility(View.VISIBLE);
+                    wearbutton.setVisibility(View.VISIBLE);
                 }
 
 
             }
         });
+        save.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+
+              String  outfitName = outfitNameRandom.getText().toString();
+
+
+                if (String.valueOf(outfitNameRandom.getText()).equals("")) {
+                    toastMessage("Please enter a name!");
+                } else {
+                    if(mDatabaseHelper.checkOutfitName(outfitName)){
+                        toastMessage("Name already exist");
+                    }
+                    else {
+                        mDatabaseHelper.addOutfit(outfitName);
+                        for (int i = 0; i < clothingItems.size(); i++) {
+                            mDatabaseHelper.addClothingToOutfit(String.valueOf(clothingItems.get(i).getClothingID()));
+
+                        }
+                    }
+                }
+
+            }
+        });
         filter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -249,13 +276,29 @@ public class RandomizeOutfit extends Fragment  implements ClothingAdapter.itemCl
                 list.notifyDataSetChanged();
                 cancel.setVisibility(View.GONE);
                 save.setVisibility(View.GONE);
+                wearbutton.setVisibility(View.GONE);
                 outfitNameRandom.setText("");
 
+            }
+        });
+        wearbutton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i=0; i <clothingItems.size(); i++){
+                    mDatabaseHelper.updateClothingStatus(String.valueOf(clothingItems.get(i).getClothingID()),"Unavailable");
+
+                }
+                FragmentTransaction fr2 =getParentFragmentManager().beginTransaction();
+                fr2.replace(R.id.fragment_container,new TheClothesFragment());
+                fr2.commit();
             }
         });
     }
     @Override
     public void onItemClick(int position) {
 
+    }
+    private void toastMessage(String Message) {
+        Toast.makeText(getContext(), Message, Toast.LENGTH_SHORT).show();
     }
 }
