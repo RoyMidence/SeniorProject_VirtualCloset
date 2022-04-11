@@ -24,7 +24,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.itemClickInterface {
+public class UpdateOutfit extends AppCompatActivity implements NameAdapter.itemClickInterface {
     String outfitID, outfitName;
     int outfitPosition;
 
@@ -35,7 +35,7 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
 
 
     private RecyclerView recyclerViewUpdateClothing;
-    private ClothingAdapter clothingAdapter;
+    private NameAdapter NameAdapter;
     private List<ClothingItem> outfitClothing = new ArrayList<>();
 
     ActivityResultLauncher<Intent> otherActivityLauncher;
@@ -94,8 +94,8 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getApplicationContext());
         recyclerViewUpdateClothing.setLayoutManager(layoutManager);
-        clothingAdapter = new ClothingAdapter(getApplicationContext() ,outfitClothing, this);
-        recyclerViewUpdateClothing.setAdapter(clothingAdapter);
+        NameAdapter = new NameAdapter(outfitClothing, this);
+        recyclerViewUpdateClothing.setAdapter(NameAdapter);
     }
 
     private void configureButtons(){
@@ -159,7 +159,7 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
     public void onItemClick(int position) {
         mDatabaseHelper.deleteClothingItemFromOutfit(outfitID,String.valueOf(outfitClothing.get(position).getClothingID()));
         storeValuesInArrays();
-        clothingAdapter.setData(outfitClothing);
+        NameAdapter.setData(outfitClothing);
 
 
     }
@@ -174,7 +174,7 @@ public class UpdateOutfit extends AppCompatActivity implements ClothingAdapter.i
                 // Data to delete
                 mDatabaseHelper.deleteClothingItemFromOutfit(outfitID,String.valueOf(outfitClothing.get(pos).getClothingID()));
                 storeValuesInArrays();
-                clothingAdapter.setData(outfitClothing);
+                NameAdapter.setData(outfitClothing);
             }
         });
         builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
