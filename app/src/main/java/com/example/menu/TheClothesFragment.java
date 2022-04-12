@@ -208,49 +208,93 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             mDatabaseHelper.addToTagsTable("All"); // 8
         }
 
-        if (mDatabaseHelper.userTableEmpty()) {
-            mDatabaseHelper.addUser("The Admin", "admin", "admin","50","50","50","50");
-            mDatabaseHelper.addUser("Person1", "abcdef", "abcd-efgh","50","50","50","50");
-            mDatabaseHelper.addUser("Person2", "abcdef", "abcd-efgh","50","50","50","50");
-            mDatabaseHelper.addUser("Person3", "abcdef", "abcd-efgh","50","50","50","50");
-            mDatabaseHelper.addUser("Person4", "abcdef", "abcd-efgh","50","50","50","50");
-        }
+//        if (mDatabaseHelper.userTableEmpty()) {
+//            mDatabaseHelper.addUser("The Admin", "admin", "admin","50","50","50","50");
+//            mDatabaseHelper.addUser("Person1", "abcdef", "abcd-efgh","50","50","50","50");
+//            mDatabaseHelper.addUser("Person2", "abcdef", "abcd-efgh","50","50","50","50");
+//            mDatabaseHelper.addUser("Person3", "abcdef", "abcd-efgh","50","50","50","50");
+//            mDatabaseHelper.addUser("Person4", "abcdef", "abcd-efgh","50","50","50","50");
+//        }
 
         int cl; // Exists for testing purposes
 
         if (mDatabaseHelper.clothingTableEmpty()) { // Fill Clothing Table
-            AddData("Yellow Jippy","Fruit of The Loom","Solid", "Yellow", "", "Mens", "Shirt","L","Cotton","");
+            AddData("Yellow Jippy","Fruit of The Loom","Solid", "Yellow", "", "Mens", "Shirt","L","Cotton","Chill and comfy");
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
+            AddData("Die for Succ","Diesel","Graphic","Black", "Red","Mens", "Shirt","L","Cotton","Has paint on it");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("Fall", cl);
+            mDatabaseHelper.addTag("Spring", cl);
+            mDatabaseHelper.addTag("Summer", cl);
+            AddData("Big Brain Shirt","Gildan","Graphic", "Black", "Green", "Mens", "Long Sleeved Shirt","L","Cotton","Pewdiepie Merch");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("Winter", cl);
+            mDatabaseHelper.addTag("Fall", cl);
+            mDatabaseHelper.addTag("Spring", cl);
+            AddData("Cheap Flamingos","Unknown","Graphic", "Black", "Pink", "Mens", "Button Down Shirt","L","Cotton/Polyester Blend","Feels like paper wtf");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("Spring", cl);
+            mDatabaseHelper.addTag("Summer", cl);
+            AddData("Nice Button Down","Calvin Klein","Solid", "Blue", "", "Mens", "Button Down Shirt","41/16","Cotton/Polyester Blend","Goes with suit");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addTag("Formal", cl);
+            mDatabaseHelper.addTag("All", cl);
+
+            // Pants
             AddData("Comfy Jeans","Lucky Brand", "Solid","Blue", "","Mens","Pants","34X34","Denim","");
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
-            AddData("White Destiny Boots","Palladium","Solid","White","","Mens", "Shoes","10","No Clue","");
-            cl = mDatabaseHelper.getLatestItem();
-            mDatabaseHelper.addTag("Formal", cl);
-            mDatabaseHelper.addTag("Spring", cl);
-            mDatabaseHelper.addTag("Summer", cl);
-            mDatabaseHelper.addTag("Winter", cl);
-            AddData("Fish Hat","No Clue","Solid","Blue", "","Unisex", "Hat","One Size","Polyester","");
-            cl = mDatabaseHelper.getLatestItem();
-            mDatabaseHelper.addTag("Casual", cl);
-            mDatabaseHelper.addTag("All", cl);
-            AddData("Die for Succ","Diesel","Graphic","Red", "Black","Mens", "Shirt","L","Cotton","");
-            cl = mDatabaseHelper.getLatestItem();
-            mDatabaseHelper.addTag("Casual", cl);
-            mDatabaseHelper.addTag("Fall", cl);
-            mDatabaseHelper.addTag("Winter", cl);
-            mDatabaseHelper.addTag("Summer", cl);
             AddData("Tight Jeans","Lucky Brand","Solid","Blue", "","Mens", "Pants","34X32","Denim","");
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
+            AddData("Winter Jeans","Wrangler","Solid","Blue", "","Mens", "Pants","32X32","Denim","Super Comfy");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("Winter", cl);
+            mDatabaseHelper.addTag("Fall", cl);
+            AddData("Black Jeans","Polo","Solid","Black", "","Mens", "Pants","34X32","Denim","A little wide");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("All", cl);
+            AddData("Fancy Pants","Ralph Lauren","Solid","Black", "","Mens", "Pants","34X32","Cotton/Polyester Blend","For very formal occasions");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addTag("Formal", cl);
+            mDatabaseHelper.addTag("All", cl);
+
+            // Shoes
+            AddData("White Destiny Boots","Palladium","Solid","White","","Mens", "Shoes","10","No Clue","");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("Spring", cl);
+            mDatabaseHelper.addTag("Summer", cl);
+            mDatabaseHelper.addTag("Winter", cl);
             AddData("Olive Boots","Palladium","Solid", "Green", "", "Mens", "Shoes","10","Polyester","");
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
+            AddData("Work Boots","Timberland","Solid", "Brown", "", "Mens", "Shoes","10","Something Tough","Look like shit lol");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("All", cl);
+            AddData("Fancy Shoes","Ralph Lauren","Solid", "Black", "", "Mens", "Shoes","10","Shiny","Pretty comfy actually");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addTag("Formal", cl);
+            mDatabaseHelper.addTag("All", cl);
+
+            AddData("Fish Hat","No Clue","Solid","Blue", "","Unisex", "Hat","One Size","Polyester","");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("All", cl);
+
+
+
         }
     }
 

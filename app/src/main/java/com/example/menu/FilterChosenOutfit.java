@@ -5,16 +5,23 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
+import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +36,7 @@ public class FilterChosenOutfit extends AppCompatActivity implements TypeAdapter
 
     RadioButton radioButtonCreateOutfit;
     EditText editTextFilterColor1, editTextFilterColor2;
-    Button buttonAddTypes, buttonDone;
+    Button buttonAddTypes, buttonDone, buttonOccasion;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +47,7 @@ public class FilterChosenOutfit extends AppCompatActivity implements TypeAdapter
         radioButtonCreateOutfit = findViewById(R.id.radioButtonCreateOutfit);
         editTextFilterColor1 = findViewById(R.id.editTextFilterColor1);
         editTextFilterColor2 = findViewById(R.id.editTextFilterColor2);
+        buttonOccasion = findViewById(R.id.buttonOccasion);
         buttonAddTypes = findViewById(R.id.buttonAddTypes);
         buttonDone = findViewById(R.id.buttonDone);
 
@@ -47,6 +55,7 @@ public class FilterChosenOutfit extends AppCompatActivity implements TypeAdapter
         setUpRecycler();
         editTextFilterColor1.setText(getIntent().getExtras().getString("c1"));
         editTextFilterColor2.setText(getIntent().getExtras().getString("c2"));
+        buttonOccasion.setText(getIntent().getExtras().getString("Occasion"));
 
 
 
@@ -105,9 +114,37 @@ public class FilterChosenOutfit extends AppCompatActivity implements TypeAdapter
                 resultIntent.putStringArrayListExtra("types",newTypes);
                 resultIntent.putExtra("c1",c1);
                 resultIntent.putExtra("c2",c2);
+                resultIntent.putExtra("Occasion",buttonOccasion.getText());
                 resultIntent.putExtra("createOutfit", radioButtonCreateOutfit.isChecked());
                 setResult(0,resultIntent);
                 finish(); // Come back later, when other screen done
+            }
+        });
+
+        buttonOccasion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(FilterChosenOutfit.this, buttonOccasion);
+
+                popupMenu.getMenu().add(0,0, Menu.NONE,"Formal");
+                popupMenu.getMenu().add(0,1,Menu.NONE,"Casual");
+                popupMenu.getMenu().add(0,2,Menu.NONE,"Any");
+
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        // DO SOMETHING
+                        if (item.getItemId() == 0) {
+                            buttonOccasion.setText("Formal");
+                        } else if (item.getItemId() == 1){
+                            buttonOccasion.setText("Casual");
+                        } else {
+                            buttonOccasion.setText("Any");
+                        }
+                        return false;
+                    }
+                });
+                popupMenu.show();
             }
         });
 

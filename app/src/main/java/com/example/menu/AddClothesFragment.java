@@ -51,10 +51,6 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
         tv_pattern = (TextView) v.findViewById(R.id.pattern_type);
         ed_name = (EditText) v.findViewById(R.id.edit_text_name);
 
-//        DatabaseHelper mDatabaseHelper = new DatabaseHelper(getContext());
-//        System.out.println(mDatabaseHelper.loggedUserTableEmpty());
-//        System.out.println("***********************************************");
-
         configureButtons();
 
         return v;
@@ -243,7 +239,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
                 tv_material.setText("Other");
                 break;
             case R.id.nav_fancy:
-                tv_fancy_casual.setText("Fancy");
+                tv_fancy_casual.setText("Formal");
                 break;
             case R.id.nav_casual:
                 tv_fancy_casual.setText("Casual");

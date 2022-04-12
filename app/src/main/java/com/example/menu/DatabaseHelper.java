@@ -181,7 +181,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(CLOTHING_COLOR_2,c2);
         contentValues.put(CLOTHING_MATERIAL, material);
         contentValues.put(CLOTHING_DESCRIPTION,desc);
-        contentValues.put(CLOTHING_STATUS,"AVAILABLE");
+        contentValues.put(CLOTHING_STATUS,"Available");
         contentValues.put(USER_ID, loggedUserID());
 
         long result = db.insert(CLOTHING_TABLE, null, contentValues);
@@ -538,7 +538,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     Cursor readClothingType(String type) {
         String query = "SELECT * FROM " + CLOTHING_TABLE +
                 " WHERE " + USER_ID + " = " + loggedUserID() +
-                " AND " + CLOTHING_TYPE + " = '" + type + "' ";
+                " AND " + CLOTHING_TYPE + " = '" + type + "' " +
+                " AND " + CLOTHING_STATUS + " = 'Available' " ;
         SQLiteDatabase db = this.getReadableDatabase();
 
         Cursor cursor = null;

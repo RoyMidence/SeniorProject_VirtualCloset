@@ -3,6 +3,7 @@ package com.example.menu;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.ContextThemeWrapper;
 import android.view.LayoutInflater;
@@ -97,12 +98,15 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
                         if (item.getItemId() == 0) {
                             db.updateClothingStatus(id,"Available");
                             holder.imageButtonStatus.setImageResource(R.drawable.ic_hanger);
+                            holder.imageButtonStatus.setBackgroundColor(Color.parseColor("#90EE90"));
                         } else if (item.getItemId() == 1){
                             db.updateClothingStatus(id,"Unavailable");
                             holder.imageButtonStatus.setImageResource(R.drawable.ic_logout);
+                            holder.imageButtonStatus.setBackgroundColor(Color.parseColor("#DC143C"));
                         } else {
                             db.updateClothingStatus(id,"Borrowed");
                             holder.imageButtonStatus.setImageResource(R.drawable.ic_borrowed);
+                            holder.imageButtonStatus.setBackgroundColor(Color.parseColor("#ADD8E6"));
                         }
                         return false;
                     }
@@ -113,8 +117,13 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
 
         if (status.equals("Unavailable")) {
             holder.imageButtonStatus.setImageResource(R.drawable.ic_logout);
+            holder.imageButtonStatus.setBackgroundColor(Color.parseColor("#DC143C"));
         } else if(status.equals("Borrowed")) {
             holder.imageButtonStatus.setImageResource(R.drawable.ic_borrowed);
+            holder.imageButtonStatus.setBackgroundColor(Color.parseColor("#ADD8E6"));
+        } else {
+            holder.imageButtonStatus.setImageResource(R.drawable.ic_hanger);
+            holder.imageButtonStatus.setBackgroundColor(Color.parseColor("#90EE90"));
         }
     }
 

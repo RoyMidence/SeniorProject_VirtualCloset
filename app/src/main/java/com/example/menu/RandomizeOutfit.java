@@ -21,19 +21,35 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Random;
 
 
 public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickInterface{
 
- private View v;
- private RecyclerView recyclerViewRandomOutfit;
+    // For Weather
+    private String url = "https://api.openweathermap.org/data/2.5/weather?lat=40.733471&lon=-73.445083&units=imperial&appid=ae4124b573a94aec76337478a86b3885";
+
+     private View v;
+    private RecyclerView recyclerViewRandomOutfit;
     private List<ClothingItem> clothingItems = new ArrayList<>();
 
     private DatabaseHelper mDatabaseHelper;
@@ -41,27 +57,23 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
     EditText outfitNameRandom;
     ActivityResultLauncher<Intent> otherActivityLauncher;
 
+    TextView textViewTemperature, textViewWeather;
+
     // Globals for filter parameters
     private ArrayList<String> types = new ArrayList<>();
-    private String c1, c2;
+    private String c1, c2, occasion;
     private boolean createOutfit;
-
-    public RandomizeOutfit() {
-        // Required empty public constructor
-    }
-
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_randomize_outfit, container, false);
+
+        textViewTemperature = v.findViewById(R.id.textViewTemperature);
+        textViewWeather = v.findViewById(R.id.textViewWeather);
+        findWeather();
+
+
 
         // Set Basic Default Filter Parameters
         types.add("Shirt");
@@ -69,6 +81,7 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
         types.add("Shoes");
         c1 = "Any";
         c2 = "Any";
+        occasion = "Any";
         createOutfit = true;
 
 
@@ -89,6 +102,7 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
                                 types = resultIntent.getStringArrayListExtra("types");
                                 c1 = resultIntent.getExtras().getString("c1");
                                 c2 = resultIntent.getExtras().getString("c2");
+                                occasion = resultIntent.getExtras().getString("Occasion");
                                 createOutfit = resultIntent.getExtras().getBoolean("createOutfit");
 
                             }
@@ -125,9 +139,18 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
             }
         } // Now have a list with the specified types
 
+        if(!occasion.equals("Any")) {
+            for (int i = 0; i < temp.size(); i++) {
+                if (!temp.get(i).getOccasion().equals(occasion)) { // Both colors, looking for specified combo
+                    temp.remove(i);
+                    i--;
+                }
+            }
+        }
+
         // Shorten list down to colors
         // Only doing for shirts for now
-        if (type.equals("Shirt")) {
+        if (type.contains("Shirt")) {
             for (int i = 0; i < temp.size(); i++) {
                 if (!c1.equals("Any") && !c2.equals("Any")) { // Both colors, looking for specified combo
                     if (!temp.get(i).getColor1().equals(c1) || !temp.get(i).getColor2().equals(c2)) {
@@ -264,6 +287,7 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
                 intent.putStringArrayListExtra("types",types);
                 intent.putExtra("c1",c1);
                 intent.putExtra("c2",c2);
+                intent.putExtra("Occasion",occasion);
                 otherActivityLauncher.launch(intent);
             }
         });
@@ -294,11 +318,42 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
             }
         });
     }
+
     @Override
     public void onItemClick(int position) {
 
     }
+
     private void toastMessage(String Message) {
         Toast.makeText(getContext(), Message, Toast.LENGTH_SHORT).show();
+    }
+
+    public void findWeather() {
+        RequestQueue queue = Volley.newRequestQueue(getContext());
+        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+            @Override
+            public void onResponse(JSONObject response) {
+                try{
+                    JSONObject main = response.getJSONObject("main");
+                    JSONArray array = response.getJSONArray("weather");
+                    JSONObject object = array.getJSONObject(0);
+
+                    Double t = main.getDouble("temp");
+                    String d = object.getString("description");
+
+                    textViewTemperature.setText( String.valueOf(t.intValue()) + " F");
+                    textViewWeather.setText(d);
+
+                } catch(JSONException e){
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        });
+        queue.add(jor);
     }
 }
