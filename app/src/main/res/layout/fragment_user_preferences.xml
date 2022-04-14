@@ -2,42 +2,233 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".UserPreferences">
 
     <TextView
-        android:id="@+id/textView11"
-        android:layout_width="118dp"
-        android:layout_height="42dp"
+        android:id="@+id/textViewFullNamePref"
+        android:layout_width="84dp"
+        android:layout_height="38dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginTop="18dp"
+        android:text="Name:"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserInfo" />
+
+    <EditText
+        android:id="@+id/editTextFullNamePref"
+        android:layout_width="110dp"
+        android:layout_height="44dp"
+        android:layout_marginStart="36dp"
+        android:layout_marginTop="16dp"
+        android:hint="Full Name"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/textViewFullNamePref"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserInfo" />
+
+    <TextView
+        android:id="@+id/textViewUserInfo"
+        android:layout_width="247dp"
+        android:layout_height="35dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
-        android:layout_marginEnd="277dp"
         android:text="User Information"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:textColor="@color/black"
+        android:textSize="24sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/textViewUserName"
         android:layout_width="86dp"
         android:layout_height="36dp"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="56dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="28dp"
         android:text="User Name:"
-        android:textSize="12sp"
+        android:textSize="16sp"
+        android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewFullNamePref" />
+
 
     <EditText
-        android:layout_width="102dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="52dp"
+        android:id="@+id/editTextUsernamePreferences"
+        android:layout_width="112dp"
+        android:layout_height="46dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
         android:hint="username"
-        app:layout_constraintStart_toEndOf="@+id/textView12"
-        app:layout_constraintTop_toBottomOf="@+id/textView11" />
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/textViewUserName"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFullNamePref" />
 
+
+    <TextView
+        android:id="@+id/textViewPassword"
+        android:layout_width="86dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="24dp"
+        android:text="Password:"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserName" />
+
+    <EditText
+        android:id="@+id/editTextPasswordPreferences"
+        android:layout_width="118dp"
+        android:layout_height="41dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="16dp"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toEndOf="@+id/textViewPassword"
+        app:layout_constraintTop_toBottomOf="@+id/editTextUsernamePreferences" />
+
+    <ImageButton
+        android:id="@+id/revealPassword"
+        android:layout_width="34dp"
+        android:layout_height="36dp"
+        android:layout_marginStart="20dp"
+        android:background="#0000"
+        android:src="@drawable/ic_key_reveal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPassword" />
+
+    <TextView
+        android:id="@+id/textViewChangePassword"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="28dp"
+        android:clickable="true"
+        android:text="@string/change_Password"
+        android:textColor="@color/teal_200"
+        app:layout_constraintStart_toEndOf="@+id/editTextPasswordPreferences"
+        app:layout_constraintTop_toBottomOf="@+id/editTextUsernamePreferences" />
+
+    <TextView
+        android:id="@+id/textViewUserTemperature"
+        android:layout_width="219dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="44dp"
+        android:text="Temperature Preferences"
+        android:textColor="@color/black"
+        android:textSize="24sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewPassword" />
+
+    <TextView
+        android:id="@+id/textViewHotPref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="20dp"
+        android:text="Hot:"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserTemperature" />
+
+    <TextView
+        android:id="@+id/textViewColdPref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="52dp"
+        android:text="Cold:"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewWarmPref" />
+
+    <TextView
+        android:id="@+id/textViewFreezingPref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="4dp"
+        android:layout_marginTop="36dp"
+        android:text="Freezing:"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewColdPref" />
+
+    <TextView
+        android:id="@+id/textViewWarmPref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="32dp"
+        android:text="Warm:"
+        android:textSize="16sp"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewHotPref" />
+
+    <EditText
+        android:id="@+id/editTextHotPref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:hint="Hot Temperature"
+        android:textColor="@color/black"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/textViewHotPref"
+        app:layout_constraintTop_toBottomOf="@+id/textViewUserTemperature" />
+
+    <EditText
+        android:id="@+id/editTextWarmPref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:hint="Warm Temperature"
+        android:textColor="@color/black"
+        android:inputType="number"
+
+        app:layout_constraintStart_toEndOf="@+id/textViewWarmPref"
+        app:layout_constraintTop_toBottomOf="@+id/editTextHotPref" />
+
+    <EditText
+        android:id="@+id/editTextColdPref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:hint="Cold Temperature"
+        android:textColor="@color/black"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/textViewColdPref"
+        app:layout_constraintTop_toBottomOf="@+id/editTextWarmPref" />
+
+    <EditText
+        android:id="@+id/editTextFreezingPref"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="8dp"
+        android:hint="Freezing Temperature"
+        android:textColor="@color/black"
+        android:inputType="number"
+        app:layout_constraintStart_toEndOf="@+id/textViewFreezingPref"
+        app:layout_constraintTop_toBottomOf="@+id/editTextColdPref" />
+
+    <Button
+        android:id="@+id/saveTemperature"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="77dp"
+        android:text="Save"
+        app:layout_constraintStart_toEndOf="@+id/editTextColdPref"
+        app:layout_constraintTop_toBottomOf="@+id/editTextWarmPref" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

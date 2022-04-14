@@ -789,7 +789,90 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return "FAILED";
     }
+    public String getUserUserName() {
+        String query = "SELECT " + USER_NAME +
+                " FROM " + USER_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID();
 
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            return cursor.getString(0);
+        }
+        return "FAILED";
+    }
+    public String getUserPassword() {
+        String query = "SELECT " + USER_PASSWORD +
+                " FROM " + USER_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            return cursor.getString(0);
+        }
+        return "FAILED";
+    }
+    public String getUserHotTemp() {
+        String query = "SELECT " + User_Hot +
+                " FROM " + USER_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            return cursor.getString(0);
+        }
+        return "FAILED";
+    }
+    public String getUserWarmTemp() {
+        String query = "SELECT " + User_Warm +
+                " FROM " + USER_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            return cursor.getString(0);
+        }
+        return "FAILED";
+    }
+    public String getUserColdTemp() {
+        String query = "SELECT " + User_Cold +
+                " FROM " + USER_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            return cursor.getString(0);
+        }
+        return "FAILED";
+    }
+    public String getUserFreezingTemp() {
+        String query = "SELECT " + User_Freezing +
+                " FROM " + USER_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID();
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            return cursor.getString(0);
+        }
+        return "FAILED";
+    }
     public Cursor readSharedCloset(String userID) {
         String query = "SELECT * FROM " + CLOTHING_TABLE +
                 " WHERE " + USER_ID + " = " + userID;
@@ -988,7 +1071,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else
             Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
     }
+    void updateUserPassword(String password){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(USER_PASSWORD,password);
 
+        long result = db.update(USER_TABLE, contentValues, "user_id=?",new String[] {loggedUserID()});
+        if (result == -1)
+            Toast.makeText(context, "Failed to Update!", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
+    }
+    void updateAllUserTemp(String hot, String warm, String cold,String freezing){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(User_Hot,hot);
+        contentValues.put(User_Warm,warm);
+        contentValues.put(User_Cold,cold);
+        contentValues.put(User_Freezing,freezing);
+
+        long result = db.update(USER_TABLE, contentValues, "user_id=?",new String[] {loggedUserID()});
+        if (result == -1)
+            Toast.makeText(context, "Failed to Update!", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
+    }
     void updateOutfit(String row_id, String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();

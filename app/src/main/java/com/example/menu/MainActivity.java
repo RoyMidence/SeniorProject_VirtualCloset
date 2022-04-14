@@ -111,6 +111,10 @@ private DatabaseHelper mDatabaseHelper;
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new RandomizeOutfit()).commit();
                 break;
+            case R.id.nav_userPreferences:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new UserPreferences()).commit();
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

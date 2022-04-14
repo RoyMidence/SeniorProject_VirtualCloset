@@ -52,7 +52,6 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
         textViewEmptyCloset = (TextView) v.findViewById(R.id.textViewEmpty_Outfit);
 
         configureFabButton();
-        fillDB();
         storeValuesInArray();
 
 
@@ -116,17 +115,6 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
         }
     }
 
-    private void fillDB(){
-        if(mDatabaseHelper.outfitTableEmpty()) {
-            mDatabaseHelper.addOutfit("Kieran's Outfit");
-            mDatabaseHelper.addOutfit("Hadia's Outfit");
-            mDatabaseHelper.addOutfit("Roy's Outfit");
-            mDatabaseHelper.addOutfit("Luis's Outfit");
-            mDatabaseHelper.addOutfit("Trevor's Outfit");
-            mDatabaseHelper.addOutfit("inside Outfit");
-            mDatabaseHelper.addOutfit("Outside Outfit");
-        }
-    }
 
     @Override
     public void onItemClick(int position) {

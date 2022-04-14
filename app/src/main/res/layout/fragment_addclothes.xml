@@ -34,9 +34,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
             android:layout_marginTop="140dp"
-            android:src="@drawable/ic_clothes"
             android:background="#0000"
-            />
+            android:src="@drawable/ic_clothes" />
 
         <TextView
             android:id="@+id/clothes_type"
