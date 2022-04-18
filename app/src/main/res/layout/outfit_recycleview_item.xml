@@ -14,7 +14,6 @@
     <GridLayout
         android:layout_width="190dp"
         android:layout_height="120dp"
-        android:background="@color/purple_700"
         android:columnCount="2"
         android:orientation="horizontal">
 

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/accesory_menu">
+    <item android:id="@+id/hat"
+        android:title="Hat"/>
+    <item android:id="@+id/scarf"
+        android:title="Scarf"/>
+    <item android:id="@+id/gloves"
+        android:title="Gloves"/>
+</menu>

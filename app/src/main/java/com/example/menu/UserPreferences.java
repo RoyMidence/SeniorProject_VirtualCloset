@@ -145,6 +145,10 @@ TextView txtFullName, txtUserName, txtPassword, txtHot, txtwarm, txtcold,txtfree
                     } else {
 
                         mDatabaseHelper.updateAllUserTemp(hot, warm, cold, freezing);
+                        edhot.setText(mDatabaseHelper.getUserHotTemp());
+                        edwarm.setText(mDatabaseHelper.getUserWarmTemp());
+                        edcold.setText(mDatabaseHelper.getUserColdTemp());
+                        edfreezing.setText(mDatabaseHelper.getUserFreezingTemp());
                     }
                 }
             }

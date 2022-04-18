@@ -4,8 +4,6 @@
     tools:ShowIn="navigation_view">
 
         <group android:checkableBehavior="single" >
-            <item android:title="Temp access"
-                android:id="@+id/temp_access"/>
             <item android:id="@+id/nav_add"
                 android:icon="@drawable/ic_add"
                 android:title="Add Clothes" />
@@ -19,7 +17,7 @@
             <item android:id="@+id/nav_randomOutfitFragment"
                 android:title="Randomize Outfits"
                 />
-            <item android:title="Item"
+            <item android:title="Weather"
                 android:id="@+id/nav_weather"
                 />
 

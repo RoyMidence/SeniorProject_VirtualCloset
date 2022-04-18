@@ -35,11 +35,8 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
     String name;
     String fits;
     boolean isColor2 = true;
-    TextView tv_color;
-    TextView tv_color2;
-    TextView tv_size;
-    TextView tv_brand;
-    EditText  ed_desc;
+    TextView tv_color, tv_color2, tv_size,tv_brand,tv_x,tv_sizeText;
+    EditText  ed_desc, ed_size,ed_size2;
     CheckBox checkBoxSpring;
     CheckBox checkBoxFall;
     CheckBox checkBoxSummer;
@@ -67,6 +64,11 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
         tv_size= (TextView)v.findViewById(R.id.size_type);
         tv_brand =(TextView)v.findViewById(R.id.brand_type);
         ed_desc = (EditText) v.findViewById(R.id.edit_text_description);
+
+        tv_sizeText =v.findViewById(R.id.textViewSize);
+        tv_x= v.findViewById(R.id.addclothesX);
+        ed_size= v.findViewById(R.id.editTextSize1);
+        ed_size2= v.findViewById(R.id.editTextSize2);
 
         checkBoxSpring= v.findViewById(R.id.checkBoxSpring_add);
         checkBoxSummer = v.findViewById(R.id.checkBoxSummer_add);
@@ -139,6 +141,17 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
 
         });
 
+    if(type.equals("Pants")|| type.equals("Button Down Shirt")){
+
+        tv_sizeText.setVisibility(View.VISIBLE);
+        tv_x.setVisibility(View.VISIBLE);
+        ed_size.setVisibility(View.VISIBLE);
+        ed_size2.setVisibility(View.VISIBLE);
+
+        btn_size.setVisibility(View.GONE);
+        tv_size.setVisibility(View.GONE);
+    }
+
     if(pattern.equals("Solid")){
             btn_color2.setVisibility(View.GONE);
             tv_color2.setVisibility(View.GONE);
@@ -166,11 +179,17 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
         {
 
             public void onClick (View v){
-                String size = String.valueOf(tv_size.getText());
+                String size;
                 String brand = String.valueOf(tv_brand.getText());
                 String desc = String.valueOf(ed_desc.getText());
                 String color = String.valueOf(tv_color.getText());
                 String color2 =  String.valueOf(tv_color2.getText());
+
+                if (type.equalsIgnoreCase("Pants")||type.equalsIgnoreCase("Button Down Shirt"))
+                {
+                    size = ed_size.getText().toString() + tv_x.getText() + ed_size2.getText().toString();
+                }
+                else { size = String.valueOf(tv_size.getText()); }
                 //(String item, String brand, String pattern, String fit, String type, String size, String material, String desc)
                 boolean insertData = mDatabaseHelper.addClothing(name,brand,pattern,color, color2,fits,type,size,material,desc);
 
@@ -221,6 +240,10 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
                tv_color.setText("Black");
 
                break;
+           case R.id.nav_white:
+               tv_color.setText("White");
+
+               break;
            case R.id.nav_green:
                tv_color.setText("Green");
 
@@ -248,6 +271,10 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
                break;
            case R.id.nav_black2:
                tv_color2.setText("Black");
+
+               break;
+           case R.id.nav_white2:
+               tv_color2.setText("White");
 
                break;
            case R.id.nav_green2:

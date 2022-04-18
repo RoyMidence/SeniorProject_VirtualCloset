@@ -103,10 +103,6 @@ private DatabaseHelper mDatabaseHelper;
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new OutfitFragment()).commit();
                 break;
-            case R.id.temp_access:
-                Intent intent = new Intent(MainActivity.this,FilterChosenOutfit.class);
-                startActivity(intent);
-                break;
             case R.id.nav_randomOutfitFragment:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new RandomizeOutfit()).commit();

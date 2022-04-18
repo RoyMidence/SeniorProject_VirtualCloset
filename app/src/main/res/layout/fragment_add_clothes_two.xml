@@ -6,197 +6,274 @@
     android:id="@+id/list2_piece"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/teal_200"
     tools:context=".AddClothesTwo">
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/teal_200">
-
-        <TextView
-            android:id="@+id/description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Description:"
-            android:textSize="35sp" />
-
-        <EditText
-            android:id="@+id/edit_text_description"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/description"
-            android:hint="Click me"
-            android:maxLength="30"
-            android:textColor="@color/orange"
-            android:textSize="25sp" />
-
-        <ImageButton
-            android:id="@+id/image_color"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_marginTop="140dp"
-            android:background="#0000"
-            android:src="@drawable/ic_color" />
-
-        <TextView
-            android:id="@+id/color_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/image_color"
-            android:layout_alignParentLeft="true"
-            android:hint="Color 1"
-            android:padding="25px"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:id="@+id/image_color2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/color_type"
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_color"
-            android:background="#0000"/>
-
-        <TextView
-            android:id="@+id/color2_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/image_color2"
-            android:layout_alignParentLeft="true"
-            android:padding="25px"
-            android:hint="Color 2"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
-
-        <ImageButton
-            android:id="@+id/image_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_marginTop="140dp"
-            android:src="@drawable/ic_size"
-            android:background="#0000"/>
-
-        <TextView
-            android:id="@+id/size_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/image_size"
-            android:layout_alignParentRight="true"
-            android:padding="25px"
-            android:hint="Size"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
 
 
-        <ImageButton
-            android:id="@+id/image_brand"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/size_type"
-            android:layout_alignParentRight="true"
-            android:src="@drawable/ic_brand"
-            android:background="#0000"/>
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description:"
+        android:textSize="35sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/brand_type"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/image_brand"
-            android:layout_alignParentRight="true"
-            android:padding="25px"
-            android:hint="Brand"
-            android:textColor="@color/black"
-            android:textSize="20sp" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/previous_screen"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/ic_previous"
-            app:fabSize="normal" />
+    <EditText
+        android:id="@+id/edit_text_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Click me"
+        android:maxLength="30"
+        android:textColor="@color/orange"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/description" />
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_clothes"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/ic_add"
-            app:fabSize="normal" />
+    <ImageButton
+        android:id="@+id/image_color"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="#0000"
+        android:src="@drawable/ic_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_description" />
 
-        <TextView
-            android:id="@+id/textViewSpringButton_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/brand_type"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="40dp"
-            android:text="@string/spring"
-            android:textSize="25sp" />
+    <TextView
+        android:id="@+id/color_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:hint="Primary Color"
+        android:padding="25px"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_color" />
 
-        <CheckBox
-            android:id="@+id/checkBoxSpring_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewSpringButton_add"
-            android:layout_marginLeft="25dp"/>
+    <ImageButton
+        android:id="@+id/image_color2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:background="#0000"
+        android:src="@drawable/ic_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/color_type" />
 
-        <TextView
-            android:id="@+id/textViewSummerButton_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/brand_type"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="40dp"
-            android:layout_toRightOf="@id/textViewSpringButton_add"
-            android:text="@string/summer"
-            android:textSize="25sp" />
+    <TextView
+        android:id="@+id/color2_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
 
-        <CheckBox
-            android:id="@+id/checkBoxSummer_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewSummerButton_add"
-            android:layout_marginLeft="148dp" />
+        android:layout_marginTop="12dp"
+        android:hint="Secondary Color"
+        android:padding="25px"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_color2" />
 
-        <TextView
-            android:id="@+id/textViewFallButton_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/brand_type"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="40dp"
-            android:layout_toRightOf="@id/textViewSummerButton_add"
-            android:text="@string/fall"
-            android:textSize="25sp" />
-        <CheckBox
-            android:id="@+id/checkBoxFall_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewFallButton_add"
-            android:layout_marginLeft="258dp"/>
-        <TextView
-            android:id="@+id/textViewWinterButton_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/brand_type"
-            android:layout_marginLeft="40dp"
-            android:layout_marginTop="40dp"
-            android:layout_toRightOf="@id/textViewFallButton_add"
-            android:text="@string/winter"
-            android:textSize="25sp" />
+    <ImageButton
+        android:id="@+id/image_size"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:background="#0000"
+        android:src="@drawable/ic_size"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_description" />
 
-        <CheckBox
-            android:id="@+id/checkBoxWinter_add"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textViewWinterButton_add"
-            android:layout_marginLeft="355dp"
-            />
-    </RelativeLayout>
+    <TextView
+        android:id="@+id/size_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="12dp"
+        android:hint="Size"
+        android:padding="25px"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        android:visibility="visible"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_size" />
+
+    <ImageButton
+        android:id="@+id/image_brand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="60dp"
+        android:background="#0000"
+        android:src="@drawable/ic_brand"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_color" />
+
+    <TextView
+        android:id="@+id/brand_type"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:hint="Brand"
+        android:padding="25px"
+        android:textColor="@color/black"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/image_brand" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/previous_screen"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="3dp"
+        android:src="@drawable/ic_previous"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_clothes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:src="@drawable/ic_add"
+        app:fabSize="normal"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/textViewSpringButton_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="12dp"
+        android:text="Spring\n(79-60)"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toStartOf="@+id/textViewFallButton_add"
+        app:layout_constraintTop_toBottomOf="@+id/brand_type" />
+
+    <CheckBox
+        android:id="@+id/checkBoxSpring_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="62dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxSummer_add"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSpringButton_add" />
+
+    <TextView
+        android:id="@+id/textViewSummerButton_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/brand_type"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="28dp"
+        android:text="Summer\n(99-80)"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toStartOf="@+id/textViewSpringButton_add"
+        app:layout_constraintTop_toBottomOf="@+id/brand_type" />
+
+    <CheckBox
+        android:id="@+id/checkBoxSummer_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="44dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewSummerButton_add" />
+
+    <TextView
+        android:id="@+id/textViewFallButton_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="8dp"
+        android:text="fall\n(59-40)"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toStartOf="@+id/textViewWinterButton_add"
+        app:layout_constraintTop_toBottomOf="@+id/brand_type" />
+
+    <CheckBox
+        android:id="@+id/checkBoxFall_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxWinter_add"
+        app:layout_constraintTop_toBottomOf="@+id/textViewWinterButton_add" />
+
+    <TextView
+        android:id="@+id/textViewWinterButton_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="16dp"
+        android:text="@string/Winter"
+        android:textSize="25sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/brand_type" />
+
+    <CheckBox
+        android:id="@+id/checkBoxWinter_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="7dp"
+        app:layout_constraintStart_toEndOf="@+id/checkBoxSpring_add"
+        app:layout_constraintTop_toBottomOf="@+id/textViewFallButton_add" />
+
+    <EditText
+        android:id="@+id/editTextSize1"
+        android:layout_width="64dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="80dp"
+        android:hint="##"
+        android:visibility="gone"
+        android:inputType="number"
+        android:maxLength="2"
+        app:layout_constraintEnd_toStartOf="@+id/addclothesX"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_description" />
+
+    <EditText
+        android:id="@+id/editTextSize2"
+        android:layout_width="64dp"
+        android:layout_height="48dp"
+        android:layout_marginTop="80dp"
+        android:hint="##"
+        android:inputType="number"
+        android:maxLength="2"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_description" />
+
+    <TextView
+        android:id="@+id/addclothesX"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="88dp"
+        android:layout_marginEnd="1dp"
+        android:text="X"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@+id/editTextSize2"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_description" />
+
+    <TextView
+        android:id="@+id/textViewSize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="44dp"
+        android:layout_marginEnd="95dp"
+        android:text="Size:"
+        android:textSize="25sp"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/edit_text_description" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

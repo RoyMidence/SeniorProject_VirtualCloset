@@ -6,6 +6,8 @@
             android:title="Red" />
         <item android:id="@+id/nav_black"
             android:title="Black" />
+        <item android:id="@+id/nav_white"
+            android:title="White" />
         <item android:id="@+id/nav_green"
             android:title="Green" />
         <item android:id="@+id/nav_blue"

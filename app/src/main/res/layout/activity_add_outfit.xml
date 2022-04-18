@@ -103,7 +103,8 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/add_outfit_tv_socks"
             android:layout_marginHorizontal="30dp"
-            android:layout_marginTop="50dp"
+            android:layout_marginLeft="31dp"
+            android:layout_marginTop="44dp"
             android:layout_toRightOf="@id/add_outfit_btn_shoes"
             android:gravity="center"
             android:hint="Name of shoes"
@@ -117,6 +118,25 @@
             android:layout_alignParentBottom="true"
             android:src="@drawable/ic_add"
             app:fabSize="normal" />
+
+        <Button
+            android:id="@+id/add_outfit_btn_acc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/add_outfit_btn_shoes"
+            android:layout_marginTop="34dp"
+            android:text="Accessories?" />
+
+        <TextView
+            android:id="@+id/add_outfit_tv_acc"
+            android:layout_width="199dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/add_outfit_tv_shoes"
+            android:layout_marginTop="25dp"
+            android:layout_toRightOf="@+id/add_outfit_btn_shoes"
+            android:hint="Hat,gloves,scarf,\netc...?"
+
+            android:textSize="25sp" />
 
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

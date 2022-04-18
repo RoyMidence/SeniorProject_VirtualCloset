@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/shoe_type_menu">
+    <item android:id="@+id/Shoes"
+        android:title="Shoe"/>
+    <item android:id="@+id/Sandals"
+        android:title="Sandals"/>
+</menu>

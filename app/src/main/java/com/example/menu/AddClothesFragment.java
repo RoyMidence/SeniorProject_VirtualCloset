@@ -189,6 +189,16 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
                 tv.setText("Shirt");
 
                 break;
+            case R.id.nav_LSshirt:
+
+                tv.setText("Long Sleeved Shirt");
+
+                break;
+            case R.id.nav_BDshirt:
+
+                tv.setText("Button Down Shirt");
+
+                break;
             case R.id.nav_pants:
 
                 tv.setText("Pants");
@@ -198,6 +208,10 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
 
                 tv.setText("Socks");
                 break;
+            case R.id.nav_jacket:
+
+                tv.setText("Jacket");
+                break;
             case R.id.nav_hat:
 
                 tv.setText("Hat");
@@ -206,6 +220,18 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
             case R.id.nav_shoes:
 
                 tv.setText("Shoes");
+                break;
+            case R.id.nav_sandals:
+
+                tv.setText("Sandals");
+                break;
+            case R.id.nav_gloves:
+
+                tv.setText("Gloves");
+                break;
+            case R.id.nav_scarf:
+
+                tv.setText("Scarf");
                 break;
             case R.id.nav_wool:
                 tv_material.setText("Wool");

@@ -293,7 +293,29 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
 
+            // sandals
+            AddData("Crocs","No Clue","Solid","Red", "","Unisex", "Sandals","One Size","Polyester","");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("All", cl);
 
+            // socks
+            AddData("Black Socks","No Clue","Solid","Black", "","Unisex", "Socks","One Size","Polyester","");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addTag("Fancy", cl);
+            mDatabaseHelper.addTag("All", cl);
+
+            //scarf
+            AddData("Long Scarf","Nike","Stripped","Red", "White","Unisex", "Scarf","One Size","Polyester","it looks nice");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("All", cl);
+
+            //Gloves
+            AddData("Mittens","Nautica","Solid","Black", "","Unisex", "Gloves","One Size","Polyester","its warm");
+            cl = mDatabaseHelper.getLatestItem();
+            mDatabaseHelper.addTag("Casual", cl);
+            mDatabaseHelper.addTag("All", cl);
 
         }
     }

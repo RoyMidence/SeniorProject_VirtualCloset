@@ -4,14 +4,28 @@
     android:id="@+id/type_menu">
     <group android:id="@+id/list_piece">
         <item android:id="@+id/nav_shirt"
-            android:title="Shirt" />
+            android:title="T-shirt" />
+        <item android:id="@+id/nav_LSshirt"
+            android:title="Long Sleeved Shirt"/>
+        <item android:id="@+id/nav_BDshirt"
+            android:title="Button Down Shirt"/>
         <item android:id="@+id/nav_pants"
             android:title="Pants" />
-        <item android:id="@+id/nav_hat"
-            android:title="Hat"/>
+        <item android:id="@+id/nav_jacket"
+            android:title="Jacket"/>
         <item android:id="@+id/nav_shoes"
             android:title ="Shoes"/>
+        <item android:id="@+id/nav_sandals"
+            android:title="Sandals"/>
         <item android:id="@+id/nav_socks"
             android:title="Socks" />
+        <item android:id="@+id/nav_hat"
+            android:title="Hat"/>
+        <item android:id="@+id/nav_scarf"
+            android:title="Scarf"/>
+        <item android:id="@+id/nav_gloves"
+            android:title="Gloves"/>
+
+
     </group>
 </menu>
