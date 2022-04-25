@@ -6,6 +6,10 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.Random;
 
 public class DatabaseHelper extends SQLiteOpenHelper {
@@ -28,6 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CLOTHING_MATERIAL = "clothing_material";
     private static final String CLOTHING_DESCRIPTION = "clothing_description";
     private static final String CLOTHING_STATUS = "clothing_status";
+    private static final String DATE_CREATED="date_created";
 
     // Shared Closet Table
     private static final String SHARED_CLOSET_TABLE = "shared_closet_table";
@@ -46,6 +51,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String OUTFIT_TABLE = "outfit_table";
     private static final String OUTFIT_ID = "outfit_id";
     private static final String OUTFIT_NAME = "outfit_name";
+    private static final String OUTFIT_DATE = "outfit_date";
 
     // Outfit/clothing table
     // Uses CLOTHING_ID & OUTFIT_ID as Composite key
@@ -118,6 +124,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 CLOTHING_MATERIAL + " TEXT, " +
                 CLOTHING_DESCRIPTION + " TEXT, " +
                 CLOTHING_STATUS + " TEXT, " +
+                DATE_CREATED + " TEXT, " +
                 USER_ID + " INTEGER, " +
                 "FOREIGN KEY (" + USER_ID + ") REFERENCES " + USER_TABLE + "(" + USER_ID + "));";
 
@@ -152,6 +159,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " (" + OUTFIT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                 OUTFIT_NAME + " TEXT, " +
                 USER_ID + " INTEGER, " +
+                OUTFIT_DATE + " TEXT, " +
                 "FOREIGN KEY (" + USER_ID + ") REFERENCES " + USER_TABLE + "(" + USER_ID + "));";
         db.execSQL(createTable);
 
@@ -168,7 +176,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // ADD METHODS BEGIN HERE -----------------------------------------------------------------------------------------
     // ADD CLOTHING ITEM
     public boolean addClothing(String item, String brand, String pattern,
-                               String c1, String c2, String fit, String type, String size, String material, String desc) {
+                               String c1, String c2, String fit, String type, String size, String material, String desc, String date) {
+
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(CLOTHING_NAME, item);
@@ -182,6 +191,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(CLOTHING_MATERIAL, material);
         contentValues.put(CLOTHING_DESCRIPTION,desc);
         contentValues.put(CLOTHING_STATUS,"Available");
+        contentValues.put(DATE_CREATED,date);
         contentValues.put(USER_ID, loggedUserID());
 
         long result = db.insert(CLOTHING_TABLE, null, contentValues);
@@ -190,10 +200,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // METHOD FOR CREATING AN OUTFIT
-    public boolean addOutfit(String name) {
+    public boolean addOutfit(String name, String date) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(OUTFIT_NAME, name);
+        contentValues.put(OUTFIT_DATE, date);
         contentValues.put(USER_ID, loggedUserID());
 
         long result = db.insert(OUTFIT_TABLE, null, contentValues);

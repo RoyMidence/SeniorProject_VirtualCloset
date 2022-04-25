@@ -39,7 +39,9 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 import java.util.Random;
 
 
@@ -133,7 +135,7 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
                 String id = cursor.getString(0);
                 CI = new ClothingItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
                         cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),
-                        cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),
+                        cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),cursor.getString(13),
                         mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id));
                 temp.add(CI);
             }
@@ -210,7 +212,7 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
             String id = cursor.getString(0);
             CI = new ClothingItem(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3), cursor.getString(4),
                     cursor.getString(5),cursor.getString(6),cursor.getString(7),cursor.getString(8),
-                    cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12),
+                    cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12),cursor.getString(13),
                     mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id));
             clothingItems.add(CI);
         }
@@ -258,6 +260,7 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
         save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                String currentDate = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault()).format(new Date());
 
 
               String  outfitName = outfitNameRandom.getText().toString();
@@ -270,7 +273,7 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
                         toastMessage("Name already exist");
                     }
                     else {
-                        mDatabaseHelper.addOutfit(outfitName);
+                        mDatabaseHelper.addOutfit(outfitName,currentDate);
                         for (int i = 0; i < clothingItems.size(); i++) {
                             mDatabaseHelper.addClothingToOutfit(String.valueOf(clothingItems.get(i).getClothingID()));
 

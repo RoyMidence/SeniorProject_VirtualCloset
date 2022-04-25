@@ -20,6 +20,9 @@
             <item android:title="Weather"
                 android:id="@+id/nav_weather"
                 />
+            <item android:title="Calendar"
+                android:id="@+id/nav_calendar"
+                />
 
         </group>
     <item android:title="Profile">

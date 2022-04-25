@@ -27,6 +27,10 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
     private View v;
     TextView tv;

@@ -24,6 +24,10 @@ import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 
 public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClickListener {
     private View v;
@@ -179,6 +183,7 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
         {
 
             public void onClick (View v){
+                String currentDate = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault()).format(new Date());
                 String size;
                 String brand = String.valueOf(tv_brand.getText());
                 String desc = String.valueOf(ed_desc.getText());
@@ -191,7 +196,7 @@ public class AddClothesTwo extends Fragment implements PopupMenu.OnMenuItemClick
                 }
                 else { size = String.valueOf(tv_size.getText()); }
                 //(String item, String brand, String pattern, String fit, String type, String size, String material, String desc)
-                boolean insertData = mDatabaseHelper.addClothing(name,brand,pattern,color, color2,fits,type,size,material,desc);
+                boolean insertData = mDatabaseHelper.addClothing(name,brand,pattern,color, color2,fits,type,size,material,desc,currentDate);
 
                 if (insertData)
                     toastMessage("Data Successfully Inserted!");

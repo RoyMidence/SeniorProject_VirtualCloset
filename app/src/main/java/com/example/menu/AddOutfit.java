@@ -23,8 +23,11 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class AddOutfit extends AppCompatActivity implements PopupMenu.OnMenuItemClickListener{
     private EditText ed_name;
@@ -132,13 +135,15 @@ public class AddOutfit extends AppCompatActivity implements PopupMenu.OnMenuItem
         fab_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-             if (String.valueOf(ed_name.getText()).equals("")) {
+                String currentDate = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault()).format(new Date());
+
+                if (String.valueOf(ed_name.getText()).equals("")) {
                toastMessage("Please enter a name!");
                } else if (id_of_shirt == null || id_of_pants == null||
                       id_of_shoes == null){
                 toastMessage("Please make a choice for all fields.");
              }else{
-                  mDatabaseHelper.addOutfit(String.valueOf(ed_name.getText()));
+                  mDatabaseHelper.addOutfit(String.valueOf(ed_name.getText()),currentDate);
                     if(id_of_socks != null){
                         mDatabaseHelper.addClothingToOutfit(id_of_socks);
                     }

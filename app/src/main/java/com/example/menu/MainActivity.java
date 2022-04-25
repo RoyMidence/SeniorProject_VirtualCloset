@@ -111,6 +111,10 @@ private DatabaseHelper mDatabaseHelper;
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new UserPreferences()).commit();
                 break;
+            case R.id.nav_calendar:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new CalenderFragment()).commit();
+                break;
         }
         drawer.closeDrawer(GravityCompat.START);
         return true;

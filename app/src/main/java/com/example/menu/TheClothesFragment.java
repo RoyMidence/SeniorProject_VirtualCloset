@@ -23,8 +23,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class TheClothesFragment extends Fragment implements ClothingAdapter.itemClickInterface {
     private DatabaseHelper mDatabaseHelper;
@@ -40,7 +43,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
     private List<String> sharedUserID = new ArrayList<>();
     private ClothingAdapter list;
     private View view;
-
+    String currentDate = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault()).format(new Date());
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -121,7 +124,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
                 String id = cursor.getString(0);
                 CI = new ClothingItem(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3), cursor.getString(4),
                         cursor.getString(5),cursor.getString(6),cursor.getString(7),cursor.getString(8),
-                        cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12),
+                        cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12),cursor.getString(13),
                         mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id));
                 clothingItems.add(CI);
             }
@@ -131,11 +134,11 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
     }
 
     public void AddData(String item, String brand, String pattern,
-                        String c1, String c2, String fit, String type, String size, String material, String desc) {
+                        String c1, String c2, String fit, String type, String size, String material, String desc,String date) {
 
 
 
-        boolean insertData = mDatabaseHelper.addClothing(item, brand, pattern, c1, c2, fit, type, size,material,desc);
+        boolean insertData = mDatabaseHelper.addClothing(item, brand, pattern, c1, c2, fit, type, size,material,desc,currentDate);
 
         if (insertData)
             toastMessage("Data Successfully Inserted!");
@@ -208,111 +211,111 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             mDatabaseHelper.addToTagsTable("All"); // 8
         }
 
-//        if (mDatabaseHelper.userTableEmpty()) {
-//            mDatabaseHelper.addUser("The Admin", "admin", "admin","50","50","50","50");
+       if (mDatabaseHelper.userTableEmpty()) {
+         mDatabaseHelper.addUser("The Admin", "admin", "admin","90","14","66","42");
 //            mDatabaseHelper.addUser("Person1", "abcdef", "abcd-efgh","50","50","50","50");
 //            mDatabaseHelper.addUser("Person2", "abcdef", "abcd-efgh","50","50","50","50");
 //            mDatabaseHelper.addUser("Person3", "abcdef", "abcd-efgh","50","50","50","50");
 //            mDatabaseHelper.addUser("Person4", "abcdef", "abcd-efgh","50","50","50","50");
-//        }
+        }
 
         int cl; // Exists for testing purposes
 
         if (mDatabaseHelper.clothingTableEmpty()) { // Fill Clothing Table
-            AddData("Yellow Jippy","Fruit of The Loom","Solid", "Yellow", "", "Mens", "Shirt","L","Cotton","Chill and comfy");
+            AddData("Yellow Jippy","Fruit of The Loom","Solid", "Yellow", "", "Mens", "Shirt","L","Cotton","Chill and comfy",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
-            AddData("Die for Succ","Diesel","Graphic","Black", "Red","Mens", "Shirt","L","Cotton","Has paint on it");
+            AddData("Die for Succ","Diesel","Graphic","Black", "Red","Mens", "Shirt","L","Cotton","Has paint on it",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("Fall", cl);
             mDatabaseHelper.addTag("Spring", cl);
             mDatabaseHelper.addTag("Summer", cl);
-            AddData("Big Brain Shirt","Gildan","Graphic", "Black", "Green", "Mens", "Long Sleeved Shirt","L","Cotton","Pewdiepie Merch");
+            AddData("Big Brain Shirt","Gildan","Graphic", "Black", "Green", "Mens", "Long Sleeved Shirt","L","Cotton","Pewdiepie Merch",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("Winter", cl);
             mDatabaseHelper.addTag("Fall", cl);
             mDatabaseHelper.addTag("Spring", cl);
-            AddData("Cheap Flamingos","Unknown","Graphic", "Black", "Pink", "Mens", "Button Down Shirt","L","Cotton/Polyester Blend","Feels like paper wtf");
+            AddData("Cheap Flamingos","Unknown","Graphic", "Black", "Pink", "Mens", "Button Down Shirt","L","Cotton/Polyester Blend","Feels like paper wtf",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("Spring", cl);
             mDatabaseHelper.addTag("Summer", cl);
-            AddData("Nice Button Down","Calvin Klein","Solid", "Blue", "", "Mens", "Button Down Shirt","41/16","Cotton/Polyester Blend","Goes with suit");
+            AddData("Nice Button Down","Calvin Klein","Solid", "Blue", "", "Mens", "Button Down Shirt","41/16","Cotton/Polyester Blend","Goes with suit",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Formal", cl);
             mDatabaseHelper.addTag("All", cl);
 
             // Pants
-            AddData("Comfy Jeans","Lucky Brand", "Solid","Blue", "","Mens","Pants","34X34","Denim","");
+            AddData("Comfy Jeans","Lucky Brand", "Solid","Blue", "","Mens","Pants","34X34","Denim","",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
-            AddData("Tight Jeans","Lucky Brand","Solid","Blue", "","Mens", "Pants","34X32","Denim","");
+            AddData("Tight Jeans","Lucky Brand","Solid","Blue", "","Mens", "Pants","34X32","Denim","",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
-            AddData("Winter Jeans","Wrangler","Solid","Blue", "","Mens", "Pants","32X32","Denim","Super Comfy");
+            AddData("Winter Jeans","Wrangler","Solid","Blue", "","Mens", "Pants","32X32","Denim","Super Comfy",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("Winter", cl);
             mDatabaseHelper.addTag("Fall", cl);
-            AddData("Black Jeans","Polo","Solid","Black", "","Mens", "Pants","34X32","Denim","A little wide");
+            AddData("Black Jeans","Polo","Solid","Black", "","Mens", "Pants","34X32","Denim","A little wide",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
-            AddData("Fancy Pants","Ralph Lauren","Solid","Black", "","Mens", "Pants","34X32","Cotton/Polyester Blend","For very formal occasions");
+            AddData("Fancy Pants","Ralph Lauren","Solid","Black", "","Mens", "Pants","34X32","Cotton/Polyester Blend","For very formal occasions",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Formal", cl);
             mDatabaseHelper.addTag("All", cl);
 
             // Shoes
-            AddData("White Destiny Boots","Palladium","Solid","White","","Mens", "Shoes","10","No Clue","");
+            AddData("White Destiny Boots","Palladium","Solid","White","","Mens", "Shoes","10","No Clue","",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("Spring", cl);
             mDatabaseHelper.addTag("Summer", cl);
             mDatabaseHelper.addTag("Winter", cl);
-            AddData("Olive Boots","Palladium","Solid", "Green", "", "Mens", "Shoes","10","Polyester","");
+            AddData("Olive Boots","Palladium","Solid", "Green", "", "Mens", "Shoes","10","Polyester","",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
-            AddData("Work Boots","Timberland","Solid", "Brown", "", "Mens", "Shoes","10","Something Tough","Look like shit lol");
+            AddData("Work Boots","Timberland","Solid", "Brown", "", "Mens", "Shoes","10","Something Tough","Look like shit lol",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
-            AddData("Fancy Shoes","Ralph Lauren","Solid", "Black", "", "Mens", "Shoes","10","Shiny","Pretty comfy actually");
+            AddData("Fancy Shoes","Ralph Lauren","Solid", "Black", "", "Mens", "Shoes","10","Shiny","Pretty comfy actually",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Formal", cl);
             mDatabaseHelper.addTag("All", cl);
 
-            AddData("Fish Hat","No Clue","Solid","Blue", "","Unisex", "Hat","One Size","Polyester","");
+            AddData("Fish Hat","No Clue","Solid","Blue", "","Unisex", "Hat","One Size","Polyester","",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
 
             // sandals
-            AddData("Crocs","No Clue","Solid","Red", "","Unisex", "Sandals","One Size","Polyester","");
+            AddData("Crocs","No Clue","Solid","Red", "","Unisex", "Sandals","One Size","Polyester","",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
 
             // socks
-            AddData("Black Socks","No Clue","Solid","Black", "","Unisex", "Socks","One Size","Polyester","");
+            AddData("Black Socks","No Clue","Solid","Black", "","Unisex", "Socks","One Size","Polyester","",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Fancy", cl);
             mDatabaseHelper.addTag("All", cl);
 
             //scarf
-            AddData("Long Scarf","Nike","Stripped","Red", "White","Unisex", "Scarf","One Size","Polyester","it looks nice");
+            AddData("Long Scarf","Nike","Stripped","Red", "White","Unisex", "Scarf","One Size","Polyester","it looks nice",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
 
             //Gloves
-            AddData("Mittens","Nautica","Solid","Black", "","Unisex", "Gloves","One Size","Polyester","its warm");
+            AddData("Mittens","Nautica","Solid","Black", "","Unisex", "Gloves","One Size","Polyester","its warm",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
@@ -357,7 +360,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
                 String id = cursor.getString(0);
                 CI = new ClothingItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
                         cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),
-                        cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),
+                        cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),cursor.getString(13),
                         mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id));
                 clothingItems.add(CI);
             }

@@ -16,6 +16,7 @@ public class ClothingItem {
     private String desc;
     private String status;
     private String occasion;
+    private String date;
 
     private boolean spring;
     private boolean summer;
@@ -39,6 +40,7 @@ public class ClothingItem {
     public String getDesc() { return desc; }
     public String getStatus() { return status; }
     public String getOccasion() { return occasion; }
+    public String getDate() {return date;}
     public boolean isSpring() { return spring; }
     public boolean isSummer() { return summer; }
     public boolean isFall() { return fall; }
@@ -70,8 +72,8 @@ public class ClothingItem {
 
 
     public ClothingItem(String clothingID, String name, String brand, String type,String pattern, String fit, String size,
-                        String color1, String color2, String material, String desc, String status,  String userID,
-                        String occasion, boolean spring, boolean summer, boolean fall, boolean winter, boolean all) {
+                        String color1, String color2, String material, String desc, String status,  String date,String userID,
+                        String occasion,  boolean spring, boolean summer, boolean fall, boolean winter, boolean all) {
         this.clothingID = Integer.parseInt(clothingID);
         this.userID = Integer.parseInt(userID);
         this.name = name;
@@ -91,6 +93,7 @@ public class ClothingItem {
         this.fall = fall;
         this.winter = winter;
         this.all = all;
+        this.date = date;
     }
 
     public ClothingItem() {
