@@ -16,21 +16,27 @@
                 />
             <item android:id="@+id/nav_randomOutfitFragment"
                 android:title="Randomize Outfits"
+                android:icon="@drawable/ic_recycle"
                 />
             <item android:title="Weather"
+                android:icon="@drawable/ic_thunderstorm"
                 android:id="@+id/nav_weather"
                 />
-            <item android:title="Calendar"
-                android:id="@+id/nav_calendar"
+            <item android:title="Events"
+                android:icon="@drawable/ic_event"
+                android:id="@+id/nav_events"
                 />
 
         </group>
     <item android:title="Profile">
         <menu>
             <item android:title="Share Closet"
-                android:id="@+id/nav_shareCloset"/>
+                android:id="@+id/nav_shareCloset"
+                android:icon="@drawable/ic__share"/>
+
             <item android:title="User Preferences"
-                android:id="@+id/nav_userPreferences"/>
+                android:id="@+id/nav_userPreferences"
+                android:icon="@drawable/ic_settings"/>
             <item android:id="@+id/nav_logout"
                 android:icon="@drawable/ic_logout"
                 android:title="Logout" />

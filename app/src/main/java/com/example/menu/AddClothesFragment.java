@@ -34,11 +34,13 @@ import java.util.Locale;
 public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItemClickListener {
     private View v;
     TextView tv;
-    TextView tv_material;
+    TextView tv_material, txtlight, txtheavy;
     TextView tv_fancy_casual;
     TextView tv_pattern;
     EditText ed_name;
    String fits;
+   CheckBox Light,Heavy;
+
 
     public AddClothesFragment() {
         // Required empty public constructor
@@ -54,7 +56,8 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
         tv_fancy_casual= (TextView)v.findViewById(R.id.fancy_casual_type);
         tv_pattern = (TextView) v.findViewById(R.id.pattern_type);
         ed_name = (EditText) v.findViewById(R.id.edit_text_name);
-
+        txtlight = v.findViewById(R.id.textViewLight);
+        txtheavy = v.findViewById(R.id.textViewHeavy);
         configureButtons();
 
         return v;
@@ -73,6 +76,8 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
         CheckBox checkBoxMen= v.findViewById(R.id.checkBoxMen);
         CheckBox checkBoxWomen = v.findViewById(R.id.checkBoxWomen);
         CheckBox checkBoxUnisex = v.findViewById(R.id.checkBoxUnisex);
+         Light = v.findViewById(R.id.checkBoxLight);
+         Heavy = v.findViewById(R.id.checkBoxHeavy);
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -154,6 +159,26 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
                 }
             }
         });
+        Light.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Light.isChecked()){
+                    Heavy.setChecked(false);
+
+                    tv.setText("Light Jacket");
+                }
+            }
+        });
+        Heavy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(Heavy.isChecked()){
+                    Light.setChecked(false);
+
+                    tv.setText("Heavy Jacket");
+                }
+            }
+        });
             fab.setOnClickListener(new View.OnClickListener() {
 
                 @Override
@@ -191,51 +216,91 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
             case R.id.nav_shirt:
 
                 tv.setText("Shirt");
-
+                txtlight.setVisibility(v.GONE);
+                txtheavy.setVisibility(v.GONE);
+                Light.setVisibility(v.GONE);
+                Heavy.setVisibility(v.GONE);
                 break;
             case R.id.nav_LSshirt:
 
                 tv.setText("Long Sleeved Shirt");
-
+                txtlight.setVisibility(v.GONE);
+                txtheavy.setVisibility(v.GONE);
+                Light.setVisibility(v.GONE);
+                Heavy.setVisibility(v.GONE);
                 break;
             case R.id.nav_BDshirt:
 
                 tv.setText("Button Down Shirt");
-
+                txtlight.setVisibility(v.GONE);
+                txtheavy.setVisibility(v.GONE);
+                Light.setVisibility(v.GONE);
+                Heavy.setVisibility(v.GONE);
                 break;
             case R.id.nav_pants:
 
                 tv.setText("Pants");
-
+                txtlight.setVisibility(v.GONE);
+                txtheavy.setVisibility(v.GONE);
+                Light.setVisibility(v.GONE);
+                Heavy.setVisibility(v.GONE);
                 break;
             case R.id.nav_socks:
 
                 tv.setText("Socks");
+                txtlight.setVisibility(v.GONE);
+                txtheavy.setVisibility(v.GONE);
+                Light.setVisibility(v.GONE);
+                Heavy.setVisibility(v.GONE);
                 break;
             case R.id.nav_jacket:
 
                 tv.setText("Jacket");
+
+                txtlight.setVisibility(v.VISIBLE);
+                txtheavy.setVisibility(v.VISIBLE);
+                Light.setVisibility(v.VISIBLE);
+                Heavy.setVisibility(v.VISIBLE);
                 break;
             case R.id.nav_hat:
 
                 tv.setText("Hat");
-
+                txtlight.setVisibility(v.GONE);
+                txtheavy.setVisibility(v.GONE);
+                Light.setVisibility(v.GONE);
+                Heavy.setVisibility(v.GONE);
                 break;
             case R.id.nav_shoes:
 
                 tv.setText("Shoes");
+                txtlight.setVisibility(v.GONE);
+                txtheavy.setVisibility(v.GONE);
+                Light.setVisibility(v.GONE);
+                Heavy.setVisibility(v.GONE);
                 break;
             case R.id.nav_sandals:
 
                 tv.setText("Sandals");
+                txtlight.setVisibility(v.GONE);
+                txtheavy.setVisibility(v.GONE);
+                Light.setVisibility(v.GONE);
+                Heavy.setVisibility(v.GONE);
                 break;
             case R.id.nav_gloves:
 
                 tv.setText("Gloves");
+                txtlight.setVisibility(v.GONE);
+                txtheavy.setVisibility(v.GONE);
+                Light.setVisibility(v.GONE);
+                Heavy.setVisibility(v.GONE);
                 break;
             case R.id.nav_scarf:
 
                 tv.setText("Scarf");
+                txtlight.setVisibility(v.GONE);
+                txtheavy.setVisibility(v.GONE);
+                Light.setVisibility(v.GONE);
+                Heavy.setVisibility(v.GONE);
                 break;
             case R.id.nav_wool:
                 tv_material.setText("Wool");

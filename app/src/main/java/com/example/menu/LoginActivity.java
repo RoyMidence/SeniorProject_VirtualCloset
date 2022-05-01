@@ -19,6 +19,10 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         DatabaseHelper mDatabaseHelper = new DatabaseHelper(getApplicationContext());
 
+        if (mDatabaseHelper.userTableEmpty()) {
+            mDatabaseHelper.addUser("The Admin", "admin", "admin", "90", "14", "66", "42");
+        }
+
     }
 
 

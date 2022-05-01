@@ -10,4 +10,8 @@
     <color name="gray">#808080</color>
     <color name="orange">#FFA500</color>
     <color name="red">#ff0000</color>
+    <color name="junglegreen">#2AAA8A</color>
+    <color name="aqua">#00FFFF</color>
+    <color name="mint_green">#98FB98</color>
+    <color name="pastel_green">#C1E1C1</color>
 </resources>

@@ -72,6 +72,24 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     // Logged-in table, only has user_id as value, will only ever have 1 entry at a time
     private static final String LOGGED_USER_TABLE = "logged_user_table";
 
+    //Events table
+    private static final String EVENT_TABLE= "event_table";
+    private static final String EVENT_ID= "event_id";
+    private static final String EVENT_TITLE= "event_title";
+    private static final String EVENT_LOCATION= "event_location";
+    private static final String EVENT_START_DATE= "event_start_date";
+    private static final String EVENT_END_DATE= "event_end_date";
+
+
+    // events & clothing table, uses EVENT_ID and CLOTHING_ID as composite key
+    private static final String EVENT_CLOTHING_TABLE ="event_clothing_table";
+    private static final String EVENT_OUTFIT_TABLE ="event_outfit_table";
+
+
+
+
+
+
     DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
@@ -171,7 +189,38 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "FOREIGN KEY (" + OUTFIT_ID + ") REFERENCES " + OUTFIT_TABLE + "(" + OUTFIT_ID + "), " +
                 "PRIMARY KEY (" + OUTFIT_ID + ", " + CLOTHING_ID + "));";
         db.execSQL(createTable);
+
+        // CREATE EVENT TABLE
+        createTable ="CREATE TABLE " + EVENT_TABLE +
+                "(" + EVENT_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                EVENT_TITLE + " TEXT, " +
+                EVENT_LOCATION + " TEXT, " +
+                EVENT_START_DATE +" TEXT, " +
+                EVENT_END_DATE + " TEXT, " +
+                USER_ID + " INTEGER, " +
+                "FOREIGN KEY (" + USER_ID + ") REFERENCES " + USER_TABLE + "(" + USER_ID + "));";
+        db.execSQL(createTable);
+
+        // CREATE Clothing & EVENT TABLE
+        createTable = "CREATE TABLE " + EVENT_CLOTHING_TABLE +
+                " (" + EVENT_ID + " INTEGER, " +
+                CLOTHING_ID + " INTEGER, " +
+                "FOREIGN KEY (" + CLOTHING_ID + ") REFERENCES " + CLOTHING_TABLE + "(" + CLOTHING_ID + "), " +
+                "FOREIGN KEY (" + EVENT_ID + ") REFERENCES " + EVENT_TABLE + "(" + EVENT_ID + "), " +
+                "PRIMARY KEY (" + EVENT_ID + ", " + CLOTHING_ID + "));";
+        db.execSQL(createTable);
+
+        // CREATE OUTFIT & EVENT TABLE
+        createTable = "CREATE TABLE " + EVENT_OUTFIT_TABLE +
+                " (" + EVENT_ID + " INTEGER, " +
+                OUTFIT_ID + " INTEGER, " +
+                "FOREIGN KEY (" + OUTFIT_ID + ") REFERENCES " + OUTFIT_TABLE + "(" + OUTFIT_ID + "), " +
+                "FOREIGN KEY (" + EVENT_ID + ") REFERENCES " + EVENT_TABLE + "(" + EVENT_ID + "), " +
+                "PRIMARY KEY (" + EVENT_ID + ", " + OUTFIT_ID + "));";
+        db.execSQL(createTable);
     }
+
+
 
     // ADD METHODS BEGIN HERE -----------------------------------------------------------------------------------------
     // ADD CLOTHING ITEM
@@ -223,7 +272,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         return result != -1;
     }
+    // method for adding clothes to events
+    public boolean addClothingToEvent(String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(EVENT_ID, getLatestEvent());
+        contentValues.put(CLOTHING_ID, clothingID);
 
+        long result = db.insert(EVENT_CLOTHING_TABLE, null, contentValues);
+
+        return result != -1;
+    }
+    public boolean addOutfitToEvent(String outfitID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(EVENT_ID, getLatestEvent());
+        contentValues.put(OUTFIT_ID, outfitID);
+
+        long result = db.insert(EVENT_OUTFIT_TABLE, null, contentValues);
+
+        return result != -1;
+    }
     // ADD A USER
     public boolean addUser(String fullname, String userName, String password,String hot,String freezing,String warm,String cold) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -243,6 +312,21 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long result = db.insert(USER_TABLE,null,contentValues);
 
         return result != -1;
+    }
+    //add a event
+    public boolean addEvent(String title, String location, String startDate, String endDate){
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(EVENT_TITLE, title);
+        contentValues.put(EVENT_LOCATION, location);
+        contentValues.put(EVENT_START_DATE, startDate);
+        contentValues.put(EVENT_END_DATE, endDate);
+        contentValues.put(USER_ID, loggedUserID());
+
+        long result = db.insert(EVENT_TABLE,null,contentValues);
+
+        return result != -1;
+
     }
 
     public boolean shareCloset(String key) {
@@ -311,6 +395,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public int getLatestOutfit() {
         String query = "SELECT " + OUTFIT_ID + " FROM " + OUTFIT_TABLE +
                 " ORDER BY " + OUTFIT_ID + " DESC LIMIT 1";
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            return cursor.getInt(0);
+        }
+        return -1;
+    }
+    public int getLatestEvent() {
+        String query = "SELECT " + EVENT_ID + " FROM " + EVENT_TABLE +
+                " ORDER BY " + EVENT_ID + " DESC LIMIT 1";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
         if (db != null) {
@@ -545,6 +641,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor = db.rawQuery(query, null);
         return cursor;
     }
+    //get all Events
+    Cursor readUsersEvent(){
+        String query = "Select * FROM " + EVENT_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID();
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null)
+            cursor = db.rawQuery(query, null);
+        return cursor;
+    }
 
     Cursor readClothingType(String type) {
         String query = "SELECT * FROM " + CLOTHING_TABLE +
@@ -668,6 +774,27 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result;
     }
 
+    public String getStartDate(String eventID){
+        String result = "DIDN'T WORK";
+        String Query = "SELECT " + EVENT_START_DATE +
+                " FROM " + EVENT_TABLE +
+                " WHERE " + EVENT_ID + " = " + eventID;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(Query, null);
+            result = "";
+            while (cursor.moveToNext()) {
+                result += cursor.getString(0);
+            }
+            return result;
+        }
+
+        return result;
+    }
+
+
     // GET CLOTHING WEATHER CONDITIONS
     public String getWeatherConditions(String clothingID) {
         String result = "DIDNT WORK!";
@@ -769,7 +896,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return false;
     }
-
+    public boolean eventTableEmpty() {
+        String query = "SELECT COUNT(*) FROM " + EVENT_TABLE;
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query,null);
+            cursor.moveToFirst();
+            if (cursor.getInt(0) == 0) {
+                return true;
+            }
+        }
+        return false;
+    }
     // GET SHARED USER NAMES
     public Cursor getSharedUsers() {
         String subquery = " SELECT " + CLOSET_OWNER +

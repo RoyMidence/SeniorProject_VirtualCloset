@@ -334,9 +334,27 @@ public class AddOutfit extends AppCompatActivity implements PopupMenu.OnMenuItem
                     intent.putExtra("type", "Shoes");
                     otherActivityLauncher.launch(intent);
                 }
+            case R.id.lightJacket:
+                if (String.valueOf(ed_name.getText()).equals("")) {
+                    toastMessage("Please enter a name!");
+                } else {
+                    Intent intent = new Intent(AddOutfit.this, SelectClothes.class);
+                    intent.putExtra("type", "Light Jacket");
+                    otherActivityLauncher.launch(intent);
+                }
+                break;
+            case R.id.heavyJacket:
+                if (String.valueOf(ed_name.getText()).equals("")) {
+                    toastMessage("Please enter a name!");
+                } else {
+                    Intent intent = new Intent(AddOutfit.this, SelectClothes.class);
+                    intent.putExtra("type", "Heavy Jacket");
+                    otherActivityLauncher.launch(intent);
+                }
         }
-        return false;
-    }
+                return false;
+        }
+
     private void toastMessage(String Message) {
         Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_SHORT).show();
     }

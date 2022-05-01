@@ -173,5 +173,41 @@
             android:src="@drawable/ic_next"
             app:fabSize="normal" />
 
+        <TextView
+            android:id="@+id/textViewHeavy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkBoxWomen"
+            android:layout_marginLeft="135dp"
+            android:text="Heavy"
+            android:textSize="20dp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/textViewLight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/checkBoxMen"
+            android:layout_marginLeft="25dp"
+            android:text="Light"
+            android:textSize="20dp"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxLight"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewLight"
+            android:layout_marginLeft="25dp"
+            android:visibility="gone" />
+
+        <CheckBox
+            android:id="@+id/checkBoxHeavy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/textViewHeavy"
+            android:layout_marginLeft="150dp"
+            android:visibility="gone" />
+
     </RelativeLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

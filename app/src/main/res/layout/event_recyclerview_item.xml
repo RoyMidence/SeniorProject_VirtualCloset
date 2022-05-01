@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/event_layout"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="100dp"
+    app:cardElevation="5dp"
+    app:cardUseCompatPadding="true">
+
+
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="120dp">
+
+        <TextView
+            android:id="@+id/eventTitle"
+            android:layout_margin="16dp"
+            android:text="Title"
+            android:textColor="@color/black"
+            android:textSize="20sp">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/eventLocation"
+            android:layout_margin="16dp"
+            android:text="Location"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/eventStartDate"
+            android:layout_row="1"
+            android:layout_column="0"
+            android:layout_margin="16dp"
+            android:text="StartDate"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/eventEndDate"
+            android:layout_margin="16dp"
+            android:text="EndDate"
+            android:textColor="@color/black"
+            android:textSize="20sp" />
+    </GridLayout>
+</androidx.cardview.widget.CardView>

@@ -7,4 +7,8 @@
         android:title="Scarf"/>
     <item android:id="@+id/gloves"
         android:title="Gloves"/>
+    <item android:id="@+id/lightJacket"
+        android:title="Light Jacket"/>
+    <item android:id="@+id/heavyJacket"
+        android:title="Heavy Jacket"/>
 </menu>

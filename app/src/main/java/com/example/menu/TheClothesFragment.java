@@ -211,12 +211,15 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             mDatabaseHelper.addToTagsTable("All"); // 8
         }
 
-       if (mDatabaseHelper.userTableEmpty()) {
-         mDatabaseHelper.addUser("The Admin", "admin", "admin","90","14","66","42");
-//            mDatabaseHelper.addUser("Person1", "abcdef", "abcd-efgh","50","50","50","50");
-//            mDatabaseHelper.addUser("Person2", "abcdef", "abcd-efgh","50","50","50","50");
-//            mDatabaseHelper.addUser("Person3", "abcdef", "abcd-efgh","50","50","50","50");
-//            mDatabaseHelper.addUser("Person4", "abcdef", "abcd-efgh","50","50","50","50");
+        if(mDatabaseHelper.eventTableEmpty()){
+            mDatabaseHelper.addEvent("Event1","Loc1",currentDate,currentDate);
+            mDatabaseHelper.addEvent("Event2","Loc2",currentDate,currentDate);
+            mDatabaseHelper.addEvent("Event3","Loc3",currentDate,currentDate);
+            mDatabaseHelper.addEvent("Event4","Loc4",currentDate,currentDate);
+            mDatabaseHelper.addEvent("Event5","Loc5","08-30-2022","09-29-2022");
+            mDatabaseHelper.addEvent("Event6","Loc6","10-15-2022","10-18-2022");
+            mDatabaseHelper.addEvent("Event7","Loc7","01-15-2023","01-16-2023");
+            mDatabaseHelper.addEvent("Event8","Loc7","06-21-2025","06-27-2025");
         }
 
         int cl; // Exists for testing purposes

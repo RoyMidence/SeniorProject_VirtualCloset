@@ -49,5 +49,9 @@
     <string name="save_types">Save Types</string>
     <string name="change_Password"><u>Change password?</u>.</string>
     <string name="Winter">Winter\n(39\uFE64)</string>
+    <string name="add"><u>Add</u></string>
+    <string name="cancel"><u>Cancel</u></string>
+    <string name="startDate"><u>Start Date:</u></string>
+    <string name="endDate"><u>End Date:</u></string>
 
 </resources>

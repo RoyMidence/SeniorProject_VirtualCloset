@@ -14,6 +14,21 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Menu">
         <activity
+            android:name=".SelectOutfitEvents"
+            android:exported="false" />
+        <activity
+            android:name=".SelectClothesEvents"
+            android:exported="false" />
+        <activity
+            android:name=".EndCalendar"
+            android:exported="false" />
+        <activity
+            android:name=".StartCalendar"
+            android:exported="false" />
+        <activity
+            android:name=".AddEvent"
+            android:exported="false" />
+        <activity
             android:name=".ChangePassword"
             android:exported="false" />
         <activity

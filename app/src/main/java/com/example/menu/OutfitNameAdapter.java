@@ -1,10 +1,6 @@
 package com.example.menu;
 
-
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,14 +11,10 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.w3c.dom.Text;
-
 import java.util.ArrayList;
-import java.util.List;
-public class OutfitAdapter extends RecyclerView.Adapter<OutfitAdapter.MyViewHolder> {
 
-    private Context context;
-    Fragment fragment;
+public class OutfitNameAdapter extends RecyclerView.Adapter<OutfitNameAdapter.MyViewHolder> {
+    private Context c;
 
     private ArrayList<String> Outfitname;
     private itemClickInterface mItemClickInterface;
@@ -31,13 +23,13 @@ public class OutfitAdapter extends RecyclerView.Adapter<OutfitAdapter.MyViewHold
 
         public TextView txtviewOutfitName;
 
-       itemClickInterface itemClickInterface;
-        CardView mainLayout;
+        itemClickInterface itemClickInterface;
+        ConstraintLayout mainLayout;
 
         public MyViewHolder(View view, itemClickInterface itemClickInterface) {
             super(view);
-            txtviewOutfitName = (TextView) view.findViewById(R.id.outfitname);
-            mainLayout = itemView.findViewById(R.id.outfit_layout);
+            txtviewOutfitName = (TextView) view.findViewById(R.id.outfit_name_item);
+            mainLayout = itemView.findViewById(R.id.outfit_name_layout);
             this.itemClickInterface = itemClickInterface;
 
             itemView.setOnClickListener(this);
@@ -45,9 +37,8 @@ public class OutfitAdapter extends RecyclerView.Adapter<OutfitAdapter.MyViewHold
         @Override
         public void onClick(View view) { itemClickInterface.onItemClick(getBindingAdapterPosition());}
     } // end MyViewHolder
-    public OutfitAdapter(Fragment fragment, Context context, ArrayList<String> outfitname,ArrayList<String> outfitId, itemClickInterface itemClickInterface) {
-        this.fragment = fragment;
-        this.context = context;
+    public OutfitNameAdapter(Context context, ArrayList<String> outfitname,ArrayList<String> outfitId, itemClickInterface itemClickInterface) {
+        this.c = context;
         this.Outfitname= outfitname;
         this.mItemClickInterface = itemClickInterface;
         this.outfitId = outfitId;
@@ -55,7 +46,7 @@ public class OutfitAdapter extends RecyclerView.Adapter<OutfitAdapter.MyViewHold
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.outfit_recycleview_item, parent, false);
+                .inflate(R.layout.outfit_name_recycleview_item, parent, false);
         return new MyViewHolder(itemView, mItemClickInterface);
     }
     @Override
