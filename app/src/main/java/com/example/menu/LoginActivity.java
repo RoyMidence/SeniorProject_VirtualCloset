@@ -20,7 +20,7 @@ public class LoginActivity extends AppCompatActivity {
         DatabaseHelper mDatabaseHelper = new DatabaseHelper(getApplicationContext());
 
         if (mDatabaseHelper.userTableEmpty()) {
-            mDatabaseHelper.addUser("The Admin", "admin", "admin", "90", "14", "66", "42");
+            mDatabaseHelper.addUser("The Admin", "admin", "admin", "90", "38", "62");
         }
 
     }

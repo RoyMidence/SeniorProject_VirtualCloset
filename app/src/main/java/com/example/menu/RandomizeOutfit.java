@@ -78,12 +78,9 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
 
 
         // Set Basic Default Filter Parameters
-        types.add("Shirt");
-        types.add("Pants");
-        types.add("Shoes");
         c1 = "Any";
         c2 = "Any";
-        occasion = "Any";
+        occasion = "Casual";
         createOutfit = true;
 
 
@@ -136,47 +133,25 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
                 CI = new ClothingItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
                         cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),
                         cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),cursor.getString(13),
-                        mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id));
+                        mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id), mDatabaseHelper.getClothingFave(id));
                 temp.add(CI);
             }
+            cursor.close();
         } // Now have a list with the specified types
 
-        if(!occasion.equals("Any")) {
-            for (int i = 0; i < temp.size(); i++) {
-                if (!temp.get(i).getOccasion().equals(occasion)) { // Both colors, looking for specified combo
-                    temp.remove(i);
-                    i--;
-                }
+
+        // Filtering Occasions
+        for (int i = 0; i < temp.size(); i++) {
+            if (!temp.get(i).getOccasion().equals(occasion)) {
+                temp.remove(i);
+                i--;
             }
         }
+
 
         // Shorten list down to colors
         // Only doing for shirts for now
-        if (type.contains("Shirt")) {
-            for (int i = 0; i < temp.size(); i++) {
-                if (!c1.equals("Any") && !c2.equals("Any")) { // Both colors, looking for specified combo
-                    if (!temp.get(i).getColor1().equals(c1) || !temp.get(i).getColor2().equals(c2)) {
-                        temp.remove(i);
-                        i--;
-                    }
-                } else if (!c1.equals("Any")) { // Looking for primary color
-                    if (!temp.get(i).getColor1().equals(c1)) {
-                        temp.remove(i);
-                        i--;
-                    }
-                } else if (!c2.equals("Any")) { // Looking for secondary color
-                    if (!temp.get(i).getColor2().equals(c2)) {
-                        temp.remove(i);
-                        i--;
-                    }
-                } // No default. if there is no color filter then no need for work
-            }
-        } // Broke down list of shirts, should only be left with shirts of the correct color
-        // But also might not have shirts at all, need to account for this
-
-        if (temp.size() == 0) { // If nothing with that color exists
-            return false;
-        }
+        temp = colorFilter(temp);
 
         Random random = new Random(); // use this to generate a random number
         clothingItems.add(temp.get(random.nextInt(temp.size()))); // adding a random clothing Item here
@@ -200,6 +175,7 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
                 // OUTFIT TABLE ID : NAME
                 of.add(new Outfit(cursor.getString(0), cursor.getString(1)));
             }
+            cursor.close();
         } // Now have a list with the outfits
 
         // SELECT OUTFIT
@@ -213,12 +189,42 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
             CI = new ClothingItem(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3), cursor.getString(4),
                     cursor.getString(5),cursor.getString(6),cursor.getString(7),cursor.getString(8),
                     cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12),cursor.getString(13),
-                    mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id));
+                    mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id), mDatabaseHelper.getClothingFave(id));
             clothingItems.add(CI);
         }
+        cursor.close();
 
         outfitNameRandom.setText(of.get(outfit).getOutfitName());
         // LIST CLOTHING
+    }
+
+    private List colorFilter(List<ClothingItem> clothingList) {
+        List<ClothingItem> filterList = new ArrayList<>();  // Will hold clothing with correct Colors
+
+        for (int i = 0; i < clothingList.size(); i++) {
+            if (!c1.equals("Any") && !c2.equals("Any")) { // Both colors, looking for specified combo
+                if (clothingList.get(i).getColor1().equals(c1) || clothingList.get(i).getColor2().equals(c2)) {
+                    filterList.add(clothingList.get(i));
+                }
+            } else if (!c1.equals("Any")) { // Looking for primary color
+                if (clothingList.get(i).getColor1().equals(c1)) {
+                    filterList.add(clothingList.get(i));
+                }
+            } else if (!c2.equals("Any")) { // Looking for secondary color
+                if (clothingList.get(i).getColor2().equals(c2)) {
+                    filterList.add(clothingList.get(i));
+                }
+            }
+        } // after the for loop, should now have list of all clothing with matching color
+        // or no clothing at all
+
+        // if there is applicable items, send them back
+        // if not, use original list
+        if (filterList.size() != 0) {
+            clothingList = filterList;
+            return clothingList;
+        }
+        return clothingList;
     }
 
     private void configureButtons() {
@@ -238,7 +244,7 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
                 if (createOutfit) {
                     for (int i = 0; i < types.size(); i++) { // Will cycle through the types of clothing
                         if (!chooseClothingItem(types.get(i))) {
-                            Toast.makeText(getContext(), "No shirt with that color", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(getContext(), "No available" + types.get(i), Toast.LENGTH_SHORT).show();
                             worked = false;
                             break;
                         }
@@ -324,6 +330,11 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
 
     @Override
     public void onItemClick(int position) {
+        if (chooseClothingItem(clothingItems.get(position).getType())) {
+            clothingItems.remove(position);
+            list.notifyDataSetChanged();
+        } else
+            Toast.makeText(getContext(), "Error getting new " + clothingItems.get(position).getType(), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -346,6 +357,44 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
 
                     textViewTemperature.setText( String.valueOf(t.intValue()) + " F");
                     textViewWeather.setText(d);
+
+                    String desc = d.toLowerCase();
+
+
+                    if (t >= 88.0) {
+                        // Hot Bracket
+                        types.add("T-Shirt");
+                        types.add("Shorts");
+                        types.add("Shoes");
+                        if (desc.contains("rain") || desc.contains("snow")) {
+                            types.add("Jacket");
+                        }
+
+
+                    } else if (t < 88 && t >= 45) {
+                        // Warm bracket
+                        types.add("T-Shirt");
+                        types.add("Pants");
+                        types.add("Shoes");
+                        if (desc.contains("rain") || desc.contains("snow")) {
+                            types.add("Jacket");
+                        }
+
+                    } else if (t < 45 && t >= 32) {
+                        // Cold bracket
+                        types.add("Long Sleeved Shirt");
+                        types.add("Pants");
+                        types.add("Shoes");
+                        types.add("Jacket");
+
+                    } else {
+                        // Freezing
+                        types.add("Long Sleeved Shirt");
+                        types.add("Pants");
+                        types.add("Shoes");
+                        types.add("Jacket");
+
+                    }
 
                 } catch(JSONException e){
                     e.printStackTrace();

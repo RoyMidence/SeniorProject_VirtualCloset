@@ -81,7 +81,7 @@ public class ShareCloset extends Fragment implements UserAdapter.itemClickInterf
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
-        list = new UserAdapter(ShareCloset.this, userName, userID, this);
+        list = new UserAdapter(userName, userID, this);
         recyclerView.setAdapter(list);
     }
 

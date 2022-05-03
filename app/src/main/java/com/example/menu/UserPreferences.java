@@ -29,9 +29,9 @@ public class UserPreferences extends Fragment {
     public UserPreferences() {
         // Required empty public constructor
     }
-TextView txtFullName, txtUserName, txtPassword, txtHot, txtwarm, txtcold,txtfreezing;
+    TextView txtFullName, txtUserName, txtPassword, txtHot, txtwarm,txtfreezing;
 
-    EditText edFullName,edUserName,edPassword, edhot,edwarm,edcold,edfreezing;
+    EditText edFullName,edUserName,edPassword, edhot,edwarm,edfreezing;
 
 
 
@@ -50,7 +50,6 @@ TextView txtFullName, txtUserName, txtPassword, txtHot, txtwarm, txtcold,txtfree
         txtUserName = v.findViewById(R.id.textViewUserName);
         txtPassword = v.findViewById(R.id.textViewPassword);
         txtHot = v.findViewById(R.id.textViewHotPref);
-        txtcold = v.findViewById(R.id.textViewColdPref);
         txtwarm = v.findViewById(R.id.textViewWarmPref);
         txtfreezing = v.findViewById(R.id.textViewFreezingPref);
 
@@ -59,7 +58,6 @@ TextView txtFullName, txtUserName, txtPassword, txtHot, txtwarm, txtcold,txtfree
         edPassword = v.findViewById(R.id.editTextPasswordPreferences);
         edhot = v.findViewById(R.id.editTextHotPref);
         edwarm = v.findViewById(R.id.editTextWarmPref);
-        edcold = v.findViewById(R.id.editTextColdPref);
         edfreezing = v.findViewById(R.id.editTextFreezingPref);
 
         edFullName.setText(mDatabaseHelper.getUserName());
@@ -67,7 +65,6 @@ TextView txtFullName, txtUserName, txtPassword, txtHot, txtwarm, txtcold,txtfree
         edPassword.setText(mDatabaseHelper.getUserPassword());
         edhot.setText(mDatabaseHelper.getUserHotTemp());
         edwarm.setText(mDatabaseHelper.getUserWarmTemp());
-        edcold.setText(mDatabaseHelper.getUserColdTemp());
         edfreezing.setText(mDatabaseHelper.getUserFreezingTemp());
 
         isReveal = true;
@@ -116,7 +113,6 @@ TextView txtFullName, txtUserName, txtPassword, txtHot, txtwarm, txtcold,txtfree
             public void onClick(View v) {
                 String hot, warm, freezing, cold;
                 hot = String.valueOf(edhot.getText());
-                cold = String.valueOf(edcold.getText());
                 warm = String.valueOf(edwarm.getText());
                 freezing = String.valueOf(edfreezing.getText());
 
@@ -124,8 +120,6 @@ TextView txtFullName, txtUserName, txtPassword, txtHot, txtwarm, txtcold,txtfree
                     toastMessage("Please enter a Hot Temperature!");
                 } else if (String.valueOf(edfreezing.getText()).equals("")) {
                     toastMessage("Please enter a Freezing Temperature!");
-                } else if (String.valueOf(edcold.getText()).equals("")) {
-                    toastMessage("Please enter a Cold Temperature!");
                 } else if (String.valueOf(edwarm.getText()).equals("")) {
                     toastMessage("Please enter a Warm Temperature!");
                 } else {
@@ -136,18 +130,14 @@ TextView txtFullName, txtUserName, txtPassword, txtHot, txtwarm, txtcold,txtfree
                     } else if (Integer.parseInt(warm) > 80 || Integer.parseInt(warm) <= 60) {
                         edwarm.setText("0");
                         toastMessage("Warm Temperature between 79 and 60");
-                    } else if (Integer.parseInt(cold) > 60 || Integer.parseInt(cold) <= 40) {
-                        edcold.setText("0");
-                        toastMessage("Cold Temperature between 59 and 40");
                     } else if (Integer.parseInt(freezing) > 40 || Integer.parseInt(freezing) <= 10) {
                         edfreezing.setText("0");
                         toastMessage("Freezing Temperature between 39 and 10");
                     } else {
 
-                        mDatabaseHelper.updateAllUserTemp(hot, warm, cold, freezing);
+                        mDatabaseHelper.updateAllUserTemp(hot, warm, freezing);
                         edhot.setText(mDatabaseHelper.getUserHotTemp());
                         edwarm.setText(mDatabaseHelper.getUserWarmTemp());
-                        edcold.setText(mDatabaseHelper.getUserColdTemp());
                         edfreezing.setText(mDatabaseHelper.getUserFreezingTemp());
                     }
                 }

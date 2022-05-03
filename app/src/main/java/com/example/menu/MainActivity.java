@@ -50,7 +50,6 @@ private DatabaseHelper mDatabaseHelper;
         if (mDatabaseHelper.loggedUserTableEmpty()) {
             Intent go = new Intent(MainActivity.this,LoginActivity.class);
                    startActivity(go);
-//            mDatabaseHelper.logginUser("1");
         }
     }
 
@@ -66,10 +65,6 @@ private DatabaseHelper mDatabaseHelper;
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new TheClothesFragment()).commit();
 
-                break;
-            case R.id.nav_weather:
-                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                        new WeatherFragment()).commit();
                 break;
             case R.id.nav_logout:
                 Toast.makeText(this,"You have been logged out.",Toast.LENGTH_SHORT).show();
@@ -90,6 +85,10 @@ private DatabaseHelper mDatabaseHelper;
             case R.id.nav_randomOutfitFragment:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new RandomizeOutfit()).commit();
+                break;
+            case R.id.nav_weather:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new WeatherFragment()).commit();
                 break;
             case R.id.nav_userPreferences:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,

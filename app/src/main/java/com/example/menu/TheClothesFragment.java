@@ -120,14 +120,15 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             textViewEmptyCloset.setVisibility(View.GONE);
 
             while (cursor.moveToNext()) {
-                // CLOTHING TABLE:  clothingID  : NAME  : BRAND : TYPE  : PATTERN : FIR : SIZE : COLOR1 : COLOR2 : MATERIAL : DESC : STATUS : userID
+                // CLOTHING TABLE:  clothingID  : NAME  : BRAND : TYPE  : PATTERN : FIR : SIZE : COLOR1 : COLOR2 : MATERIAL : DESC : STATUS : FAVOR: DATE : userID
                 String id = cursor.getString(0);
                 CI = new ClothingItem(cursor.getString(0),cursor.getString(1),cursor.getString(2),cursor.getString(3), cursor.getString(4),
                         cursor.getString(5),cursor.getString(6),cursor.getString(7),cursor.getString(8),
                         cursor.getString(9),cursor.getString(10),cursor.getString(11),cursor.getString(12),cursor.getString(13),
-                        mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id));
+                        mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id), mDatabaseHelper.getClothingFave(id));
                 clothingItems.add(CI);
             }
+            cursor.close();
         }
 
 
@@ -176,7 +177,6 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         for (ClothingItem item : clothingItems) {
             if (item.getName().toLowerCase().contains(s.toLowerCase())) {
                 rawList.add(item);
-
             }
             if (item.getBrand().toLowerCase().contains(s.toLowerCase())) {
                 rawList.add(item);
@@ -184,7 +184,9 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             if (item.getType().toLowerCase().contains(s.toLowerCase())) {
                 rawList.add(item);
             }
-        }
+            if (item.getStatus().toLowerCase().contains(s.toLowerCase())) {
+                rawList.add(item);
+            }        }
 
         if (rawList.isEmpty()) {
 
@@ -225,11 +227,11 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
         int cl; // Exists for testing purposes
 
         if (mDatabaseHelper.clothingTableEmpty()) { // Fill Clothing Table
-            AddData("Yellow Jippy","Fruit of The Loom","Solid", "Yellow", "", "Mens", "Shirt","L","Cotton","Chill and comfy",currentDate);
+            AddData("Yellow Jippy","Fruit of The Loom","Solid", "Yellow", "", "Mens", "T-Shirt","L","Cotton","Chill and comfy",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("All", cl);
-            AddData("Die for Succ","Diesel","Graphic","Black", "Red","Mens", "Shirt","L","Cotton","Has paint on it",currentDate);
+            AddData("Die for Succ","Diesel","Graphic","Black", "Red","Mens", "T-Shirt","L","Cotton","Has paint on it",currentDate);
             cl = mDatabaseHelper.getLatestItem();
             mDatabaseHelper.addTag("Casual", cl);
             mDatabaseHelper.addTag("Fall", cl);
@@ -364,7 +366,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
                 CI = new ClothingItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
                         cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),
                         cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),cursor.getString(13),
-                        mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id));
+                        mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id), mDatabaseHelper.getClothingFave(id));
                 clothingItems.add(CI);
             }
         }

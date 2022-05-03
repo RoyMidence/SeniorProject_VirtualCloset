@@ -128,7 +128,6 @@ public class FilterChosenOutfit extends AppCompatActivity implements TypeAdapter
 
                 popupMenu.getMenu().add(0,0, Menu.NONE,"Formal");
                 popupMenu.getMenu().add(0,1,Menu.NONE,"Casual");
-                popupMenu.getMenu().add(0,2,Menu.NONE,"Any");
 
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -138,8 +137,6 @@ public class FilterChosenOutfit extends AppCompatActivity implements TypeAdapter
                             buttonOccasion.setText("Formal");
                         } else if (item.getItemId() == 1){
                             buttonOccasion.setText("Casual");
-                        } else {
-                            buttonOccasion.setText("Any");
                         }
                         return false;
                     }

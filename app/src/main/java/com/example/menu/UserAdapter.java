@@ -37,8 +37,7 @@ public class UserAdapter extends RecyclerView.Adapter<UserAdapter.MyViewHolder>{
         public void onClick(View view) { itemClickInterface.onItemClick(getBindingAdapterPosition());}
     } // end MyViewHolder
 
-    public UserAdapter(Fragment fragment, List<String> userList, List<String> userID, UserAdapter.itemClickInterface itemClickInterface) {
-        this.fragment = fragment;
+    public UserAdapter( List<String> userList, List<String> userID, UserAdapter.itemClickInterface itemClickInterface) {
         mUserList = userList;
         mUserID = userID;
         this.mItemClickInterface = itemClickInterface;

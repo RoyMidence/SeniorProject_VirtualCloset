@@ -15,13 +15,12 @@ EditText name,user,pass,hot,freezing,warm,cold;
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
-         name = (EditText) findViewById(R.id.editTextFullName);
+        name = (EditText) findViewById(R.id.editTextFullName);
         user = (EditText) findViewById(R.id.editTextUsername);
         pass = (EditText) findViewById(R.id.editTextPassword);
         hot = (EditText) findViewById(R.id.editHot);
         freezing = (EditText) findViewById(R.id.editFreezing);
-       warm = (EditText) findViewById(R.id.editWarm);
-         cold = (EditText) findViewById(R.id.editCold);
+        warm = (EditText) findViewById(R.id.editWarm);
 
 
 
@@ -39,7 +38,7 @@ EditText name,user,pass,hot,freezing,warm,cold;
         String hotTemp = hot.getText().toString();
         String freezingTemp = freezing.getText().toString();
         String warmTemp = warm.getText().toString();
-        String coldTemp = cold.getText().toString();
+
         //check to see if there are values.
         if (String.valueOf(hot.getText()).equals("")) {
             toastMessage("Please enter a Hot Temperature!");
@@ -50,24 +49,22 @@ EditText name,user,pass,hot,freezing,warm,cold;
         } else if (String.valueOf(warm.getText()).equals("")) {
             toastMessage("Please enter a Warm Temperature!");
         }else {
-// once all values have been entered then it gets checked to see if its in a reasonable range
-            if (Integer.parseInt(hotTemp) > 100 || Integer.parseInt(hotTemp) <= 80) {
+
+            // once all values have been entered then it gets checked to see if its in a reasonable range
+            if (Integer.parseInt(hotTemp) > 106 || Integer.parseInt(hotTemp) <= 80) {
                 hot.setText("0");
-                toastMessage("Hot Temperature between 99 and 80");
-            } else if (Integer.parseInt(warmTemp) > 80 || Integer.parseInt(warmTemp) <= 60) {
+                toastMessage("Hot Temperature between 105 and 80");
+            } else if (Integer.parseInt(warmTemp) > 80 || Integer.parseInt(warmTemp) <= 50) {
                 warm.setText("0");
-                toastMessage("Warm Temperature between 79 and 60");
-            } else if (Integer.parseInt(coldTemp) > 60 || Integer.parseInt(coldTemp) <= 40) {
-                cold.setText("0");
-                toastMessage("Cold Temperature between 59 and 40");
-            } else if (Integer.parseInt(freezingTemp) > 40 || Integer.parseInt(freezingTemp) <= 10) {
+                toastMessage("Warm Temperature between 79 and 50");
+            } else if (Integer.parseInt(freezingTemp) > 50 || Integer.parseInt(freezingTemp) <= 10) {
                 freezing.setText("0");
-                toastMessage("Freezing Temperature between 39 and 10");
+                toastMessage("Freezing Temperature between 49 and 10");
             } else {
 
 
                 // public boolean addUser(String fullname, String userName, String password)
-                db.addUser(fullname, username, password, hotTemp, freezingTemp, warmTemp, coldTemp);
+                db.addUser(fullname, username, password, hotTemp, freezingTemp, warmTemp);
 
                 // public String checkLogin(String userName, String password)
                 String result = db.checkLogin(username, password);

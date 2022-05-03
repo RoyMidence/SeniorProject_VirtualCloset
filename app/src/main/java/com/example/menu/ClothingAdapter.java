@@ -11,6 +11,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -37,6 +38,7 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
 
         public TextView txtviewClothingName, textViewBrand, textViewType;
         ImageButton imageButtonStatus;
+        CheckBox checkBoxFavorite;
         itemClickInterface itemClickInterface;
         CardView mainLayout;
 
@@ -46,6 +48,7 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
             textViewBrand = (TextView) view.findViewById(R.id.textViewBrand);
             textViewType = (TextView) view.findViewById(R.id.textViewType);
             imageButtonStatus = (ImageButton) view.findViewById(R.id.imageButtonStatus);
+            checkBoxFavorite = (CheckBox) view.findViewById(R.id.checkBoxFavorite);
             mainLayout = itemView.findViewById(R.id.mainLayout);
             this.itemClickInterface = itemClickInterface;
 
@@ -76,6 +79,7 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
         String type = mClothingList.get(position).getType();
         String status = mClothingList.get(position).getStatus();
         String id = String.valueOf(mClothingList.get(position).getClothingID());
+        boolean fave = mClothingList.get(position).isFavorite();
 
         holder.txtviewClothingName.setText(clothing);
         holder.textViewType.setText(type);
@@ -115,6 +119,14 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
             }
         });
 
+        holder.checkBoxFavorite.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                DatabaseHelper db = new DatabaseHelper(context);
+                db.updateClothingFavorite(id, String.valueOf(holder.checkBoxFavorite.isChecked()));
+            }
+        });
+
         if (status.equals("Unavailable")) {
             holder.imageButtonStatus.setImageResource(R.drawable.ic_logout);
             holder.imageButtonStatus.setBackgroundColor(Color.parseColor("#DC143C"));
@@ -125,6 +137,8 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
             holder.imageButtonStatus.setImageResource(R.drawable.ic_hanger);
             holder.imageButtonStatus.setBackgroundColor(Color.parseColor("#90EE90"));
         }
+
+        holder.checkBoxFavorite.setChecked(fave);
     }
 
     @Override

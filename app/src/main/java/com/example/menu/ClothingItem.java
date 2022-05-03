@@ -24,6 +24,11 @@ public class ClothingItem {
     private boolean winter;
     private boolean all;
 
+    public boolean isFavorite() { return favorite; }
+    public void setFavorite(boolean favorite) { this.favorite = favorite; }
+
+    private boolean favorite;
+
 
     // Accessor methods
     public int getClothingID() { return clothingID; }
@@ -73,7 +78,7 @@ public class ClothingItem {
 
     public ClothingItem(String clothingID, String name, String brand, String type,String pattern, String fit, String size,
                         String color1, String color2, String material, String desc, String status,  String date,String userID,
-                        String occasion,  boolean spring, boolean summer, boolean fall, boolean winter, boolean all) {
+                        String occasion,  boolean spring, boolean summer, boolean fall, boolean winter, boolean all, boolean fav) {
         this.clothingID = Integer.parseInt(clothingID);
         this.userID = Integer.parseInt(userID);
         this.name = name;
@@ -94,6 +99,7 @@ public class ClothingItem {
         this.winter = winter;
         this.all = all;
         this.date = date;
+        this.favorite = fav;
     }
 
     public ClothingItem() {
@@ -116,6 +122,7 @@ public class ClothingItem {
         this.fall = false;
         this.winter = false;
         this.all = true;
+        this.favorite = false;
     }
 
     public ClothingItem(ClothingItem copy) {
@@ -138,5 +145,6 @@ public class ClothingItem {
         this.fall = copy.fall;
         this.winter = copy.winter;
         this.all = copy.all;
+        this.favorite = copy.favorite;
     }
 }

@@ -32,6 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String CLOTHING_MATERIAL = "clothing_material";
     private static final String CLOTHING_DESCRIPTION = "clothing_description";
     private static final String CLOTHING_STATUS = "clothing_status";
+    private static final String CLOTHING_FAVORITED = "clothing_favorited";
     private static final String DATE_CREATED="date_created";
 
     // Shared Closet Table
@@ -65,7 +66,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String USER_PASSWORD = "user_password";
     private static final String USER_KEY = "user_key";// randomly generated key, might get used to share closet later
     private static final String User_Hot = "user_hot";
-    private static final String User_Cold="user_cold";
     private static final String User_Freezing="user_freezing";
     private static final String User_Warm="user_warm";
 
@@ -118,8 +118,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 USER_KEY + " TEXT, " +
                 User_Hot + " TEXT, " +
                 User_Freezing + " TEXT, " +
-                User_Warm + " TEXT, " +
-                User_Cold + " TEXT);";
+                User_Warm + " TEXT);";
         db.execSQL(createTable);
 
         // CREATE LOGGED_USER_TABLE
@@ -144,6 +143,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 CLOTHING_STATUS + " TEXT, " +
                 DATE_CREATED + " TEXT, " +
                 USER_ID + " INTEGER, " +
+                CLOTHING_FAVORITED + " TEXT, " +
                 "FOREIGN KEY (" + USER_ID + ") REFERENCES " + USER_TABLE + "(" + USER_ID + "));";
 
         db.execSQL(createTable);
@@ -240,6 +240,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(CLOTHING_MATERIAL, material);
         contentValues.put(CLOTHING_DESCRIPTION,desc);
         contentValues.put(CLOTHING_STATUS,"Available");
+        contentValues.put(CLOTHING_FAVORITED, "False");
         contentValues.put(DATE_CREATED,date);
         contentValues.put(USER_ID, loggedUserID());
 
@@ -294,7 +295,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return result != -1;
     }
     // ADD A USER
-    public boolean addUser(String fullname, String userName, String password,String hot,String freezing,String warm,String cold) {
+    public boolean addUser(String fullname, String userName, String password,String hot,String freezing,String warm) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(USER_FULLNAME, fullname);
@@ -304,7 +305,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         contentValues.put(User_Hot,hot);
         contentValues.put(User_Freezing,freezing);
         contentValues.put(User_Warm,warm);
-        contentValues.put(User_Cold,cold);
 
 
 
@@ -863,6 +863,22 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
 
     // CHECK HOW A CLOTHING ITEM FITS
+    public boolean getClothingFave(String clothingID) {
+        String result = "FAILED!!";
+        String query = "SELECT " + CLOTHING_FAVORITED + " FROM " + CLOTHING_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+        }
+        cursor.moveToFirst();
+        return cursor.getString(0).equalsIgnoreCase("True");
+    }
+
+
+    // CHECK HOW A CLOTHING ITEM FITS
     public String getClothingFit(String clothingID) {
         String result = "FAILED!!";
         String query = "SELECT " + CLOTHING_FIT + " FROM " + CLOTHING_TABLE +
@@ -896,6 +912,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return false;
     }
+
     public boolean eventTableEmpty() {
         String query = "SELECT COUNT(*) FROM " + EVENT_TABLE;
         SQLiteDatabase db = this.getReadableDatabase();
@@ -909,6 +926,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return false;
     }
+
     // GET SHARED USER NAMES
     public Cursor getSharedUsers() {
         String subquery = " SELECT " + CLOSET_OWNER +
@@ -939,6 +957,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return "FAILED";
     }
+
     public String getUserUserName() {
         String query = "SELECT " + USER_NAME +
                 " FROM " + USER_TABLE +
@@ -953,6 +972,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return "FAILED";
     }
+
     public String getUserPassword() {
         String query = "SELECT " + USER_PASSWORD +
                 " FROM " + USER_TABLE +
@@ -967,6 +987,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return "FAILED";
     }
+
     public String getUserHotTemp() {
         String query = "SELECT " + User_Hot +
                 " FROM " + USER_TABLE +
@@ -981,6 +1002,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return "FAILED";
     }
+
     public String getUserWarmTemp() {
         String query = "SELECT " + User_Warm +
                 " FROM " + USER_TABLE +
@@ -995,20 +1017,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return "FAILED";
     }
-    public String getUserColdTemp() {
-        String query = "SELECT " + User_Cold +
-                " FROM " + USER_TABLE +
-                " WHERE " + USER_ID + " = " + loggedUserID();
 
-        SQLiteDatabase db = this.getReadableDatabase();
-        Cursor cursor = null;
-        if (db != null) {
-            cursor = db.rawQuery(query,null);
-            cursor.moveToFirst();
-            return cursor.getString(0);
-        }
-        return "FAILED";
-    }
     public String getUserFreezingTemp() {
         String query = "SELECT " + User_Freezing +
                 " FROM " + USER_TABLE +
@@ -1221,6 +1230,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else
             Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
     }
+
+    void updateClothingFavorite(String id, String fave) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues cv = new ContentValues();
+        cv.put(CLOTHING_FAVORITED, fave);
+
+        long result = db.update(CLOTHING_TABLE, cv, "clothing_id=?", new String[] {id});
+        if (result == -1)
+            Toast.makeText(context, "Failed to Update!", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
+    }
+
     void updateUserPassword(String password){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
@@ -1232,12 +1254,12 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else
             Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
     }
-    void updateAllUserTemp(String hot, String warm, String cold,String freezing){
+
+    void updateAllUserTemp(String hot, String warm,String freezing){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(User_Hot,hot);
         contentValues.put(User_Warm,warm);
-        contentValues.put(User_Cold,cold);
         contentValues.put(User_Freezing,freezing);
 
         long result = db.update(USER_TABLE, contentValues, "user_id=?",new String[] {loggedUserID()});
@@ -1246,6 +1268,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else
             Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
     }
+
     void updateOutfit(String row_id, String name) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();

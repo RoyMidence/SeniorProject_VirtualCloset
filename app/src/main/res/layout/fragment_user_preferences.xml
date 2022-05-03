@@ -72,11 +72,11 @@
         android:id="@+id/textViewPassword"
         android:layout_width="86dp"
         android:layout_height="36dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
         android:text="Password:"
-        android:textSize="16sp"
         android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewUserName" />
 
@@ -96,7 +96,7 @@
         android:id="@+id/revealPassword"
         android:layout_width="34dp"
         android:layout_height="36dp"
-        android:layout_marginStart="20dp"
+        android:layout_marginStart="16dp"
         android:background="#0000"
         android:src="@drawable/ic_key_reveal"
         app:layout_constraintStart_toStartOf="parent"
@@ -140,38 +140,26 @@
         app:layout_constraintTop_toBottomOf="@+id/textViewUserTemperature" />
 
     <TextView
-        android:id="@+id/textViewColdPref"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
-        android:layout_marginTop="52dp"
-        android:text="Cold:"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewWarmPref" />
-
-    <TextView
         android:id="@+id/textViewFreezingPref"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
         android:text="Freezing:"
         android:textColor="@color/black"
         android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewColdPref" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewWarmPref" />
 
     <TextView
         android:id="@+id/textViewWarmPref"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="9dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="64dp"
         android:text="Warm:"
-        android:textSize="16sp"
         android:textColor="@color/black"
+        android:textSize="16sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewHotPref" />
 
@@ -179,11 +167,11 @@
         android:id="@+id/editTextHotPref"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="16dp"
         android:hint="Hot Temperature"
-        android:textColor="@color/black"
         android:inputType="number"
+        android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/textViewHotPref"
         app:layout_constraintTop_toBottomOf="@+id/textViewUserTemperature" />
 
@@ -191,46 +179,35 @@
         android:id="@+id/editTextWarmPref"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="16dp"
         android:hint="Warm Temperature"
-        android:textColor="@color/black"
         android:inputType="number"
-
-        app:layout_constraintStart_toEndOf="@+id/textViewWarmPref"
-        app:layout_constraintTop_toBottomOf="@+id/editTextHotPref" />
-
-    <EditText
-        android:id="@+id/editTextColdPref"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="16dp"
-        android:hint="Cold Temperature"
         android:textColor="@color/black"
-        android:inputType="number"
-        app:layout_constraintStart_toEndOf="@+id/textViewColdPref"
-        app:layout_constraintTop_toBottomOf="@+id/editTextWarmPref" />
+
+        app:layout_constraintBottom_toBottomOf="@+id/textViewWarmPref"
+        app:layout_constraintStart_toStartOf="@+id/editTextHotPref"
+        app:layout_constraintTop_toTopOf="@+id/textViewWarmPref" />
 
     <EditText
         android:id="@+id/editTextFreezingPref"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="8dp"
         android:hint="Freezing Temperature"
-        android:textColor="@color/black"
         android:inputType="number"
-        app:layout_constraintStart_toEndOf="@+id/textViewFreezingPref"
-        app:layout_constraintTop_toBottomOf="@+id/editTextColdPref" />
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="@+id/textViewFreezingPref"
+        app:layout_constraintStart_toStartOf="@+id/editTextWarmPref"
+        app:layout_constraintTop_toTopOf="@+id/textViewFreezingPref" />
 
     <Button
         android:id="@+id/saveTemperature"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="77dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="Save"
-        app:layout_constraintStart_toEndOf="@+id/editTextColdPref"
-        app:layout_constraintTop_toBottomOf="@+id/editTextWarmPref" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFreezingPref" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
