@@ -60,13 +60,13 @@ public class SelectClothes extends AppCompatActivity implements NameAdapter.item
                             cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),cursor.getString(13),
                             mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id), mDatabaseHelper.getClothingFave(id));
                     clothingItems.add(CI);
-                } //else {
-                  //  CI = new ClothingItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
-                      //      cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),
-                     //       cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),
-                  //          mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id));
-                  //  clothingItems.add(CI);
-               // }
+                } else if(type.equals("all")) {
+                    CI = new ClothingItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+                           cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),
+                            cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),cursor.getString(13),
+                            mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id), mDatabaseHelper.getClothingFave(id));
+                    clothingItems.add(CI);
+                }
 
 
             }
@@ -86,7 +86,7 @@ public class SelectClothes extends AppCompatActivity implements NameAdapter.item
 
         // after you're done and have all the info you need
         // set the code for the info and the info to go with it
-        if(type.equals("Shirt")||type.equals("Long Sleeve Shirt")|| type.equals("Button Down Shirt")){
+        if(type.equals("T-Shirt")||type.equals("Long Sleeve Shirt")|| type.equals("Button Down Shirt")){
             resultIntent.putExtra("name", name);
             resultIntent.putExtra("id", id);
             setResult(0,resultIntent);
