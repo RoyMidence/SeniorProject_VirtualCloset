@@ -17,7 +17,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
-//kieran from the mac
+//kieran from the mac 1
 public class SelectClothes extends AppCompatActivity implements NameAdapter.itemClickInterface {
     private DatabaseHelper mDatabaseHelper;
 
