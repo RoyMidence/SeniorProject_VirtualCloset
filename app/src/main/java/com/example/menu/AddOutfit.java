@@ -200,6 +200,7 @@ public class AddOutfit extends AppCompatActivity implements PopupMenu.OnMenuItem
 
             }
         });
+
         btn_pants.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -214,6 +215,7 @@ public class AddOutfit extends AppCompatActivity implements PopupMenu.OnMenuItem
                 }
             }
         });
+
         btn_socks.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -226,7 +228,9 @@ public class AddOutfit extends AppCompatActivity implements PopupMenu.OnMenuItem
 
                 }
             }
-        });btn_shoes.setOnClickListener(new View.OnClickListener() {
+        });
+
+        btn_shoes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 PopupMenu popup = new PopupMenu(AddOutfit.this, v);
@@ -239,6 +243,7 @@ public class AddOutfit extends AppCompatActivity implements PopupMenu.OnMenuItem
 
             }
         });
+
         btn_acc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -261,7 +266,7 @@ public class AddOutfit extends AppCompatActivity implements PopupMenu.OnMenuItem
                     toastMessage("Please enter a name!");
                 } else {
                     Intent intent = new Intent(AddOutfit.this, SelectClothes.class);
-                    intent.putExtra("type", "Shirt");
+                    intent.putExtra("type", "T-Shirt");
                     otherActivityLauncher.launch(intent);
 
                 }
@@ -334,6 +339,7 @@ public class AddOutfit extends AppCompatActivity implements PopupMenu.OnMenuItem
                     intent.putExtra("type", "Shoes");
                     otherActivityLauncher.launch(intent);
                 }
+                break;
             case R.id.lightJacket:
                 if (String.valueOf(ed_name.getText()).equals("")) {
                     toastMessage("Please enter a name!");

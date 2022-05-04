@@ -109,7 +109,7 @@ public class SelectClothes extends AppCompatActivity implements NameAdapter.item
             setResult(3, resultIntent);
             finish();
 
-        } else if(type.equals("Hat")|| type.equals("Gloves")||type.equals("Scarf")){
+        } else if(type.equals("Hat")|| type.equals("Gloves")||type.equals("Scarf") ||type.equals("Light Jacket") ||type.equals("Heavy Jacket")){
 
 
             resultIntent.putExtra("name", name);
