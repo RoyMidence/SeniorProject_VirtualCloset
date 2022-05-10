@@ -43,6 +43,7 @@ public class EventFragment extends Fragment implements EventAdapter.itemClickInt
     String dayAdvance,dateAdvance;
     String monthAdvance;
     String yearAdvance;
+
     int inc;
 
     private EventAdapter eventAdapter;
@@ -138,7 +139,6 @@ public class EventFragment extends Fragment implements EventAdapter.itemClickInt
             while (cursor.moveToNext()) {
                 String id = cursor.getString(0);
                 startDate = mDatabaseHelper.getStartDate(id);
-
 
                 String startMonth = startDate.substring(0,2);
                 String startDay = startDate.substring(3,5);
@@ -236,6 +236,105 @@ public class EventFragment extends Fragment implements EventAdapter.itemClickInt
     }
     @Override
     public void onItemClick(int position) {
+        String currentDate = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault()).format(new Date());
 
+        monthAdvance = currentDate.substring(0,2);
+        dayAdvance = currentDate.substring(3,5);
+        yearAdvance =currentDate.substring(6);
+        inc = Integer.parseInt(monthAdvance);
+
+        inc++;
+
+        if(inc<10){
+            monthAdvance="0"+(inc);
+        }
+        else if(inc == 13) {
+            monthAdvance="01";
+        }
+        else{
+            monthAdvance = String.valueOf(inc);
+        }
+
+        dateAdvance = monthAdvance +"-"+ dayAdvance + "-" + yearAdvance;
+
+                String startMonth = startDate.substring(0,2);
+                String startDay = startDate.substring(3,5);
+                String startYear = startDate.substring(6);
+
+                if(startYear.compareTo(yearAdvance) == 0) {
+                    int tempMonth = Integer.parseInt(monthAdvance)-1;
+                    if(tempMonth == 0)
+                        tempMonth= 12;
+                    if ((Integer.parseInt(startMonth)==Integer.parseInt(monthAdvance))) {
+                        if (startDay.compareTo(dayAdvance) <= 0) {
+
+                            Bundle bundle = new Bundle();
+                            bundle.putString("id",eventID.get(position));
+                            bundle.putString("title", eventTitle.get(position));
+                            bundle.putString("location", eventLoc.get(position));
+                            bundle.putString("start",eventStart.get(position));
+                            bundle.putString("end", eventEnd.get(position));
+                            UpdateEventFragment frag = new UpdateEventFragment();
+                            frag.setArguments(bundle);
+                            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                    frag).addToBackStack(null).commit();
+                        }
+                        else{
+                            Bundle bundle = new Bundle();
+                            bundle.putString("id",eventID2.get(position));
+                            bundle.putString("title", eventTitle2.get(position));
+                            bundle.putString("location", eventLoc2.get(position));
+                            bundle.putString("start",eventStart2.get(position));
+                            bundle.putString("end", eventEnd2.get(position));
+                            UpdateEventFragment frag = new UpdateEventFragment();
+                            frag.setArguments(bundle);
+                            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                    frag).addToBackStack(null).commit();
+                        }
+                    } else if(((Integer.parseInt(startMonth)) == tempMonth)){
+                        if (startDay.compareTo(dayAdvance) >= 0) {
+                            Bundle bundle = new Bundle();
+                            bundle.putString("id",eventID.get(position));
+                            bundle.putString("title", eventTitle.get(position));
+                            bundle.putString("location", eventLoc.get(position));
+                            bundle.putString("start",eventStart.get(position));
+                            bundle.putString("end", eventEnd.get(position));
+                            UpdateEventFragment frag = new UpdateEventFragment();
+                            frag.setArguments(bundle);
+                            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                    frag).addToBackStack(null).commit();
+                        }
+
+                    }
+                    else{
+                        Bundle bundle = new Bundle();
+                        bundle.putString("id",eventID2.get(position));
+                        bundle.putString("title", eventTitle2.get(position));
+                        bundle.putString("location", eventLoc2.get(position));
+                        bundle.putString("start",eventStart2.get(position));
+                        bundle.putString("end", eventEnd2.get(position));
+                        UpdateEventFragment frag = new UpdateEventFragment();
+                        frag.setArguments(bundle);
+                        getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                                frag).addToBackStack(null).commit();
+                    }
+                }
+                else{
+
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id",eventID2.get(position));
+                    bundle.putString("title", eventTitle2.get(position));
+                    bundle.putString("location", eventLoc2.get(position));
+                    bundle.putString("start",eventStart2.get(position));
+                    bundle.putString("end", eventEnd2.get(position));
+                    UpdateEventFragment frag = new UpdateEventFragment();
+                    frag.setArguments(bundle);
+                    getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            frag).addToBackStack(null).commit();
+                }
+
+
+
+
+        }
     }
-}

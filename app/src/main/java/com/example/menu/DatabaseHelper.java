@@ -679,7 +679,34 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             cursor = db.rawQuery(query, null);
         return cursor;
     }
+    Cursor readEventClothing(String eventID) {
+        String Subquery = " SELECT " + CLOTHING_ID +
+                " FROM " + EVENT_CLOTHING_TABLE +
+                " WHERE " + EVENT_ID + " = " + eventID;
+        String query = "SELECT * FROM " + CLOTHING_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID() +
+                " AND " + CLOTHING_ID + " IN " + "(" + Subquery + ")";
+        SQLiteDatabase db = this.getReadableDatabase();
 
+        Cursor cursor = null;
+        if (db != null)
+            cursor = db.rawQuery(query, null);
+        return cursor;
+    }
+    Cursor readEventOutfit(String eventID) {
+        String Subquery = " SELECT " + OUTFIT_ID +
+                " FROM " + EVENT_OUTFIT_TABLE +
+                " WHERE " + EVENT_ID + " = " + eventID;
+        String query = "SELECT * FROM " + OUTFIT_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID() +
+                " AND " + OUTFIT_ID + " IN " + "(" + Subquery + ")";
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null)
+            cursor = db.rawQuery(query, null);
+        return cursor;
+    }
     // GETS LIST OF EVERYONE WHO HAS ACCESS TO A USERS CLOSET
     public Cursor readSharedUsers() {
         String Subquery = " SELECT " + CLOSET_OWNER +
