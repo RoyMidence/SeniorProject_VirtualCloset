@@ -105,18 +105,31 @@ public class UpdateOutfit extends AppCompatActivity implements NameAdapter.itemC
         fabUpdateButton.setOnClickListener(new View.OnClickListener() {
         @Override
         public void onClick(View v) {
-
+            boolean isShirt = false;
+            boolean isPants = false;
+            boolean isShoes = false;
             outfitName = editTextOutfitName.getText().toString();
-        if(mDatabaseHelper.checkOutfitTypes(outfitID,"Shirt")&&
-            mDatabaseHelper.checkOutfitTypes(outfitID,"Pants")&&
-            mDatabaseHelper.checkOutfitTypes(outfitID,"Shoes")){
+            for(int i = 0; i< outfitClothing.size(); i++){
+                if(outfitClothing.get(i).getType().contains("Shirt")){
+                    isShirt = true;
+
+                }
+                if(outfitClothing.get(i).getType().equals("Pants")){
+                    isPants = true;
+                }
+                if(outfitClothing.get(i).getType().equals("Sandals")|| outfitClothing.get(i).getType().equals("Shoes")){
+                    isShoes = true;
+                }
+            }
+        if(isPants && isShirt && isShoes)
+           {
             Intent resultIntent = new Intent();
             setResult(0,resultIntent);
 
             mDatabaseHelper.updateOutfit(outfitID,outfitName);
             finish();
         }else{
-            toastMessage("you need shirt, pants and shoes");
+            toastMessage("you need a shirt, pants and shoes");
         }
 
         }

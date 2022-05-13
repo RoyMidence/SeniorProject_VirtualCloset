@@ -49,7 +49,7 @@ public class SelectOutfitEvents extends AppCompatActivity implements  OutfitName
         }
     }
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(ArrayList<String> names, int position) {
         Intent resultIntent = new Intent();
 
 
@@ -59,7 +59,9 @@ public class SelectOutfitEvents extends AppCompatActivity implements  OutfitName
 
         resultIntent.putExtra("name", name);
         resultIntent.putExtra("id", id);
+        resultIntent.putExtra("type","NONE");
         setResult(2, resultIntent);
         finish();
     }
+
 }

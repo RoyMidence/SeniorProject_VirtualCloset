@@ -213,7 +213,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             mDatabaseHelper.addToTagsTable("All"); // 8
         }
 
-        if(mDatabaseHelper.eventTableEmpty()){
+       /* if(mDatabaseHelper.eventTableEmpty()){
             mDatabaseHelper.addEvent("Event1","Loc1",currentDate,currentDate);
             mDatabaseHelper.addEvent("Event2","Loc2",currentDate,currentDate);
             mDatabaseHelper.addEvent("Event3","Loc3",currentDate,currentDate);
@@ -222,7 +222,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
             mDatabaseHelper.addEvent("Event6","Loc6","10-15-2022","10-18-2022");
             mDatabaseHelper.addEvent("Event7","Loc7","01-15-2023","01-16-2023");
             mDatabaseHelper.addEvent("Event8","Loc7","06-21-2025","06-27-2025");
-        }
+        }*/
 
         int cl; // Exists for testing purposes
 

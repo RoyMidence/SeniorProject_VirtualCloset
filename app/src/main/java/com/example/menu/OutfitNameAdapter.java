@@ -19,6 +19,8 @@ public class OutfitNameAdapter extends RecyclerView.Adapter<OutfitNameAdapter.My
     private ArrayList<String> Outfitname;
     private itemClickInterface mItemClickInterface;
     private  ArrayList<String> outfitId;
+
+
     public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
         public TextView txtviewOutfitName;
@@ -35,7 +37,7 @@ public class OutfitNameAdapter extends RecyclerView.Adapter<OutfitNameAdapter.My
             itemView.setOnClickListener(this);
         }
         @Override
-        public void onClick(View view) { itemClickInterface.onItemClick(getBindingAdapterPosition());}
+        public void onClick(View view) { itemClickInterface.onItemClick(Outfitname,getBindingAdapterPosition());}
     } // end MyViewHolder
     public OutfitNameAdapter(Context context, ArrayList<String> outfitname,ArrayList<String> outfitId, itemClickInterface itemClickInterface) {
         this.c = context;
@@ -68,6 +70,6 @@ public class OutfitNameAdapter extends RecyclerView.Adapter<OutfitNameAdapter.My
 
 
     public interface itemClickInterface {
-        void onItemClick(int position);
+        void onItemClick(ArrayList<String> name, int position);
     }
 }

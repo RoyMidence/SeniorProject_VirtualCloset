@@ -466,6 +466,23 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return result;
     }
+    public String getClothingName(String clothingID) {
+        String result = "FAILED!!";
+        String query = "SELECT " + CLOTHING_NAME + " FROM " + CLOTHING_TABLE +
+                " WHERE " + CLOTHING_ID + " = " + clothingID;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null) {
+            cursor = db.rawQuery(query, null);
+            result = "";
+            while (cursor.moveToNext()) {
+                result += cursor.getString(0);
+            }
+            return result;
+        }
+        return result;
+    }
 
     // GET CLOTHING MATERIAL
     public String getClothingMaterial(String clothingID) {
@@ -1307,6 +1324,20 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         else
             Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
     }
+    void updateEvent(String row_id, String title,String location,String startDate,String endDate) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(EVENT_TITLE,title);
+        contentValues.put(EVENT_LOCATION,location);
+        contentValues.put(EVENT_START_DATE,startDate);
+        contentValues.put(EVENT_END_DATE,endDate);
+
+        long result = db.update(EVENT_TABLE, contentValues, "event_id=?", new String[] {row_id});
+        if (result == -1)
+            Toast.makeText(context, "Failed to Update!", Toast.LENGTH_SHORT).show();
+        else
+            Toast.makeText(context, "Updated!!", Toast.LENGTH_SHORT).show();
+    }
 
     // DELETES --------------------------------------------------------------------------------------------------------------------------------------
 
@@ -1314,6 +1345,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     void deleteOneItem(String row_id) {
         SQLiteDatabase db = this.getWritableDatabase();
         long result = db.delete(CLOTHING_TABLE, "clothing_id=?", new String[] {row_id});
+        if (result == -1) {
+            Toast.makeText(context, "Failed to delete", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Deleted!", Toast.LENGTH_SHORT).show();
+        }
+    }
+    void deleteOneEvent(String row_id) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        long result = db.delete(EVENT_TABLE, "event_id=?", new String[] {row_id});
         if (result == -1) {
             Toast.makeText(context, "Failed to delete", Toast.LENGTH_SHORT).show();
         } else {
@@ -1358,6 +1398,18 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 " WHERE " + OUTFIT_ID + " = " + outfitID +
                 " AND " + CLOTHING_ID + " = " + clothingID);
     }
+    void deleteClothingItemFromEvent(String eventID, String clothingID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + EVENT_CLOTHING_TABLE +
+                " WHERE " + EVENT_ID + " = " + eventID +
+                " AND " + CLOTHING_ID + " = " + clothingID);
+    }
+    void deleteOutfitItemFromEvent(String eventID, String outfitID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + EVENT_OUTFIT_TABLE +
+                " WHERE " + EVENT_ID + " = " + eventID +
+                " AND " + OUTFIT_ID + " = " + outfitID);
+    }
 
     void deleteAllClothingFromOutfit(String outfitID) {
         SQLiteDatabase db = this.getWritableDatabase();
@@ -1372,6 +1424,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("DELETE FROM " + OUTFIT_TABLE +
                 " WHERE " + OUTFIT_ID + " = " + outfitID);
     }
+    void deleteAllClothingFromEvent(String eventID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + EVENT_CLOTHING_TABLE +
+                " WHERE " + EVENT_ID + " = " + eventID);
+    }
+    void deleteAllOutfitFromEvent(String eventID) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM " + EVENT_OUTFIT_TABLE +
+                " WHERE " + EVENT_ID + " = " + eventID);
+    }
+
 
 
     // OTHER----------------------------------------------------------------------------------------------------------

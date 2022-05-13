@@ -74,7 +74,7 @@ public class AddEvent extends AppCompatActivity implements OutfitNameAdapter.ite
                             if (resultIntent != null) {
                                 names.add(resultIntent.getStringExtra("name"));
                                 outfitId.add(resultIntent.getStringExtra("id"));
-
+                                String type = resultIntent.getStringExtra("type");
                                 RecyclerView.LayoutManager layoutManager =
                                         new LinearLayoutManager(getApplicationContext());
                                 recyclerView.setLayoutManager(layoutManager);
@@ -136,6 +136,8 @@ public class AddEvent extends AppCompatActivity implements OutfitNameAdapter.ite
                             }
                         }
                     }
+                    Intent resultIntent = new Intent();
+                    setResult(7, resultIntent);
                     finish();
                 }
             }
@@ -184,9 +186,10 @@ public class AddEvent extends AppCompatActivity implements OutfitNameAdapter.ite
     }
 
     @Override
-    public void onItemClick(int position) {
+    public void onItemClick(ArrayList<String> name, int position) {
 
     }
+
     private void toastMessage(String Message) {
         Toast.makeText(getApplicationContext(),Message,Toast.LENGTH_SHORT).show();
     }

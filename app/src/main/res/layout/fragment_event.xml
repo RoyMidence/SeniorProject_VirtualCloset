@@ -57,11 +57,11 @@
         android:id="@+id/textViewFutureEvents"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="204dp"
         android:text="Future Events"
         android:textSize="25sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/eventRecycle" />
+        app:layout_constraintTop_toBottomOf="@+id/textviewRecentEvent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/eventRecycleView2"
@@ -74,8 +74,7 @@
         android:id="@+id/textViewUpComingEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="128dp"
         android:text="There are no events coming up."
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -85,8 +84,7 @@
         android:id="@+id/txtViewFutureEventsEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="72dp"
-        android:layout_marginEnd="32dp"
+        android:layout_marginEnd="116dp"
         android:text="There are no events in the future."
         android:textSize="20dp"
         app:layout_constraintEnd_toEndOf="parent"

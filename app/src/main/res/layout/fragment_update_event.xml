@@ -12,7 +12,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/editEventOutfitRecycle"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="169dp"
         android:layout_marginStart="4dp"
         android:layout_marginTop="12dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -24,9 +24,12 @@
         android:id="@+id/textViewEditEventStart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="55dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
         android:text="Start Date"
+        android:textColor="@color/junglegreen"
+        android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editTextEditEventLocation" />
 
@@ -34,8 +37,8 @@
         android:id="@+id/editTextEditEventTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="45dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="24dp"
         android:inputType="textPersonName"
         android:text="Title"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,20 +48,23 @@
         android:id="@+id/editTextEditEventLocation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="21dp"
-        android:layout_marginTop="31dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="24dp"
         android:inputType="textPersonName"
         android:text="Location"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEditEventTitle" />
+        app:layout_constraintStart_toEndOf="@+id/editTextEditEventTitle"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/textViewEditEventEnd"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="142dp"
-        android:layout_marginTop="57dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:clickable="true"
         android:text="End Date"
+        android:textColor="@color/orange"
+        android:textSize="25dp"
         app:layout_constraintStart_toEndOf="@+id/textViewEditEventStart"
         app:layout_constraintTop_toBottomOf="@+id/editTextEditEventLocation" />
 
@@ -66,9 +72,9 @@
         android:id="@+id/textViewEditEventClothes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:layout_marginTop="62dp"
+        android:layout_marginTop="12dp"
         android:text="Clothes picked:"
+        android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewEditEventStart" />
 
@@ -76,18 +82,18 @@
         android:id="@+id/textViewEditEventOutfits"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
         android:layout_marginTop="7dp"
         android:text="Outfits picked:"
+        android:textSize="25dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/editEventsClothesRecycle" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/editEventsClothesRecycle"
         android:layout_width="wrap_content"
-        android:layout_height="0dp"
+        android:layout_height="169dp"
         android:layout_marginStart="4dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textViewEditEventClothes" />
 
@@ -115,22 +121,38 @@
         android:id="@+id/textViewEventClothesEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="128dp"
-        android:layout_marginTop="60dp"
         android:text="No clothes associated with this event"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEditEventEnd"
-        tools:visibility="gone" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewEditEventClothes" />
 
     <TextView
         android:id="@+id/textViewEventOutfitsEmpty"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="208dp"
         android:text="No outfits associated with this event."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textViewEditEventOutfits" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddEditEventClothes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="164dp"
+        android:layout_marginTop="52dp"
+        android:clickable="true"
+        android:src="@drawable/ic_add"
+        app:layout_constraintStart_toEndOf="@+id/textViewEditEventClothes"
+        app:layout_constraintTop_toBottomOf="@+id/floatingActionButtonDeleteEdit" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/fabAddEditEventsOutfits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="173dp"
+        android:layout_marginTop="176dp"
+        android:clickable="true"
+        android:src="@drawable/ic_add"
         app:layout_constraintStart_toEndOf="@+id/textViewEditEventOutfits"
-        app:layout_constraintTop_toBottomOf="@+id/textViewEditEventClothes"
-        tools:visibility="gone" />
+        app:layout_constraintTop_toBottomOf="@+id/fabAddEditEventClothes" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

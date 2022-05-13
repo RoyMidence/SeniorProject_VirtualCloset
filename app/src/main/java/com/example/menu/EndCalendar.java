@@ -73,7 +73,7 @@ boolean isDay, isMonth;
                 String endYear = date.substring(6);
 
 
-                // compares if start month comes before or after end month
+                // compares if start year comes before or after end year
                 if(startYear.compareTo(endYear)<=0){
                     if(startMonth.compareTo(endMonth)<0) {
                         Intent resultIntent = new Intent();

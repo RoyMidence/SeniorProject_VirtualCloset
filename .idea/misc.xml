@@ -83,10 +83,13 @@
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/size_menu.xml" value="0.20416666666666666" />
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/type_menu.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_add_event.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/event_recyclerview_item.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_event.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_update.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_update_event.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_user_preferences.xml" value="0.19610507246376813" />
+        <entry key="app/src/main/res/layout/fragment_weather.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/outfit_name_recycleview_item.xml" value="0.165" />
       </map>
     </option>
   </component>

@@ -119,6 +119,8 @@ public class SelectClothes extends AppCompatActivity implements NameAdapter.item
 
         }
         else {
+            resultIntent.putExtra("name", name);
+            resultIntent.putExtra("id", id);
             setResult(0,resultIntent);
             finish();
         }

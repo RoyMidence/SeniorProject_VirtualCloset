@@ -215,7 +215,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
         switch(item.getItemId()){
             case R.id.nav_shirt:
 
-                tv.setText("Shirt");
+                tv.setText("T-Shirt");
                 txtlight.setVisibility(v.GONE);
                 txtheavy.setVisibility(v.GONE);
                 Light.setVisibility(v.GONE);

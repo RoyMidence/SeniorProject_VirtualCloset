@@ -59,10 +59,12 @@ public class SelectClothesEvents extends AppCompatActivity implements  NameAdapt
 
         String name = String.valueOf(clothingItems.get(position).getName());
         String id = String.valueOf(clothingItems.get(position).getClothingID());
+        String type = String.valueOf(clothingItems.get(position).getType());
 
 
         resultIntent.putExtra("name", name);
         resultIntent.putExtra("id", id);
+        resultIntent.putExtra("type", type);
         setResult(2, resultIntent);
         finish();
     }

@@ -46,7 +46,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
         }
         @Override
         public void onClick(View view) {
-            itemClickInterface.onItemClick(getBindingAdapterPosition());
+            itemClickInterface.onItemClick(eventID,getBindingAdapterPosition());
         }
     }
     public EventAdapter(Fragment fragment, Context context, ArrayList<String> eventid, ArrayList<String> eventTitle ,ArrayList<String> eventLoc,ArrayList<String> eventSDate, ArrayList<String> eventEDate,EventAdapter.itemClickInterface itemClickInterface) {
@@ -83,6 +83,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     public int getItemCount() { return eventTitle.size();}
 
     public interface itemClickInterface {
-        void onItemClick(int position);
+        void onItemClick(ArrayList<String> id,int position);
     }
 }

@@ -4,7 +4,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -46,7 +49,8 @@ public class EventFragment extends Fragment implements EventAdapter.itemClickInt
 
     int inc;
 
-    private EventAdapter eventAdapter;
+    private EventAdapter eventAdapter1;
+    private EventAdapter eventAdapter2;
     private DatabaseHelper mDatabaseHelper;
     public EventFragment() {
         // Required empty public constructor
@@ -70,12 +74,25 @@ public class EventFragment extends Fragment implements EventAdapter.itemClickInt
          futureEmpty = v.findViewById(R.id.txtViewFutureEventsEmpty);
          upComingEmpty = v.findViewById(R.id.textViewUpComingEmpty);
         total = v.findViewById(R.id.textviewTotalEvents);
-        storeValuesInArray();
         configureButtons();
         setUpRecycler(v);
-        setUpRecycler2(v);
-        total.setText("Total Number of Events: "+ (eventID.size() + eventID2.size()))
-        ;
+        System.out.println(eventID.size());
+        System.out.println(eventID2.size());
+        total.setText("Total Number of Events: "+ (eventID.size() + eventID2.size()));
+        otherActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == 7) {
+                            System.out.println("I made it back");
+                            setUpRecycler(v);
+                            System.out.println(eventID.size());
+                            System.out.println(eventID2.size());
+                            total.setText("Total Number of Events: "+ (eventID.size() + eventID2.size()));
+
+                        }
+                    }
+                });
         return v;
     }
 
@@ -85,8 +102,8 @@ public class EventFragment extends Fragment implements EventAdapter.itemClickInt
         add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getActivity(), AddEvent.class);
-                startActivity(intent);
+                Intent go = new Intent(getContext(),AddEvent.class);
+                otherActivityLauncher.launch(go);
             }
         });
     }
@@ -213,113 +230,51 @@ public class EventFragment extends Fragment implements EventAdapter.itemClickInt
 
 
             }
+        cursor.close();
         }
 
 
     private void setUpRecycler(View v){
         RecyclerView recyclerView = v.findViewById(R.id.eventRecycle);
-
+        storeValuesInArray();
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(layoutManager);
-        eventAdapter = new EventAdapter(EventFragment.this, getContext(),eventID,eventTitle,eventLoc,eventStart,eventEnd,this);
-        recyclerView.setAdapter(eventAdapter);
-    }
-    private void setUpRecycler2(View v){
-        RecyclerView recyclerView = v.findViewById(R.id.eventRecycleView2);
+        eventAdapter1 = new EventAdapter(EventFragment.this, getContext(),eventID,eventTitle,eventLoc,eventStart,eventEnd,this);
+        recyclerView.setAdapter(eventAdapter1);
 
-        RecyclerView.LayoutManager layoutManager =
+        RecyclerView recyclerView2 = v.findViewById(R.id.eventRecycleView2);
+
+        RecyclerView.LayoutManager layoutManager2 =
                 new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
-        recyclerView.setLayoutManager(layoutManager);
-        eventAdapter = new EventAdapter(EventFragment.this, getContext(),eventID2,eventTitle2,eventLoc2,eventStart2,eventEnd2,this);
-        recyclerView.setAdapter(eventAdapter);
+        recyclerView2.setLayoutManager(layoutManager2);
+        eventAdapter2 = new EventAdapter(EventFragment.this, getContext(),eventID2,eventTitle2,eventLoc2,eventStart2,eventEnd2,this);
+        recyclerView2.setAdapter(eventAdapter2);
     }
     @Override
-    public void onItemClick(int position) {
-        String currentDate = new SimpleDateFormat("MM-dd-yyyy", Locale.getDefault()).format(new Date());
+    public void onItemClick(ArrayList<String> id,int position) {
 
-        monthAdvance = currentDate.substring(0,2);
-        dayAdvance = currentDate.substring(3,5);
-        yearAdvance =currentDate.substring(6);
-        inc = Integer.parseInt(monthAdvance);
-
-        inc++;
-
-        if(inc<10){
-            monthAdvance="0"+(inc);
-        }
-        else if(inc == 13) {
-            monthAdvance="01";
-        }
-        else{
-            monthAdvance = String.valueOf(inc);
-        }
-
-        dateAdvance = monthAdvance +"-"+ dayAdvance + "-" + yearAdvance;
-
-                String startMonth = startDate.substring(0,2);
-                String startDay = startDate.substring(3,5);
-                String startYear = startDate.substring(6);
-
-                if(startYear.compareTo(yearAdvance) == 0) {
-                    int tempMonth = Integer.parseInt(monthAdvance)-1;
-                    if(tempMonth == 0)
-                        tempMonth= 12;
-                    if ((Integer.parseInt(startMonth)==Integer.parseInt(monthAdvance))) {
-                        if (startDay.compareTo(dayAdvance) <= 0) {
-
-                            Bundle bundle = new Bundle();
-                            bundle.putString("id",eventID.get(position));
-                            bundle.putString("title", eventTitle.get(position));
-                            bundle.putString("location", eventLoc.get(position));
-                            bundle.putString("start",eventStart.get(position));
-                            bundle.putString("end", eventEnd.get(position));
-                            UpdateEventFragment frag = new UpdateEventFragment();
-                            frag.setArguments(bundle);
-                            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                    frag).addToBackStack(null).commit();
-                        }
-                        else{
-                            Bundle bundle = new Bundle();
-                            bundle.putString("id",eventID2.get(position));
-                            bundle.putString("title", eventTitle2.get(position));
-                            bundle.putString("location", eventLoc2.get(position));
-                            bundle.putString("start",eventStart2.get(position));
-                            bundle.putString("end", eventEnd2.get(position));
-                            UpdateEventFragment frag = new UpdateEventFragment();
-                            frag.setArguments(bundle);
-                            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                    frag).addToBackStack(null).commit();
-                        }
-                    } else if(((Integer.parseInt(startMonth)) == tempMonth)){
-                        if (startDay.compareTo(dayAdvance) >= 0) {
-                            Bundle bundle = new Bundle();
-                            bundle.putString("id",eventID.get(position));
-                            bundle.putString("title", eventTitle.get(position));
-                            bundle.putString("location", eventLoc.get(position));
-                            bundle.putString("start",eventStart.get(position));
-                            bundle.putString("end", eventEnd.get(position));
-                            UpdateEventFragment frag = new UpdateEventFragment();
-                            frag.setArguments(bundle);
-                            getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                    frag).addToBackStack(null).commit();
-                        }
-
-                    }
-                    else{
-                        Bundle bundle = new Bundle();
-                        bundle.putString("id",eventID2.get(position));
-                        bundle.putString("title", eventTitle2.get(position));
-                        bundle.putString("location", eventLoc2.get(position));
-                        bundle.putString("start",eventStart2.get(position));
-                        bundle.putString("end", eventEnd2.get(position));
-                        UpdateEventFragment frag = new UpdateEventFragment();
-                        frag.setArguments(bundle);
-                        getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
-                                frag).addToBackStack(null).commit();
-                    }
+        if(id.size() == eventID.size()){
+            for (int i = 0; i < id.size(); i++) {
+                if (id.get(i).equals(eventID.get(position))) {
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id",eventID.get(position));
+                    bundle.putString("title", eventTitle.get(position));
+                    bundle.putString("location", eventLoc.get(position));
+                    bundle.putString("start",eventStart.get(position));
+                    bundle.putString("end", eventEnd.get(position));
+                    System.out.println(1);
+                    UpdateEventFragment frag = new UpdateEventFragment();
+                    frag.setArguments(bundle);
+                    getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                            frag).addToBackStack(null).commit();
                 }
-                else{
+            }
+        }
+
+        if(id.size()==eventID2.size()){
+            for(int i = 0; i<id.size();i++){
+                if(id.get(i).equals(eventID2.get(position))){
 
                     Bundle bundle = new Bundle();
                     bundle.putString("id",eventID2.get(position));
@@ -327,14 +282,13 @@ public class EventFragment extends Fragment implements EventAdapter.itemClickInt
                     bundle.putString("location", eventLoc2.get(position));
                     bundle.putString("start",eventStart2.get(position));
                     bundle.putString("end", eventEnd2.get(position));
+                    System.out.println(2);
                     UpdateEventFragment frag = new UpdateEventFragment();
                     frag.setArguments(bundle);
                     getParentFragmentManager().beginTransaction().replace(R.id.fragment_container,
                             frag).addToBackStack(null).commit();
                 }
-
-
-
-
+            }
+        }
         }
     }
