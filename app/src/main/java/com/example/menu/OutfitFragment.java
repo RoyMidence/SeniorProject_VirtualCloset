@@ -113,6 +113,7 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
                 outfitId.add(id);
             }
         }
+        cursor.close();
     }
 
 

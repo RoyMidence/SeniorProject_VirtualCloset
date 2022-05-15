@@ -3,6 +3,7 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="../../../../layout/custom_preview.xml" value="0.14895833333333333" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable/ic_add.xml" value="0.5025" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable/ic_closet.xml" value="0.5025" />
         <entry key="..\:/Users/blood/AndroidStudioProjects/Menu/app/src/main/res/drawable/ic_hanger.xml" value="0.5025" />
@@ -84,7 +85,8 @@
         <entry key="..\:/Users/kiera/SeniorProject_VirtualCloset/app/src/main/res/menu/type_menu.xml" value="0.1" />
         <entry key="app/src/main/res/layout/activity_add_event.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/event_recyclerview_item.xml" value="0.3098958333333333" />
-        <entry key="app/src/main/res/layout/fragment_event.xml" value="0.3098958333333333" />
+        <entry key="app/src/main/res/layout/fragment_event.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/fragment_outfit.xml" value="0.1" />
         <entry key="app/src/main/res/layout/fragment_update.xml" value="0.3098958333333333" />
         <entry key="app/src/main/res/layout/fragment_update_event.xml" value="0.25" />
         <entry key="app/src/main/res/layout/fragment_user_preferences.xml" value="0.19610507246376813" />

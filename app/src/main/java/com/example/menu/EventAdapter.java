@@ -82,6 +82,16 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.MyViewHolder
     @Override
     public int getItemCount() { return eventTitle.size();}
 
+    public void setData(ArrayList<String> title,ArrayList<String>id,ArrayList<String>loc,ArrayList<String> sDate,
+    ArrayList<String>eDate) {
+        eventTitle=title;
+        eventEDate = eDate;
+        eventSDate = sDate;
+        eventID= id;
+        eventLoc = loc;
+        notifyDataSetChanged();
+    }
+
     public interface itemClickInterface {
         void onItemClick(ArrayList<String> id,int position);
     }

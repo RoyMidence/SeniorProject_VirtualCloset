@@ -9,6 +9,7 @@ import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -52,6 +53,7 @@ public class EventFragment extends Fragment implements EventAdapter.itemClickInt
     private EventAdapter eventAdapter1;
     private EventAdapter eventAdapter2;
     private DatabaseHelper mDatabaseHelper;
+    private RecyclerView recyclerView, recyclerView2;
     public EventFragment() {
         // Required empty public constructor
     }
@@ -70,26 +72,28 @@ public class EventFragment extends Fragment implements EventAdapter.itemClickInt
         v = inflater.inflate(R.layout.fragment_event, container, false);
 
         mDatabaseHelper =  new DatabaseHelper(getContext());
-
+        recyclerView = v.findViewById(R.id.eventRecycle);
+        recyclerView2 = v.findViewById(R.id.eventRecycleView2);
          futureEmpty = v.findViewById(R.id.txtViewFutureEventsEmpty);
          upComingEmpty = v.findViewById(R.id.textViewUpComingEmpty);
         total = v.findViewById(R.id.textviewTotalEvents);
         configureButtons();
-        setUpRecycler(v);
-        System.out.println(eventID.size());
-        System.out.println(eventID2.size());
+        storeValuesInArray();
+        setUpRecycler();
         total.setText("Total Number of Events: "+ (eventID.size() + eventID2.size()));
         otherActivityLauncher = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
                 new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == 7) {
-                            System.out.println("I made it back");
-                            setUpRecycler(v);
-                            System.out.println(eventID.size());
-                            System.out.println(eventID2.size());
-                            total.setText("Total Number of Events: "+ (eventID.size() + eventID2.size()));
-
+                            Intent resultIntent = result.getData();
+                            if (resultIntent != null) {
+                               // FragmentTransaction fr2 =getFragmentManager().beginTransaction();
+                                //fr2.replace(R.id.fragment_container,new TheClothesFragment());
+                               // fr2.commit();
+                                storeValuesInArray();
+                                setUpRecycler();
+                            }
                         }
                     }
                 });
@@ -129,16 +133,17 @@ public class EventFragment extends Fragment implements EventAdapter.itemClickInt
         }
 
         dateAdvance = monthAdvance +"-"+ dayAdvance + "-" + yearAdvance;
-        System.out.println(dateAdvance);
 
-        eventEnd.clear();
+         eventEnd.clear();
        eventID.clear();
        eventLoc.clear();
+       eventTitle.clear();
        eventStart.clear();
        eventEnd.clear();
 
         eventEnd2.clear();
         eventID2.clear();
+        eventTitle2.clear();
         eventLoc2.clear();
         eventStart2.clear();
         eventEnd2.clear();
@@ -225,28 +230,47 @@ public class EventFragment extends Fragment implements EventAdapter.itemClickInt
                         eventLoc2.add(loc);
                         eventStart2.add(start);
                         eventEnd2.add(end);
+
+
                     }
                 }
 
 
             }
         cursor.close();
+        //eventAdapter1.setData();
+
+        for(int i = 0; i<eventID2.size(); i++){
+            System.out.println(eventID2.get(i));
+            System.out.println(eventTitle2.get(i));
+            System.out.println(eventLoc2.get(i));
+            System.out.println(eventStart2.get(i));
+            System.out.println(eventEnd2.get(i));
+        }
+        for(int i = 0; i<eventID.size(); i++){
+            System.out.println(eventID.get(i));
+            System.out.println(eventTitle.get(i));
+            System.out.println(eventLoc.get(i));
+            System.out.println(eventStart.get(i));
+            System.out.println(eventEnd.get(i));
+        }
         }
 
 
-    private void setUpRecycler(View v){
-        RecyclerView recyclerView = v.findViewById(R.id.eventRecycle);
-        storeValuesInArray();
+    private void setUpRecycler(){
+
+
+
         RecyclerView.LayoutManager layoutManager =
                 new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
         recyclerView.setLayoutManager(layoutManager);
         eventAdapter1 = new EventAdapter(EventFragment.this, getContext(),eventID,eventTitle,eventLoc,eventStart,eventEnd,this);
         recyclerView.setAdapter(eventAdapter1);
 
-        RecyclerView recyclerView2 = v.findViewById(R.id.eventRecycleView2);
+
 
         RecyclerView.LayoutManager layoutManager2 =
-                new LinearLayoutManager(getContext(),LinearLayoutManager.HORIZONTAL,false);
+                new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL,false);
         recyclerView2.setLayoutManager(layoutManager2);
         eventAdapter2 = new EventAdapter(EventFragment.this, getContext(),eventID2,eventTitle2,eventLoc2,eventStart2,eventEnd2,this);
         recyclerView2.setAdapter(eventAdapter2);
