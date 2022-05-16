@@ -6,6 +6,7 @@ import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -101,6 +102,7 @@ public class UpdateOutfit extends AppCompatActivity implements NameAdapter.itemC
     private void configureButtons(){
     fabUpdateButton= findViewById(R.id.floatingActionButtonUpdateOutfit);
     fabDeleteButton= findViewById(R.id.floatingActionButtonDeleteOutfit);
+    Button wear = findViewById(R.id.wearButtonOutfit);
     editTextOutfitName.setText(outfitName);
         fabUpdateButton.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -145,6 +147,19 @@ public class UpdateOutfit extends AppCompatActivity implements NameAdapter.itemC
 
         }
     });
+        wear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                for(int i=0; i <outfitClothing.size(); i++){
+                    mDatabaseHelper.updateClothingStatus(String.valueOf(outfitClothing.get(i).getClothingID()),"Unavailable");
+                }
+
+                Intent resultIntent = new Intent();
+                setResult(1,resultIntent);
+                finish();
+
+            }
+        });
 
 
 }

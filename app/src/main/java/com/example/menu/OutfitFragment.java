@@ -70,7 +70,14 @@ public class OutfitFragment extends Fragment implements OutfitAdapter.itemClickI
                                 setUpRecycler(v);
                             }
                         }
-
+                        if (result.getResultCode() == 1) {
+                            Intent resultIntent = result.getData();
+                            if (resultIntent != null) {
+                               FragmentTransaction fr2 =getParentFragmentManager().beginTransaction();
+                               fr2.replace(R.id.fragment_container,new TheClothesFragment());
+                               fr2.commit();
+                            }
+                        }
                     }
                 });
 
