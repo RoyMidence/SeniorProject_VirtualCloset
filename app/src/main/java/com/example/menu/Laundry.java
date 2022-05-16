@@ -12,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -37,7 +38,7 @@ public class Laundry extends Fragment implements NameAdapter.itemClickInterface 
                 new LinearLayoutManager(getContext());
         laundryRecyclerView.setLayoutManager(layoutManager);
         laundryRecyclerView.setAdapter(new NameAdapter(clothingItems,this));
-        storeValuesInArray();
+        storeValuesInArray(v);
         laundryButton = v.findViewById(R.id.laundryButton);
 
         laundryButton.setOnClickListener(new View.OnClickListener() {
@@ -54,20 +55,26 @@ public class Laundry extends Fragment implements NameAdapter.itemClickInterface 
         return v;
     }
 
-    private void storeValuesInArray(){
+    private void storeValuesInArray(View v){
+        TextView laundryEmpty = v.findViewById(R.id.textViewLaundryEmpty);
         ClothingItem CI;
         Cursor cursor = mDatabaseHelper.readClothingTypeLaundry();
-
+        if (cursor.getCount() == 0) {
+            laundryEmpty.setVisibility(v.VISIBLE);
+        }
+        else {
+            laundryEmpty.setVisibility(v.GONE);
             while (cursor.moveToNext()) {
                 String id = cursor.getString(0);
                 CI = new ClothingItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
                         cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),
-                        cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),cursor.getString(13),
+                        cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12), cursor.getString(13),
                         mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id), mDatabaseHelper.getClothingFave(id));
                 clothingItems.add(CI);
             }
 
-        cursor.close();
+            cursor.close();
+        }
     }
 
     @Override

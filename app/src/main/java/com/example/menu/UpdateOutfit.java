@@ -103,6 +103,7 @@ public class UpdateOutfit extends AppCompatActivity implements NameAdapter.itemC
     fabUpdateButton= findViewById(R.id.floatingActionButtonUpdateOutfit);
     fabDeleteButton= findViewById(R.id.floatingActionButtonDeleteOutfit);
     Button wear = findViewById(R.id.wearButtonOutfit);
+    Button laundry = findViewById(R.id.laundryButtonOutfit);
     editTextOutfitName.setText(outfitName);
         fabUpdateButton.setOnClickListener(new View.OnClickListener() {
         @Override
@@ -158,6 +159,14 @@ public class UpdateOutfit extends AppCompatActivity implements NameAdapter.itemC
                 setResult(1,resultIntent);
                 finish();
 
+            }
+        });
+        laundry.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                for(int i=0; i <outfitClothing.size(); i++) {
+                    mDatabaseHelper.updateClothingStatus(String.valueOf(outfitClothing.get(i).getClothingID()), "Laundry");
+                }
             }
         });
 

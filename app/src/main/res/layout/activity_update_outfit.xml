@@ -64,4 +64,13 @@
         android:text="Wear"
         app:layout_constraintBottom_toTopOf="@+id/recyclerViewUpdateClothing"
         app:layout_constraintEnd_toEndOf="@+id/recyclerViewUpdateClothing" />
+
+    <Button
+        android:id="@+id/laundryButtonOutfit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:text="Laundry"
+        app:layout_constraintBottom_toTopOf="@+id/recyclerViewUpdateClothing"
+        app:layout_constraintEnd_toStartOf="@+id/floatingActionButtonUpdateOutfit" />
 </androidx.constraintlayout.widget.ConstraintLayout>

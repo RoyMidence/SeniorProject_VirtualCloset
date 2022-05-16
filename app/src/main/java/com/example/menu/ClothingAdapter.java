@@ -138,9 +138,12 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
         } else if(status.equals("Borrowed")) {
             holder.imageButtonStatus.setImageResource(R.drawable.ic_borrowed);
             holder.imageButtonStatus.setBackgroundColor(Color.parseColor("#ADD8E6"));
-        } else {
+        } else if(status.equals("Available")){
             holder.imageButtonStatus.setImageResource(R.drawable.ic_hanger);
             holder.imageButtonStatus.setBackgroundColor(Color.parseColor("#90EE90"));
+        }else{
+            holder.imageButtonStatus.setImageResource(R.drawable.ic_laundry);
+            holder.imageButtonStatus.setBackgroundColor(Color.parseColor("#FFFF00"));
         }
 
         holder.checkBoxFavorite.setChecked(fave);
