@@ -194,7 +194,9 @@ public class UpdateOutfit extends AppCompatActivity implements NameAdapter.itemC
 
     @Override
     public void onItemClick(int position) {
-        confirmDialog(position);
+        mDatabaseHelper.deleteClothingItemFromOutfit(outfitID,String.valueOf(outfitClothing.get(position).getClothingID()));
+        storeValuesInArrays();
+        NameAdapter.setData(outfitClothing);
 
 
     }
