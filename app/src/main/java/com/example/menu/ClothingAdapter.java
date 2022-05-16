@@ -94,6 +94,7 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
                 popupMenu.getMenu().add(0,0,Menu.NONE,"Available");
                 popupMenu.getMenu().add(0,1,Menu.NONE,"Unavailable");
                 popupMenu.getMenu().add(0,2,Menu.NONE,"Borrowed");
+                popupMenu.getMenu().add(0,3,Menu.NONE,"Laundry");
 
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
@@ -107,10 +108,14 @@ public class ClothingAdapter extends RecyclerView.Adapter<ClothingAdapter.MyView
                             db.updateClothingStatus(id,"Unavailable");
                             holder.imageButtonStatus.setImageResource(R.drawable.ic_logout);
                             holder.imageButtonStatus.setBackgroundColor(Color.parseColor("#DC143C"));
-                        } else {
+                        } else if(item.getItemId() == 2){
                             db.updateClothingStatus(id,"Borrowed");
                             holder.imageButtonStatus.setImageResource(R.drawable.ic_borrowed);
                             holder.imageButtonStatus.setBackgroundColor(Color.parseColor("#ADD8E6"));
+                        } else {
+                            db.updateClothingStatus(id,"Laundry");
+                            holder.imageButtonStatus.setImageResource(R.drawable.ic_laundry);
+                            holder.imageButtonStatus.setBackgroundColor(Color.parseColor("#FFFF00"));
                         }
                         return false;
                     }

@@ -10,6 +10,9 @@
             <item android:id="@+id/nav_closet"
                 android:icon="@drawable/ic_closet"
                 android:title="My Closet" />
+            <item android:id="@+id/nav_laundry"
+                android:icon="@drawable/ic_laundry"
+                android:title="Laundry" />
             <item android:id="@+id/nav_outfit"
                 android:icon="@drawable/ic_outfit"
                 android:title="Outfits"

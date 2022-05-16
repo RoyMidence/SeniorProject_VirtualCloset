@@ -682,6 +682,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return cursor;
     }
 
+    Cursor readClothingTypeUnavailable() {
+        String query = "SELECT * FROM " + CLOTHING_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID() +
+                " AND " + CLOTHING_STATUS + " = 'Unavailable' " ;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null)
+            cursor = db.rawQuery(query, null);
+        return cursor;
+    }
+
+    Cursor readClothingTypeLaundry() {
+        String query = "SELECT * FROM " + CLOTHING_TABLE +
+                " WHERE " + USER_ID + " = " + loggedUserID() +
+                " AND " + CLOTHING_STATUS + " = 'Laundry' " ;
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        Cursor cursor = null;
+        if (db != null)
+            cursor = db.rawQuery(query, null);
+        return cursor;
+    }
+
+
     Cursor readOutfitClothing(String outfitID) {
         String Subquery = " SELECT " + CLOTHING_ID +
                 " FROM " + OUTFIT_CLOTHING_TABLE +

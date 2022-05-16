@@ -61,6 +61,11 @@ private DatabaseHelper mDatabaseHelper;
                         new AddClothesFragment()).commit();
 
                 break;
+            case R.id.nav_laundry:
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
+                        new Laundry()).commit();
+
+                break;
             case R.id.nav_closet:
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container,
                         new TheClothesFragment()).commit();
