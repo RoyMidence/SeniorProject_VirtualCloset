@@ -77,4 +77,8 @@ EditText name,user,pass,hot,freezing,warm,cold;
         private void toastMessage(String Message) {
             Toast.makeText(getApplicationContext(), Message, Toast.LENGTH_SHORT).show();
         }
+    @Override
+    public void onBackPressed () {
+
+    }
 }
