@@ -13,13 +13,13 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerViewAllowedUsers"
             android:layout_width="0dp"
-            android:layout_height="270dp"
+            android:layout_height="0dp"
             android:layout_marginStart="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/textView6" />
 
         <TextView
             android:id="@+id/textView"
@@ -60,10 +60,10 @@
             android:id="@+id/textView6"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
+            android:layout_marginTop="30dp"
             android:text="@string/sharing_your_closet_with"
-            app:layout_constraintBottom_toTopOf="@+id/recyclerViewAllowedUsers"
-            app:layout_constraintStart_toStartOf="@+id/recyclerViewAllowedUsers" />
+            app:layout_constraintStart_toStartOf="@+id/recyclerViewAllowedUsers"
+            app:layout_constraintTop_toBottomOf="@+id/buttonEnterKey" />
 
         <EditText
             android:id="@+id/editTextEnterKey"
