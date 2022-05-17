@@ -21,10 +21,6 @@
                 android:title="Randomize Outfits"
                 android:icon="@drawable/ic_recycle"
                 />
-            <item android:title="Weather"
-                android:icon="@drawable/ic_thunderstorm"
-                android:id="@+id/nav_weather"
-                />
             <item android:title="Events"
                 android:icon="@drawable/ic_event"
                 android:id="@+id/nav_events"
