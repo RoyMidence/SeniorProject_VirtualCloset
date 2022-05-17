@@ -46,6 +46,7 @@ public class SelectOutfitEvents extends AppCompatActivity implements  OutfitName
                 outfit_name.add(name);
                 outfitId.add(id);
             }
+            cursor.close();
         }
     }
     @Override

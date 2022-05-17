@@ -22,7 +22,7 @@
     <EditText
         android:id="@+id/editTextFullNamePref"
         android:layout_width="110dp"
-        android:layout_height="44dp"
+        android:layout_height="48dp"
         android:layout_marginStart="36dp"
         android:layout_marginTop="16dp"
         android:hint="Full Name"
@@ -59,7 +59,7 @@
     <EditText
         android:id="@+id/editTextUsernamePreferences"
         android:layout_width="112dp"
-        android:layout_height="46dp"
+        android:layout_height="48dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
         android:hint="username"
@@ -83,7 +83,7 @@
     <EditText
         android:id="@+id/editTextPasswordPreferences"
         android:layout_width="118dp"
-        android:layout_height="41dp"
+        android:layout_height="48dp"
         android:layout_marginStart="28dp"
         android:layout_marginTop="16dp"
         android:hint="Password"
@@ -171,6 +171,7 @@
         android:layout_marginTop="16dp"
         android:hint="Hot Temperature"
         android:inputType="number"
+        android:minHeight="48dp"
         android:textColor="@color/black"
         app:layout_constraintStart_toEndOf="@+id/textViewHotPref"
         app:layout_constraintTop_toBottomOf="@+id/textViewUserTemperature" />
@@ -181,8 +182,9 @@
         android:layout_height="wrap_content"
         android:hint="Warm Temperature"
         android:inputType="number"
-        android:textColor="@color/black"
+        android:minHeight="48dp"
 
+        android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/textViewWarmPref"
         app:layout_constraintStart_toStartOf="@+id/editTextHotPref"
         app:layout_constraintTop_toTopOf="@+id/textViewWarmPref" />
@@ -193,6 +195,7 @@
         android:layout_height="wrap_content"
         android:hint="Freezing Temperature"
         android:inputType="number"
+        android:minHeight="48dp"
         android:textColor="@color/black"
         app:layout_constraintBottom_toBottomOf="@+id/textViewFreezingPref"
         app:layout_constraintStart_toStartOf="@+id/editTextWarmPref"

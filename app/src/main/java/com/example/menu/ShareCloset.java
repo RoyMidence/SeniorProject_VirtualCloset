@@ -49,9 +49,12 @@ public class ShareCloset extends Fragment implements UserAdapter.itemClickInterf
         mDatabaseHelper = new DatabaseHelper(getContext());
 
         // This is the users own key, send this to friend
-        textViewUserKey.setText(mDatabaseHelper.getUserKey());
+        if (!mDatabaseHelper.loggedUserTableEmpty()) {
+            textViewUserKey.setText(mDatabaseHelper.getUserKey());
+        }
 
-        //setUpRecycler(view);
+
+        setUpRecycler(view);
 
         // They hit enter on the button
         // check the entered key and make sure it isn't null
@@ -62,8 +65,6 @@ public class ShareCloset extends Fragment implements UserAdapter.itemClickInterf
                     Toast.makeText(getContext(),"Please Enter a Key",Toast.LENGTH_SHORT).show();
                 } else if (mDatabaseHelper.shareCloset(editTextEnterKey.getText().toString())) {
                     Toast.makeText(getContext(),"Key Successfully Entered",Toast.LENGTH_SHORT).show();
-                    //storeValuesInArrays();
-                    //list.setData(userName,userID);
                 } else {
                     Toast.makeText(getContext(),"Invalid Key",Toast.LENGTH_SHORT).show();
                 }
@@ -95,6 +96,7 @@ public class ShareCloset extends Fragment implements UserAdapter.itemClickInterf
                 userID.add(cursor.getString(1));
             }
         }
+        cursor.close();
     }
 
     @Override

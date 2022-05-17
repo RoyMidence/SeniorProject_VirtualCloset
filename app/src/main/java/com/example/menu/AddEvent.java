@@ -138,6 +138,8 @@ public class AddEvent extends AppCompatActivity implements OutfitNameAdapter.ite
                             }
                         }
                     }
+                    cursor.close();
+                    cursorClothes.close();
                     Intent resultIntent = new Intent();
                     setResult(7, resultIntent);
                     finish();

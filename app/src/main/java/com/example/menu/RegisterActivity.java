@@ -44,8 +44,6 @@ EditText name,user,pass,hot,freezing,warm,cold;
             toastMessage("Please enter a Hot Temperature!");
         } else if (String.valueOf(freezing.getText()).equals("")) {
             toastMessage("Please enter a Freezing Temperature!");
-        } else if (String.valueOf(cold.getText()).equals("")) {
-            toastMessage("Please enter a Cold Temperature!");
         } else if (String.valueOf(warm.getText()).equals("")) {
             toastMessage("Please enter a Warm Temperature!");
         }else {

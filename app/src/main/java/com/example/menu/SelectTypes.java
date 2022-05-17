@@ -64,6 +64,7 @@ public class SelectTypes extends AppCompatActivity implements TypeAdapter.itemCl
                 listTypes.add(cursor.getString(3));
             }
         }
+        cursor.close();
     }
 
     private void setUpRecycler() {

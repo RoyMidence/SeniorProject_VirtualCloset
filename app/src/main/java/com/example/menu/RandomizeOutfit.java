@@ -147,11 +147,17 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
                 i--;
             }
         }
+        if(temp.size() == 0) {
+            return false;
+        }
 
 
         // Shorten list down to colors
         // Only doing for shirts for now
         temp = colorFilter(temp);
+        if(temp.size() == 0) {
+            return false;
+        }
 
         Random random = new Random(); // use this to generate a random number
         clothingItems.add(temp.get(random.nextInt(temp.size()))); // adding a random clothing Item here
@@ -238,6 +244,11 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
             @Override
             public void onClick(View v) {
                 boolean worked = true;
+
+                if (mDatabaseHelper.clothingTableEmpty()) {
+                    Toast.makeText(getContext(), "No Clothing Available", Toast.LENGTH_SHORT).show();
+                    return;
+                }
                 clothingItems.clear(); // new outfit everytime
 
 
@@ -250,6 +261,10 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
                         }
                     }
                 } else {
+                    if (mDatabaseHelper.outfitTableEmpty()) {
+                        Toast.makeText(getContext(), "No Outfits Available", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
                     chooseOutfit();
                 }
 

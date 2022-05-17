@@ -751,9 +751,9 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     // GETS LIST OF EVERYONE WHO HAS ACCESS TO A USERS CLOSET
     public Cursor readSharedUsers() {
-        String Subquery = " SELECT " + CLOSET_OWNER +
+        String Subquery = " SELECT " + ALLOWED_USER +
                 " FROM " + SHARED_CLOSET_TABLE +
-                " WHERE " + ALLOWED_USER + " = " + loggedUserID();
+                " WHERE " + CLOSET_OWNER + " = " + loggedUserID();
         String Query = "SELECT " + USER_FULLNAME + ", " + USER_ID +
                 " FROM " + USER_TABLE +
                 " WHERE " + USER_ID + " IN " + " (" + Subquery + ")";
