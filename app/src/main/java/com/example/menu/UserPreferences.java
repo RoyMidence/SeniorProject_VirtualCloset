@@ -124,13 +124,13 @@ public class UserPreferences extends Fragment {
                     toastMessage("Please enter a Warm Temperature!");
                 } else {
                     // once all values have been entered then it gets checked to see if its in a reasonable range
-                    if (Integer.parseInt(hot) > 100 || Integer.parseInt(hot) <= 80) {
+                    if (Integer.parseInt(hot) > 106 || Integer.parseInt(hot) <= 80) {
                         edhot.setText("0");
                         toastMessage("Hot Temperature between 99 and 80");
-                    } else if (Integer.parseInt(warm) > 80 || Integer.parseInt(warm) <= 60) {
+                    } else if (Integer.parseInt(warm) > 80 || Integer.parseInt(warm) <= 50) {
                         edwarm.setText("0");
                         toastMessage("Warm Temperature between 79 and 60");
-                    } else if (Integer.parseInt(freezing) > 40 || Integer.parseInt(freezing) <= 10) {
+                    } else if (Integer.parseInt(freezing) > 50 || Integer.parseInt(freezing) <= 10) {
                         edfreezing.setText("0");
                         toastMessage("Freezing Temperature between 39 and 10");
                     } else {

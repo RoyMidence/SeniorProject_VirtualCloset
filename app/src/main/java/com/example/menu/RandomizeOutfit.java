@@ -379,10 +379,10 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
                     if (t >= 88.0) {
                         // Hot Bracket
                         types.add("T-Shirt");
-                        types.add("Shorts");
+                        types.add("Pants");
                         types.add("Shoes");
                         if (desc.contains("rain") || desc.contains("snow")) {
-                            types.add("Jacket");
+                            types.add("Light Jacket");
                         }
 
 
@@ -392,7 +392,7 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
                         types.add("Pants");
                         types.add("Shoes");
                         if (desc.contains("rain") || desc.contains("snow")) {
-                            types.add("Jacket");
+                            types.add("Light Jacket");
                         }
 
                     } else if (t < 45 && t >= 32) {
@@ -400,14 +400,14 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
                         types.add("Long Sleeved Shirt");
                         types.add("Pants");
                         types.add("Shoes");
-                        types.add("Jacket");
+                        types.add("Heavy Jacket");
 
                     } else {
                         // Freezing
                         types.add("Long Sleeved Shirt");
                         types.add("Pants");
                         types.add("Shoes");
-                        types.add("Jacket");
+                        types.add("Heavy Jacket");
 
                     }
 
