@@ -72,6 +72,7 @@ public class SelectClothes extends AppCompatActivity implements NameAdapter.item
 
                 }
             }
+            cursor.close();
         if(clothingItems.size() ==0) {
             emptyImageView.setVisibility(View.VISIBLE);
             textViewEmptyCloset.setVisibility(View.VISIBLE);
