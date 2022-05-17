@@ -344,6 +344,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
                 sharedUserNames.add(cursor.getString(0));
                 sharedUserID.add(cursor.getString(1));
             }
+            cursor.close();
         }
     }
 
@@ -369,6 +370,7 @@ public class TheClothesFragment extends Fragment implements ClothingAdapter.item
                         mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id), mDatabaseHelper.getClothingFave(id));
                 clothingItems.add(CI);
             }
+            cursor.close();
         }
     }
 

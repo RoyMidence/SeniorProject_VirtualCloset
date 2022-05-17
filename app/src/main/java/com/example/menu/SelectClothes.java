@@ -70,6 +70,7 @@ public class SelectClothes extends AppCompatActivity implements NameAdapter.item
 
 
             }
+            cursor.close();
         }
     }
     @Override

@@ -190,6 +190,7 @@ public class UpdateOutfit extends AppCompatActivity implements NameAdapter.itemC
                     mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id), mDatabaseHelper.getClothingFave(id));
             outfitClothing.add(CI);
         }
+        cursor.close();
     }
 
     @Override

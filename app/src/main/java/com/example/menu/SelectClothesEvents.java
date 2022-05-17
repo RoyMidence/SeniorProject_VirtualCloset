@@ -49,6 +49,7 @@ public class SelectClothesEvents extends AppCompatActivity implements  NameAdapt
 
 
             }
+            cursor.close();
         }
     }
     @Override

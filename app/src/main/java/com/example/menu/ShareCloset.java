@@ -95,6 +95,7 @@ public class ShareCloset extends Fragment implements UserAdapter.itemClickInterf
                 userID.add(cursor.getString(1));
             }
         }
+        cursor.close();
     }
 
     @Override
