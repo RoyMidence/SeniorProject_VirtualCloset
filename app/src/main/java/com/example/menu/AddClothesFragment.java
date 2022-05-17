@@ -62,6 +62,7 @@ public class AddClothesFragment extends Fragment implements PopupMenu.OnMenuItem
 
         return v;
     }
+
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), 0);

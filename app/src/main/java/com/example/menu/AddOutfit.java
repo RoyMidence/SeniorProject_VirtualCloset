@@ -277,7 +277,7 @@ public class AddOutfit extends AppCompatActivity implements PopupMenu.OnMenuItem
                     toastMessage("Please enter a name!");
                 } else {
                     Intent intent = new Intent(AddOutfit.this, SelectClothes.class);
-                    intent.putExtra("type", "Long Sleeve Shirt");
+                    intent.putExtra("type", "Long Sleeved Shirt");
                     otherActivityLauncher.launch(intent);
 
                 }

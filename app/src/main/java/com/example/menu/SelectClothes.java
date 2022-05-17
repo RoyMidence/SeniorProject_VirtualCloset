@@ -45,33 +45,39 @@ public class SelectClothes extends AppCompatActivity implements NameAdapter.item
     private void storeValuesInArrays() {
         ClothingItem CI;
         Cursor cursor = mDatabaseHelper.readUsersClothing();
-        if (cursor.getCount() == 0) {
+
+            if (cursor.getCount() == 0) {
+
+            } else {
+                emptyImageView.setVisibility(View.GONE);
+                textViewEmptyCloset.setVisibility(View.GONE);
+
+                while (cursor.moveToNext()) {
+                    String id = cursor.getString(0);
+                    if(mDatabaseHelper.getClothingType(id).equals(type)) {
+                        CI = new ClothingItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+                                cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),
+                                cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),cursor.getString(13),
+                                mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id), mDatabaseHelper.getClothingFave(id));
+                        clothingItems.add(CI);
+                    } else if(type.equals("all")) {
+                        CI = new ClothingItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
+                                cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),
+                                cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),cursor.getString(13),
+                                mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id), mDatabaseHelper.getClothingFave(id));
+                        clothingItems.add(CI);
+                    }
+
+
+
+                }
+            }
+        if(clothingItems.size() ==0) {
             emptyImageView.setVisibility(View.VISIBLE);
             textViewEmptyCloset.setVisibility(View.VISIBLE);
-        } else {
-            emptyImageView.setVisibility(View.GONE);
-            textViewEmptyCloset.setVisibility(View.GONE);
-
-            while (cursor.moveToNext()) {
-                String id = cursor.getString(0);
-                if(mDatabaseHelper.getClothingType(id).equals(type)) {
-                    CI = new ClothingItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
-                            cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),
-                            cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),cursor.getString(13),
-                            mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id), mDatabaseHelper.getClothingFave(id));
-                    clothingItems.add(CI);
-                } else if(type.equals("all")) {
-                    CI = new ClothingItem(cursor.getString(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4),
-                           cursor.getString(5), cursor.getString(6), cursor.getString(7), cursor.getString(8),
-                            cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12),cursor.getString(13),
-                            mDatabaseHelper.getOccasion(id), mDatabaseHelper.checkSpring(id), mDatabaseHelper.checkSummer(id), mDatabaseHelper.checkFall(id), mDatabaseHelper.checkWinter(id), mDatabaseHelper.checkAll(id), mDatabaseHelper.getClothingFave(id));
-                    clothingItems.add(CI);
-                }
-
-
-            }
         }
-    }
+        }
+
     @Override
     public void onItemClick(int position) {
 
