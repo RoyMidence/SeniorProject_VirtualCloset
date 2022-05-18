@@ -358,69 +358,115 @@ public class RandomizeOutfit extends Fragment  implements NameAdapter.itemClickI
     }
 
     public void findWeather() {
-        RequestQueue queue = Volley.newRequestQueue(getContext());
-        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject response) {
-                try{
-                    JSONObject main = response.getJSONObject("main");
-                    JSONArray array = response.getJSONArray("weather");
-                    JSONObject object = array.getJSONObject(0);
+        textViewTemperature.setText( 62 + " F");
+        textViewWeather.setText("Sunny");
 
-                    Double t = main.getDouble("temp");
-                    String d = object.getString("description");
-
-                    textViewTemperature.setText( String.valueOf(t.intValue()) + " F");
-                    textViewWeather.setText(d);
-
-                    String desc = d.toLowerCase();
+        float t = 62;
+        String desc = "Sunny";
 
 
-                    if (t >= 88.0) {
-                        // Hot Bracket
-                        types.add("T-Shirt");
-                        types.add("Pants");
-                        types.add("Shoes");
-                        if (desc.contains("rain") || desc.contains("snow")) {
-                            types.add("Light Jacket");
-                        }
-
-
-                    } else if (t < 88 && t >= 45) {
-                        // Warm bracket
-                        types.add("T-Shirt");
-                        types.add("Pants");
-                        types.add("Shoes");
-                        if (desc.contains("rain") || desc.contains("snow")) {
-                            types.add("Light Jacket");
-                        }
-
-                    } else if (t < 45 && t >= 32) {
-                        // Cold bracket
-                        types.add("Long Sleeved Shirt");
-                        types.add("Pants");
-                        types.add("Shoes");
-                        types.add("Heavy Jacket");
-
-                    } else {
-                        // Freezing
-                        types.add("Long Sleeved Shirt");
-                        types.add("Pants");
-                        types.add("Shoes");
-                        types.add("Heavy Jacket");
-
-                    }
-
-                } catch(JSONException e){
-                    e.printStackTrace();
-                }
+        if (t >= 88.0) {
+            // Hot Bracket
+            types.add("T-Shirt");
+            types.add("Pants");
+            types.add("Shoes");
+            if (desc.contains("rain") || desc.contains("snow")) {
+                types.add("Light Jacket");
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
 
+
+        } else if (t < 88 && t >= 45) {
+            // Warm bracket
+            types.add("T-Shirt");
+            types.add("Pants");
+            types.add("Shoes");
+            if (desc.contains("rain") || desc.contains("snow")) {
+                types.add("Light Jacket");
             }
-        });
-        queue.add(jor);
+
+        } else if (t < 45 && t >= 32) {
+            // Cold bracket
+            types.add("Long Sleeved Shirt");
+            types.add("Pants");
+            types.add("Shoes");
+            types.add("Heavy Jacket");
+
+        } else {
+            // Freezing
+            types.add("Long Sleeved Shirt");
+            types.add("Pants");
+            types.add("Shoes");
+            types.add("Heavy Jacket");
+
+        }
+
+
+
+
+
+//        RequestQueue queue = Volley.newRequestQueue(getContext());
+//        JsonObjectRequest jor = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+//            @Override
+//            public void onResponse(JSONObject response) {
+//                try{
+//                    JSONObject main = response.getJSONObject("main");
+//                    JSONArray array = response.getJSONArray("weather");
+//                    JSONObject object = array.getJSONObject(0);
+//
+//                    Double t = main.getDouble("temp");
+//                    String d = object.getString("description");
+//
+//                    textViewTemperature.setText( String.valueOf(t.intValue()) + " F");
+//                    textViewWeather.setText(d);
+//
+//                    String desc = d.toLowerCase();
+//
+//
+//                    if (t >= 88.0) {
+//                        // Hot Bracket
+//                        types.add("T-Shirt");
+//                        types.add("Pants");
+//                        types.add("Shoes");
+//                        if (desc.contains("rain") || desc.contains("snow")) {
+//                            types.add("Light Jacket");
+//                        }
+//
+//
+//                    } else if (t < 88 && t >= 45) {
+//                        // Warm bracket
+//                        types.add("T-Shirt");
+//                        types.add("Pants");
+//                        types.add("Shoes");
+//                        if (desc.contains("rain") || desc.contains("snow")) {
+//                            types.add("Light Jacket");
+//                        }
+//
+//                    } else if (t < 45 && t >= 32) {
+//                        // Cold bracket
+//                        types.add("Long Sleeved Shirt");
+//                        types.add("Pants");
+//                        types.add("Shoes");
+//                        types.add("Heavy Jacket");
+//
+//                    } else {
+//                        // Freezing
+//                        types.add("Long Sleeved Shirt");
+//                        types.add("Pants");
+//                        types.add("Shoes");
+//                        types.add("Heavy Jacket");
+//
+//                    }
+//
+//                } catch(JSONException e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//        queue.add(jor);
     }
 }

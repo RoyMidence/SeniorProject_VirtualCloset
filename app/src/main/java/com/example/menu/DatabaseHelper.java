@@ -64,7 +64,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     private static final String USER_FULLNAME = "user_fullname";
     private static final String USER_NAME = "username";
     private static final String USER_PASSWORD = "user_password";
-    private static final String USER_KEY = "user_key";// randomly generated key, might get used to share closet later
+    private static final String USER_KEY = "user_key";
     private static final String User_Hot = "user_hot";
     private static final String User_Freezing="user_freezing";
     private static final String User_Warm="user_warm";
